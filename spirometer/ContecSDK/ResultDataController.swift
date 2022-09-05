@@ -10,24 +10,28 @@ import Foundation
 
 
 class ResultDataController {
-    public var measuringCount: Int?
+    public var measuringCount: Int!
     
     var predictedValuesBexp: PredictedValuesBEXP?
     var fVCDataBEXP: [FVCDataBEXP] = []
     var waveData: [WaveData] = []
     
+    private func computeDoubleFromTwoBytes(firstByte: Int8, secondByte: Int8) -> Double {
+        return (Double(Int(firstByte) & 127 | (Int(secondByte) & 127) << 7) & 65535) / 100.0
+    }
+    
     public func savePredictedValuesBEXP(data: [Int8]) {
         predictedValuesBexp = PredictedValuesBEXP(
-            FEF25: (Double((Int(data[10]) & 127 | (Int(data[11]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEF2575: (Double((Int(data[16]) & 127 | (Int(data[17]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEF50: (Double((Int(data[12]) & 127 | (Int(data[13]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEF75: (Double((Int(data[14]) & 127 | (Int(data[15]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEV1: (Double((Int(data[4]) & 127 | (Int(data[5]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEV1_FVC: (Double((Int(data[8]) & 127 | (Int(data[9]) & 127) << 7) & 65535) * 1.0) / 10.0,
-            FEV3: (Double((Int(data[18]) & 127 | (Int(data[19]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FEV6: (Double((Int(data[20]) & 127 | (Int(data[21]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            FVC: (Double((Int(data[2]) & 127 | (Int(data[3]) & 127) << 7) & 65535) * 1.0) / 100.0,
-            PEF: (Double((Int(data[6]) & 127 | (Int(data[7]) & 127) << 7) & 65535) * 1.0) / 100.0
+            FVC: (Double((Int(data[10]) & 127 | (Int(data[11]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEV1: (Double((Int(data[16]) & 127 | (Int(data[17]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEV1_FVC: (Double((Int(data[12]) & 127 | (Int(data[13]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            PEF: (Double((Int(data[14]) & 127 | (Int(data[15]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEF25: (Double((Int(data[4]) & 127 | (Int(data[5]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEF50: (Double((Int(data[8]) & 127 | (Int(data[9]) & 127) << 7) & 65535) * 1.0) / 10.0,
+            FEF75: (Double((Int(data[18]) & 127 | (Int(data[19]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEF2575: (Double((Int(data[20]) & 127 | (Int(data[21]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEV3: (Double((Int(data[2]) & 127 | (Int(data[3]) & 127) << 7) & 65535) * 1.0) / 100.0,
+            FEV6: (Double((Int(data[6]) & 127 | (Int(data[7]) & 127) << 7) & 65535) * 1.0) / 100.0
         )
     }
     

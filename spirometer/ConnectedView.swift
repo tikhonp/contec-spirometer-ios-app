@@ -22,30 +22,53 @@ struct ConnectedView: View {
     }
     
     var dataLoaded: some View {
-        NavigationView {
-            ScrollView {
-                HStack {
-                    Text("Выберите врача, к которому привязать колонку.")
-                    Spacer()
+        ZStack {
+            if bleController.resultDataController!.measuringCount == 0 {
+                NavigationView {
+                    Text("В вашем устройстве нет измерений.")
+//                        .navigationBarTitle("Ваши измерения")
+                        .toolbar {
+                            Menu {
+                                Button("Обновить данные", action: bleController.getData)
+                                Button("Загрузить данные в Medsenger", action: uploadToMedsenger)
+                                Button("Очистить память спирометра", action: bleController.deleteData)
+                            } label: {
+                                Label("", systemImage: "ellipsis.circle")
+                            }
+                        }
                 }
-                .padding()
-                
-                ForEach(0..<bleController.resultDataController!.measuringCount!) { i in
-                    Text(String(bleController.resultDataController!.fVCDataBEXP[i].EVOL))
+            } else {
+                NavigationView {
+                    ScrollView {
+                        ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
+                            RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXP[i])
+                        }
+                        .navigationBarTitle("Ваши измерения")
+                        .toolbar {
+                            Menu {
+                                Button("Обновить данные", action: bleController.getData)
+                                Button("Загрузить данные в Medsenger", action: uploadToMedsenger)
+                                Button("Очистить память спирометра", action: bleController.deleteData)
+                            } label: {
+                                Label("", systemImage: "ellipsis.circle")
+                            }
+                        }
+                    }
                 }
             }
-        }
-        .refreshable {
-            bleController.getData()
         }
     }
     
     var loadingData: some View {
         VStack {
             Text("Загрузка данных со спирометра...")
-            ProgressView(value: bleController.progress)
+            ProgressView(value: bleController.progress, total: 1)
         }
         .padding()
+    }
+    
+    func uploadToMedsenger() {
+        
     }
 }
 

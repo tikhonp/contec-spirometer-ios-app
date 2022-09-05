@@ -88,16 +88,18 @@ class ContecDeviceController {
     
     private var dataSerializer = DataSerializer()
     
-    private var writeValueCallback: (Data) -> Void
-    private var saveResultDataCallback: (ResultDataController) -> Void
+    private let writeValueCallback: (Data) -> Void
+    private let saveResultDataCallback: (ResultDataController) -> Void
     private let onProgressUpdate: (_ progress: Float) -> Void
+    private let onContecDeviceSuccessCallback: (_ successCode: SuccessCodes) -> Void
     
     private var resultDataController = ResultDataController()
     
-    init(writeValueCallback: @escaping (Data) -> Void, saveResultDataCallback: @escaping (ResultDataController) -> Void, onProgressUpdate: @escaping (_ progress: Float) -> Void) {
+    init(writeValueCallback: @escaping (Data) -> Void, saveResultDataCallback: @escaping (ResultDataController) -> Void, onProgressUpdate: @escaping (_ progress: Float) -> Void, onContecDeviceSuccessCallback: @escaping (_ successCode: SuccessCodes) -> Void) {
         self.writeValueCallback = writeValueCallback
         self.saveResultDataCallback = saveResultDataCallback
         self.onProgressUpdate = onProgressUpdate
+        self.onContecDeviceSuccessCallback = onContecDeviceSuccessCallback
     }
     
     private func copyDataToDataStorage(copyTo: inout [Int8], from: Int, length: Int) {
@@ -176,8 +178,6 @@ class ContecDeviceController {
                 var volumes = [Float](repeating: 0, count: maxFramesCount)
                 var framesCount = 0
                 
-                print("Lalala", currentRecord, maxFramesCount)
-                
                 while maxFramesCount > framesCount {
                     var bufferByteData = [Int8](repeating: 0, count: 64)
                     copyDataToDataStorage(copyTo: &bufferByteData, from: 0, length: 8)
@@ -187,12 +187,16 @@ class ContecDeviceController {
                 resultDataController.saveWaveData(framesCount: framesCount, speeds: speeds, volumes: volumes, times: times)
 //                copyDataToDataStorage(copyTo: &dataStorage, from: 5, length: 19)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    print(self.incomingDataQueue.getElements)
-                    print(self.incomingDataQueue.getElements.count)
+//                    print(self.incomingDataQueue.getElements)
+//                    print(self.incomingDataQueue.getElements.count)
                     self.incomingDataQueue.clear()
                     if currentRecord == self.resultDataController.measuringCount {
                         print("Exit")
                         self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 126, i2: 1))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            self.incomingDataQueue.clear()
+                            self.state = STATE.UNKNOWN
+                        }
                         self.saveResultDataCallback(self.resultDataController)
                         return
                     }
@@ -200,7 +204,6 @@ class ContecDeviceController {
                     let newProgress = 0.2 + (0.8 * (Float(currentRecord) / Float(self.resultDataController.measuringCount!)))
                     self.onProgressUpdate(newProgress)
                     
-                    print("More")
                     self.state = STATE.UNKNOWN
                     self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 1, i2: 1))
                 }
@@ -209,7 +212,9 @@ class ContecDeviceController {
         case STATE.deleteDataResponse:
             copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 2)
             if dataStorage[1] == 0 {
-                print("done")
+                DispatchQueue.main.async {
+                    self.onContecDeviceSuccessCallback(.deletedData)
+                }
             } else {
                 print("failed")
             }
@@ -229,7 +234,20 @@ class ContecDeviceController {
         if state == STATE.UNKNOWN {
             guard let value = incomingDataQueue.dequeue() else { return }
             state = value
+
             chooseStep()
         }
+    }
+    
+    func getData() {
+        state = STATE.UNKNOWN
+        incomingDataQueue.clear()
+        writeValueCallback(dataSerializer.getDataRequest())
+    }
+    
+    func deleteData() {
+        state = STATE.UNKNOWN
+        incomingDataQueue.clear()
+        writeValueCallback(dataSerializer.generateDataForDelete())
     }
 }

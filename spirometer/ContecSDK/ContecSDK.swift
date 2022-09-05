@@ -15,9 +15,11 @@ enum FailCodes {
     case periferalIsNotFromThisQueue
     case failedToDiscoverServiceError
     case periferalIsNotReady
+    case failedToDeleteData
 }
 
 enum SuccessCodes {
+    case deletedData
     case disconnected
     case gotData
     case connected
@@ -71,7 +73,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     /// Request to load data from contec device
     public func getData() {
         if isPeriferalReady {
-            sendData(dataSerializer.getDataRequest())
+            contecDeviceController?.getData()
         } else {
             onFailCallback(.periferalIsNotReady)
         }
@@ -79,7 +81,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     
     public func deleteData() {
         if isPeriferalReady {
-            sendData(dataSerializer.generateDataForDelete())
+            contecDeviceController?.deleteData()
         } else {
             onFailCallback(.periferalIsNotReady)
         }
@@ -114,7 +116,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
             self.peripheral = peripheral
             self.peripheral.delegate = self
             centralManager!.connect(self.peripheral, options: nil)
-            contecDeviceController = ContecDeviceController(writeValueCallback: sendData, saveResultDataCallback: saveResultData, onProgressUpdate: onProgressUpdate)
+            contecDeviceController = ContecDeviceController(writeValueCallback: sendData, saveResultDataCallback: saveResultData, onProgressUpdate: onProgressUpdate, onContecDeviceSuccessCallback: onContecDeviceSuccessCallback)
         } else {
             onFailCallback(FailCodes.bluetoothIsOff)
         }
@@ -129,6 +131,10 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     private func saveResultData(_ resultDataController: ResultDataController) {
         self.resultDataController = resultDataController
         onSuccessCallback(.gotData)
+    }
+    
+    private func onContecDeviceSuccessCallback(_ successCode: SuccessCodes) {
+        onSuccessCallback(successCode)
     }
     
     // MARK: - central manager callbacks
@@ -155,15 +161,15 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     }
     
     internal func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        guard error == nil else {
-            print("Failed to disconnect from peripheral \(peripheral), error: \(error?.localizedDescription ?? "no error description")")
-            return
-        }
-        
         self.peripheral = nil
         isPeriferalReady = false
         
         onSuccessCallback(SuccessCodes.disconnected)
+        
+        guard error == nil else {
+            print("Failed to disconnect from peripheral \(peripheral), error: \(error?.localizedDescription ?? "no error description")")
+            return
+        }
     }
     
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {

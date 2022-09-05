@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4311B14D28C6263E00FC0EA1 /* HttpRequestToMedsenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311B14C28C6263E00FC0EA1 /* HttpRequestToMedsenger.swift */; };
+		4311B14F28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */; };
 		437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */; };
+		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
+		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
 		43F39C5528BD07130098C96A /* spirometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5428BD07130098C96A /* spirometerApp.swift */; };
 		43F39C5728BD07130098C96A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5628BD07130098C96A /* RootView.swift */; };
 		43F39C5928BD07150098C96A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43F39C5828BD07150098C96A /* Assets.xcassets */; };
@@ -23,7 +27,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4311B14C28C6263E00FC0EA1 /* HttpRequestToMedsenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequestToMedsenger.swift; sourceTree = "<group>"; };
+		4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AppPrefs.swift"; sourceTree = "<group>"; };
+		4311B15028C6354500FC0EA1 /* spirometer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = spirometer.entitlements; sourceTree = "<group>"; };
 		437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedViewModel.swift; sourceTree = "<group>"; };
+		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
 		43F39C5128BD07130098C96A /* spirometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spirometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F39C5428BD07130098C96A /* spirometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spirometerApp.swift; sourceTree = "<group>"; };
 		43F39C5628BD07130098C96A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -53,6 +62,7 @@
 		43F39C4828BD07130098C96A = {
 			isa = PBXGroup;
 			children = (
+				437A5C4E28C2270A00064C10 /* README.md */,
 				43F39C5328BD07130098C96A /* spirometer */,
 				43F39C5228BD07130098C96A /* Products */,
 			);
@@ -69,6 +79,7 @@
 		43F39C5328BD07130098C96A /* spirometer */ = {
 			isa = PBXGroup;
 			children = (
+				4311B15028C6354500FC0EA1 /* spirometer.entitlements */,
 				43F39C6228BD074A0098C96A /* ContecSDK */,
 				43F39C5428BD07130098C96A /* spirometerApp.swift */,
 				43F39C5628BD07130098C96A /* RootView.swift */,
@@ -78,6 +89,9 @@
 				43F79A3028BF4607009102CB /* ConnectedView.swift */,
 				43F79A3228BF8375009102CB /* BLEController.swift */,
 				437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */,
+				437A5C5028C22AEE00064C10 /* RecordLabel.swift */,
+				4311B14C28C6263E00FC0EA1 /* HttpRequestToMedsenger.swift */,
+				4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */,
 			);
 			path = spirometer;
 			sourceTree = "<group>";
@@ -160,6 +174,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				437A5C4F28C2270A00064C10 /* README.md in Resources */,
 				43F39C5C28BD07150098C96A /* Preview Assets.xcassets in Resources */,
 				43F39C5928BD07150098C96A /* Assets.xcassets in Resources */,
 			);
@@ -181,8 +196,11 @@
 				43F39C6828BD08250098C96A /* DataSerializer.swift in Sources */,
 				43F39C6A28BD08E00098C96A /* ResultDataController.swift in Sources */,
 				43F79A3328BF8375009102CB /* BLEController.swift in Sources */,
+				4311B14F28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift in Sources */,
+				4311B14D28C6263E00FC0EA1 /* HttpRequestToMedsenger.swift in Sources */,
 				43F39C6628BD07E20098C96A /* ContecDeviceController.swift in Sources */,
 				43F39C6D28BD09040098C96A /* Models.swift in Sources */,
+				437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +326,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
@@ -325,7 +344,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.medsenger.spirometer;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -338,6 +357,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
@@ -355,7 +375,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.medsenger.spirometer;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

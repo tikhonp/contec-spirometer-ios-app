@@ -20,8 +20,17 @@ struct RootView: View {
                 ConnectView()
             }
         }
+        .alert(item: $bleController.error, content: { error in
+            Alert(
+                title: Text(error.title),
+                message: Text(error.description)
+            )
+        })
         .onAppear(perform: { bleController.startContecSDK() })
         .environmentObject(bleController)
+        .onOpenURL { url in
+            bleController.updatePropertiesFromDeeplink(url: url)
+        }
     }
 }
 
