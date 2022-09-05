@@ -181,7 +181,7 @@ class ContecDeviceController {
                 while maxFramesCount > framesCount {
                     var bufferByteData = [Int8](repeating: 0, count: 64)
                     copyDataToDataStorage(copyTo: &bufferByteData, from: 0, length: 8)
-                    resultDataController.saveWaveArrays(data: bufferByteData, times: &times, speeds: &speeds, volumes: &volumes, framesCount: framesCount)
+                    resultDataController.generateWaveArrays(data: bufferByteData, times: &times, speeds: &speeds, volumes: &volumes, framesCount: framesCount)
                     framesCount += 1
                 }
                 resultDataController.saveWaveData(framesCount: framesCount, speeds: speeds, volumes: volumes, times: times)

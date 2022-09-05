@@ -41,7 +41,7 @@ struct ConnectedView: View {
                 NavigationView {
                     ScrollView {
                         ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
-                            RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXP[i])
+                            RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
                         }
                         .navigationBarTitle("Ваши измерения")
                         .toolbar {

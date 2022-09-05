@@ -117,31 +117,13 @@ final class BLEController: NSObject, ObservableObject {
         }
         
         for i in 0..<resultDataController!.measuringCount {
-            let record = resultDataController!.fVCDataBEXP[i]
-            
-            let calendar = Calendar(identifier: .gregorian)
-            let dateComponents = DateComponents(timeZone: TimeZone.current, year: record.year, month: record.month, day: record.day, hour: record.hour, minute: record.minute)
-            let date = calendar.date(from: dateComponents)!
+            let record = resultDataController!.fVCDataBEXPs[i]
             
             let data = [
                 "contract_id": medsengerContractId,
                 "agent_token": medsengerAgentToken,
-                "timestamp": date.timeIntervalSince1970,
-                "measurement": [
-                    "FVC": record.FVC,
-                    "FEV1": record.FEV1,
-                    "FEV1%": record.FEV1_FVC,
-                    "PEF": record.PEF,
-                    "FEF25": record.FEF25,
-                    "FEF50": record.FEF50,
-                    "FEF75": record.FEF75,
-                    "FEF2575": record.FEF2575,
-                    "FEV05": record.FEV05,
-                    "FEV3": record.FEV3,
-                    "FEV6": record.FEV6,
-                    "PEFT": record.PEFT,
-                    "EVOL": record.EVOL
-                ]
+                "timestamp": record.date.timeIntervalSince1970,
+                "measurement": record.recordJson
             ] as [String : Any]
             
             postRequest(jsonData: data, url: "https://contec.medsenger.ru/api/receive")
