@@ -9,99 +9,70 @@
 import Foundation
 
 
-struct STATE {
-    static let UNKNOWN: Int8 = 127
-    static let FIRST_STEP: Int8 = -16
-    static let SECOND_STEP: Int8 = -13
-    static let THIRD_STEP: Int8 = -14
-    static let getPredictedValuesBEXP: Int8 = -28
-    static let checkRecordsCount: Int8 = -32
-    static let captureRecord: Int8 = -31
-    static let SEVENTH_STEP: Int8 = -30
-    static let deleteDataResponse: Int8 = -29
-}
-
-
-struct Queue<T> {
-    private let queue = DispatchQueue(label: "queue.operations", attributes: .concurrent)
-    private var elements: [T] = []
-
-    mutating func enqueue(_ value: T) {
-        queue.sync(flags: .barrier) {
-            self.elements.append(value)
-        }
-    }
-    
-    mutating func dequeue() -> T? {
-        return queue.sync(flags: .barrier) {
-            guard !self.elements.isEmpty else {
-                return nil
-            }
-            return self.elements.removeFirst()
-        }
-    }
-    
-    mutating func clear() {
-        queue.sync(flags: .barrier) {
-            self.elements = []
-        }
-    }
-
-    var head: T? {
-        return queue.sync {
-            return elements.first
-        }
-    }
-
-    var tail: T? {
-        return queue.sync {
-            return elements.last
-        }
-    }
-    
-    var length: Int {
-        return queue.sync {
-            return elements.count
-        }
-    }
-    
-    var isEmpty: Bool {
-        return queue.sync {
-            return elements.isEmpty
-        }
-    }
-    
-    var getElements: [T] {
-        return queue.sync {
-            return elements
-        }
-    }
-}
-
-
+/// Implements steps and methods to communicate with contec spirometer
 class ContecDeviceController {
-    private var incomingDataQueue = Queue<Int8>()
     
+    /// State encoded with bytes for different step in incoming spirometr data
+    private struct stateValues {
+        static let unknown: Int8 = 127
+        static let firstStep: Int8 = -16
+        static let secondStep: Int8 = -13
+        static let thirdStep: Int8 = -14
+        static let getPredictedValuesBEXP: Int8 = -28
+        static let checkRecordsCount: Int8 = -32
+        static let captureRecord: Int8 = -31
+        static let seventhStep: Int8 = -30
+        static let deleteDataResponse: Int8 = -29
+    }
+    
+    /// All incoming data stores here
+    private var incomingDataQueue = AsyncQueue<Int8>()
+    
+    /// Buffer for holding specific data pieces from ``incomingDataQueue`` and process it
     private var dataStorage = [Int8](repeating: 0, count: 128)
     
-    private var state: Int8 = STATE.UNKNOWN
+    /// Current process state, stores ``state`` values
+    private var state: Int8 = stateValues.unknown
     
     private var dataSerializer = DataSerializer()
     
-    private let writeValueCallback: (Data) -> Void
-    private let saveResultDataCallback: (ResultDataController) -> Void
-    private let onProgressUpdate: (_ progress: Float) -> Void
-    private let onContecDeviceSuccessCallback: (_ successCode: SuccessCodes) -> Void
-    
+    /// Stores all processed incoming data
     private var resultDataController = ResultDataController()
     
-    init(writeValueCallback: @escaping (Data) -> Void, saveResultDataCallback: @escaping (ResultDataController) -> Void, onProgressUpdate: @escaping (_ progress: Float) -> Void, onContecDeviceSuccessCallback: @escaping (_ successCode: SuccessCodes) -> Void) {
+    // Callbacks
+    private let writeValueCallback: (Data) -> Void
+    private let saveResultDataCallback: (ResultDataController) -> Void
+    private let onProgressUpdate: (Float) -> Void
+    private let onContecDeviceUpdateStatusCallback: (StatusCodes) -> Void
+    
+    
+    /// Initilize ``ContecDeviceController`` store all callbacks
+    /// - Parameters:
+    ///   - writeValueCallback: function gets ``Data`` object and sends it to spirometer
+    ///   - saveResultDataCallback: save ``ResultDataController`` instance to display in view
+    ///   - onProgressUpdate: push progress when data loading, from 0.0 to 1.0
+    ///   - onContecDeviceUpdateStatusCallback: update status callback
+    init(
+        writeValueCallback: @escaping (Data) -> Void,
+        saveResultDataCallback: @escaping (ResultDataController) -> Void,
+        onProgressUpdate: @escaping (Float) -> Void,
+        onContecDeviceUpdateStatusCallback: @escaping (StatusCodes) -> Void
+    ) {
         self.writeValueCallback = writeValueCallback
         self.saveResultDataCallback = saveResultDataCallback
         self.onProgressUpdate = onProgressUpdate
-        self.onContecDeviceSuccessCallback = onContecDeviceSuccessCallback
+        self.onContecDeviceUpdateStatusCallback = onContecDeviceUpdateStatusCallback
     }
     
+    
+    // MARK: - Main logic private functions
+    
+    
+    /// Copy data from ``incomingDataQueue`` to array from specific index and with given length
+    /// - Parameters:
+    ///   - copyTo: array copy data to
+    ///   - from: store data from this index in array
+    ///   - length: length to store data from ``incomingDataQueue``
     private func copyDataToDataStorage(copyTo: inout [Int8], from: Int, length: Int) {
         var from = from, length = length, i = from
         
@@ -114,38 +85,39 @@ class ContecDeviceController {
         }
     }
     
+    /// Choose and process step
     private func chooseStep() {
         switch state {
-        case STATE.FIRST_STEP:
+        case stateValues.firstStep:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 1)
                 writeValueCallback(dataSerializer.generateDataForSyncTime())
-                state = STATE.UNKNOWN
+                state = stateValues.unknown
                 onProgressUpdate(0.02)
             }
-        case STATE.SECOND_STEP:
+        case stateValues.secondStep:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 2)
-                writeValueCallback(dataSerializer.generate_data_step_2())
-                state = STATE.UNKNOWN
+                writeValueCallback(dataSerializer.getDataStepTwo())
+                state = stateValues.unknown
                 onProgressUpdate(0.04)
             }
-        case STATE.THIRD_STEP:
+        case stateValues.thirdStep:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 7)
-                writeValueCallback(dataSerializer.generate_data_step_3())
-                state = STATE.UNKNOWN
+                writeValueCallback(dataSerializer.getDataStepThree())
+                state = stateValues.unknown
                 onProgressUpdate(0.06)
             }
-        case STATE.getPredictedValuesBEXP:
+        case stateValues.getPredictedValuesBEXP:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 22)
                 resultDataController.savePredictedValuesBEXP(data: dataStorage)
                 writeValueCallback(dataSerializer.generateDataForGotPredictedValuesBEXP())
-                state = STATE.UNKNOWN
+                state = stateValues.unknown
                 onProgressUpdate(0.1)
             }
-        case STATE.checkRecordsCount:
+        case stateValues.checkRecordsCount:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 9)
                 resultDataController.measuringCount = (Int(dataStorage[1]) & 127 | (Int(dataStorage[2]) & 127) << 7) & 65535
@@ -154,19 +126,19 @@ class ContecDeviceController {
                     return
                 }
                 writeValueCallback(dataSerializer.generateDataForCheckRecords())
-                state = STATE.UNKNOWN
+                state = stateValues.unknown
                 print("Records to capture: ", resultDataController.measuringCount ?? "measuringCount is nil")
                 onProgressUpdate(0.15)
             }
-        case STATE.captureRecord:
+        case stateValues.captureRecord:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 43)
                 if !(dataStorage[1] != 127 && dataStorage[1] != 126) { return }
                 resultDataController.saveFVCDataBEXP(data: dataStorage)
                 writeValueCallback(dataSerializer.generateDataForCaptureRecord())
-                state = STATE.UNKNOWN
+                state = stateValues.unknown
             }
-        case STATE.SEVENTH_STEP:
+        case stateValues.seventhStep:
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 4)
                 
@@ -185,40 +157,40 @@ class ContecDeviceController {
                     framesCount += 1
                 }
                 resultDataController.saveWaveData(framesCount: framesCount, speeds: speeds, volumes: volumes, times: times)
-//                copyDataToDataStorage(copyTo: &dataStorage, from: 5, length: 19)
+                //                copyDataToDataStorage(copyTo: &dataStorage, from: 5, length: 19)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                    print(self.incomingDataQueue.getElements)
-//                    print(self.incomingDataQueue.getElements.count)
+                    //                    print(self.incomingDataQueue.getElements)
+                    //                    print(self.incomingDataQueue.getElements.count)
                     self.incomingDataQueue.clear()
                     if currentRecord == self.resultDataController.measuringCount {
-                        print("Exit")
+//                        print("Exit")
                         self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 126, i2: 1))
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             self.incomingDataQueue.clear()
-                            self.state = STATE.UNKNOWN
+                            self.state = stateValues.unknown
                         }
                         self.saveResultDataCallback(self.resultDataController)
                         return
                     }
-
+                    
                     let newProgress = 0.2 + (0.8 * (Float(currentRecord) / Float(self.resultDataController.measuringCount!)))
                     self.onProgressUpdate(newProgress)
                     
-                    self.state = STATE.UNKNOWN
+                    self.state = stateValues.unknown
                     self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 1, i2: 1))
                 }
                 
             }
-        case STATE.deleteDataResponse:
+        case stateValues.deleteDataResponse:
             copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 2)
             if dataStorage[1] == 0 {
                 DispatchQueue.main.async {
-                    self.onContecDeviceSuccessCallback(.deletedData)
+                    self.onContecDeviceUpdateStatusCallback(.deletedData)
                 }
             } else {
                 print("failed")
             }
-        case STATE.UNKNOWN:
+        case stateValues.unknown:
             print("Case set to unknown!")
         default:
             print("CHOOSE CASE, unknown case: ", state)
@@ -226,28 +198,43 @@ class ContecDeviceController {
         }
     }
     
-    func onDataReceived(data: [Int8]) {
+    
+    // MARK: - Public functions
+    
+    /// Priocess data from spirometr callback
+    /// - Parameter data: Int8 array with bytes
+    public func onDataReceived(data: [Int8]) {
         for i in 0..<(data.count) {
             incomingDataQueue.enqueue(data[i])
         }
         
-        if state == STATE.UNKNOWN {
+        if state == stateValues.unknown {
             guard let value = incomingDataQueue.dequeue() else { return }
             state = value
-
+            
             chooseStep()
         }
     }
     
-    func getData() {
-        state = STATE.UNKNOWN
+    /// Get data request
+    public func getData() {
+        state = stateValues.unknown
         incomingDataQueue.clear()
         writeValueCallback(dataSerializer.getDataRequest())
     }
     
+    /// Delete data request
     func deleteData() {
-        state = STATE.UNKNOWN
+        state = stateValues.unknown
         incomingDataQueue.clear()
         writeValueCallback(dataSerializer.generateDataForDelete())
+    }
+    
+    /// Set user params to spirometer request
+    func setUserParams(userParams: UserParams) {
+        print("here")
+        state = stateValues.unknown
+        incomingDataQueue.clear()
+        writeValueCallback(dataSerializer.generateDataForSetUserParams(userParams: userParams))
     }
 }

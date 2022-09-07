@@ -13,6 +13,7 @@ extension UserDefaults {
         static let savedSpirometrUUIDkey = "savedSpirometrUUID"
         static let medsengerContractIdKey = "medsengerContractId"
         static let medsengerAgentTokenKey = "medsengerAgentToken"
+        static let saveUUIDkey = "saveUUID"
     }
 
     class var savedSpirometrUUID: String? {
@@ -21,6 +22,15 @@ extension UserDefaults {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: Keys.savedSpirometrUUIDkey)
+        }
+    }
+    
+    class var saveUUID: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Keys.saveUUIDkey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.saveUUIDkey)
         }
     }
     

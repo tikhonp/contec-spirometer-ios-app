@@ -12,11 +12,15 @@ struct ConnectView: View {
     
     var body: some View {
         VStack {
-            Spacer()
+//            Spacer()
             HStack {
                 Text("Поиск устройств...")
+                    .font(.title2)
+                    .fontWeight(.bold)
                     .padding()
-                ProgressView()
+                if bleController.connectingPeripheral == nil {
+                    ProgressView()
+                }
             }
             List{
                 ForEach(self.bleController.devices, id: \.self) { device in

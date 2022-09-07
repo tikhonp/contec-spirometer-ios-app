@@ -9,6 +9,30 @@
 import Foundation
 
 
+// MARK: - Enums
+
+enum measureModeEnum {
+    case ALL
+    case FVC
+    case VC
+    case MVV
+    case MV
+}
+
+
+enum standartEnum: Int {
+    case ECCS = 1
+    case KNUDSON = 2
+    case USA = 3
+}
+
+
+enum sexEnum: Int {
+    case MALE = 0
+    case FEMALE = 1
+}
+
+
 /// Predicted values from personal data in spirometr
 struct PredictedValuesBEXP {
     let FVC: Double
@@ -32,7 +56,7 @@ struct PredictedValuesBEXP {
 /// One record from spirometr
 struct FVCDataBEXP {
     let measureType: Int
-    let measureTypeName: String
+    let measureTypeName: measureModeEnum
     let number: Int // Number of record in array
     
     // MARK: - DateTime data
@@ -45,12 +69,12 @@ struct FVCDataBEXP {
     let second: Int
     
     // MARK: - Personal data
-    let gender: Int
+    let gender: sexEnum
     let age: Int
     let height: Int
     
     let standartType: Int
-    let standartTypeName: String
+    let standartTypeName: standartEnum
     
     let drug: Int
     
@@ -109,4 +133,35 @@ struct WaveData {
     let speeds: [Float]
     let volumes: [Float]
     let times: [Float]
+}
+
+
+/// User params can bet set in spirometer
+class UserParams {
+    public enum smokeEnum: Int {
+        case NOSMOKE = 0
+        case SMOKE = 1
+    }
+    
+    var age: Int
+    var height: Int
+    var weight: Int
+    var measureMode: measureModeEnum
+    var sex: sexEnum
+    var smoke: smokeEnum
+    var standart: standartEnum
+    
+    init(
+        age: Int, height: Int, weight: Int,
+        measureMode: measureModeEnum, sex: sexEnum,
+        smoke: smokeEnum, standart: standartEnum
+    ) {
+        self.age = age
+        self.height = height
+        self.weight = weight
+        self.measureMode = measureMode
+        self.sex = sex
+        self.smoke = smoke
+        self.standart = standart
+    }
 }

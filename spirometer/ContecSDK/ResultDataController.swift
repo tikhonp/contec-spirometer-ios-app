@@ -66,31 +66,31 @@ class ResultDataController {
     /// - Parameter data: byte array with `Int8` type
     public func saveFVCDataBEXP(data: [Int8]) {
         let measureType = Int(data[2])
-        var measureTypeName: String = ""
+        var measureTypeName: measureModeEnum = .ALL
         switch (measureType)  {
         case 0:
-            measureTypeName = "ALL"
+            measureTypeName = .ALL
         case 1:
-            measureTypeName = "FVC"
+            measureTypeName = .FVC
         case 2:
-            measureTypeName = "VC"
+            measureTypeName = .VC
         case 3:
-            measureTypeName = "MVV"
+            measureTypeName = .MVV
         case 4:
-            measureTypeName = "MV"
+            measureTypeName = .MV
         default:
             print("ERROR: Decoding FVC data: UNKNOWN measureType CASE `\(measureType)`")
         }
         
         let standartType = Int(data[15])
-        var standartTypeName: String = ""
+        var standartTypeName: standartEnum = .ECCS
         switch (standartType) {
         case 1:
-            standartTypeName = "ERS"
+            standartTypeName = .ECCS
         case 2:
-            standartTypeName = "K_NUDSON"
+            standartTypeName = .KNUDSON
         case 3:
-            standartTypeName = "USA"
+            standartTypeName = .USA
         default:
             print("ERROR: Decoding FVC data: UNKNOWN standartType CASE `\(standartType)`")
         }
@@ -108,7 +108,7 @@ class ResultDataController {
             minute: Int(data[9]),
             second: Int(data[10]),
             
-            gender: Int(data[11]),
+            gender: Int(data[11]) == 0 ? .MALE : .FEMALE,
             age: Int(data[12]),
             height: computeIntFromTwoBytes(data[13], data[14]),
             
@@ -179,5 +179,18 @@ class ResultDataController {
         print(predictedValuesBexp ?? "Predicted values BEXP is nil")
         print(fVCDataBEXPs)
         print(waveDatas)
+    }
+    
+    /// User param generated from first record if it exists
+    var userParams: UserParams {
+        let record = fVCDataBEXPs.first
+        return UserParams(
+            age: record?.age ?? 0,
+            height: record?.height ?? 0,
+            weight: 0,
+            measureMode: record?.measureTypeName ?? .FVC,
+            sex: record?.gender ?? .MALE,
+            smoke: .NOSMOKE,
+            standart: record?.standartTypeName ?? .ECCS)
     }
 }

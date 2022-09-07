@@ -10,6 +10,8 @@ import SwiftUI
 struct ConnectedView: View {
     @EnvironmentObject var bleController: BLEController
     
+    @State private var showSettingsModal: Bool = false
+    
     var body: some View {
         ZStack {
             if bleController.resultDataController != nil {
@@ -18,57 +20,65 @@ struct ConnectedView: View {
                 loadingData
             }
         }
-        .onAppear(perform: bleController.getData)
-    }
-    
-    var dataLoaded: some View {
-        ZStack {
-            if bleController.resultDataController!.measuringCount == 0 {
-                NavigationView {
-                    Text("В вашем устройстве нет измерений.")
-//                        .navigationBarTitle("Ваши измерения")
-                        .toolbar {
-                            Menu {
-                                Button("Обновить данные", action: bleController.getData)
-                                Button("Загрузить данные в Medsenger", action: uploadToMedsenger)
-                                Button("Очистить память спирометра", action: bleController.deleteData)
-                            } label: {
-                                Label("", systemImage: "ellipsis.circle")
-                            }
-                        }
-                }
-            } else {
-                NavigationView {
-                    ScrollView {
-                        ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
-                            RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
-                        }
-                        .navigationBarTitle("Ваши измерения")
-                        .toolbar {
-                            Menu {
-                                Button("Обновить данные", action: bleController.getData)
-                                Button("Загрузить данные в Medsenger", action: uploadToMedsenger)
-                                Button("Очистить память спирометра", action: bleController.deleteData)
-                            } label: {
-                                Label("", systemImage: "ellipsis.circle")
-                            }
-                        }
-                    }
-                }
+        .onAppear() {
+            DispatchQueue.main.async {
+                bleController.getData()
             }
         }
     }
     
-    var loadingData: some View {
-        VStack {
-            Text("Загрузка данных со спирометра...")
-            ProgressView(value: bleController.progress, total: 1)
+    var dataLoaded: some View {
+        NavigationView {
+            ZStack {
+                if bleController.resultDataController!.measuringCount == 0 {
+                    Text("В вашем устройстве нет измерений.")
+                    
+                } else {
+                    measurementsList
+                }
+            }
+            .toolbar { Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") }) }
+            .toolbar { ToolbarItemGroup(placement: .bottomBar) {
+                Button(action: { showSettingsModal.toggle() }, label: {
+                    Image(systemName: "person") })
+                Spacer()
+                if bleController.resultDataController!.measuringCount != 0 {
+                    Button("Загрузить в Medsenger", action: bleController.sendDataToMedsenger)
+                    Spacer()
+                    Button(action: bleController.deleteData, label:  {
+                        Image(systemName: "trash") })
+                } } }
         }
-        .padding()
+        .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: $showSettingsModal, content: { ProfileView() })
+        
     }
     
-    func uploadToMedsenger() {
-        
+    var measurementsList: some View {
+        ScrollView {
+            ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
+                RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
+            }
+            .navigationTitle("Ваши измерения")
+        }
+    }
+    
+    var loadingData: some View {
+        VStack(alignment: .center) {
+            Spacer()
+            Text("Загрузка данных со спирометра")
+                .font(.title2)
+                .fontWeight(.bold)
+            Text("Не выключайте устройство до завершения")
+                .font(.body)
+                .foregroundColor(Color.gray)
+                .multilineTextAlignment(.center)
+                .padding(.leading, 40)
+                .padding(.trailing, 40)
+            ProgressView(value: bleController.progress, total: 1)
+                .padding()
+            Spacer()
+        }
     }
 }
 
