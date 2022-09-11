@@ -1,8 +1,9 @@
 //
 //  ContentView.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 29.08.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import SwiftUI
@@ -14,16 +15,23 @@ struct RootView: View {
     var body: some View
     {
         ZStack {
-            if bleController.isConnected {
-                ConnectedView()
+            if bleController.isBluetoothOn {
+                if bleController.isConnected {
+                    ConnectedView()
+                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
+                } else {
+                    ConnectView()
+                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
+                }
             } else {
-                ConnectView()
+                BluetoothIsOffView()
             }
         }
         .alert(item: $bleController.error, content: { error in
             Alert(
                 title: Text(error.title),
-                message: Text(error.description)
+                message: Text(error.description),
+                dismissButton: .default(Text("Close"))
             )
         })
         .onAppear(perform: { bleController.startContecSDK() })

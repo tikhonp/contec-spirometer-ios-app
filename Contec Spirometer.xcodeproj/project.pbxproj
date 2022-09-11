@@ -13,6 +13,9 @@
 		437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
+		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
+		43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A5F28CE5C280099088A /* LocalizedString+.swift */; };
+		43E60A6228CE61640099088A /* BluetoothIsOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A6128CE61640099088A /* BluetoothIsOffView.swift */; };
 		43F39C5528BD07130098C96A /* spirometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5428BD07130098C96A /* spirometerApp.swift */; };
 		43F39C5728BD07130098C96A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5628BD07130098C96A /* RootView.swift */; };
 		43F39C5928BD07150098C96A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43F39C5828BD07150098C96A /* Assets.xcassets */; };
@@ -35,6 +38,10 @@
 		437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedViewModel.swift; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
+		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		43E60A5E28CE58940099088A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		43E60A5F28CE5C280099088A /* LocalizedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedString+.swift"; sourceTree = "<group>"; };
+		43E60A6128CE61640099088A /* BluetoothIsOffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothIsOffView.swift; sourceTree = "<group>"; };
 		43F39C5128BD07130098C96A /* Contec Spirometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contec Spirometer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F39C5428BD07130098C96A /* spirometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spirometerApp.swift; sourceTree = "<group>"; };
 		43F39C5628BD07130098C96A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -94,6 +101,9 @@
 				437A5C5028C22AEE00064C10 /* RecordLabel.swift */,
 				4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */,
 				4307BEE628C7945E00465C9F /* ProfileView.swift */,
+				43E60A5D28CE588F0099088A /* Localizable.strings */,
+				43E60A5F28CE5C280099088A /* LocalizedString+.swift */,
+				43E60A6128CE61640099088A /* BluetoothIsOffView.swift */,
 			);
 			path = spirometer;
 			sourceTree = "<group>";
@@ -122,9 +132,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		43F39C5028BD07130098C96A /* spirometer */ = {
+		43F39C5028BD07130098C96A /* Contec Spirometer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "spirometer" */;
+			buildConfigurationList = 43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Contec Spirometer" */;
 			buildPhases = (
 				43F39C4D28BD07130098C96A /* Sources */,
 				43F39C4E28BD07130098C96A /* Frameworks */,
@@ -134,7 +144,7 @@
 			);
 			dependencies = (
 			);
-			name = spirometer;
+			name = "Contec Spirometer";
 			productName = spirometer;
 			productReference = 43F39C5128BD07130098C96A /* Contec Spirometer.app */;
 			productType = "com.apple.product-type.application";
@@ -148,26 +158,28 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
+				ORGANIZATIONNAME = "OOO Telepat";
 				TargetAttributes = {
 					43F39C5028BD07130098C96A = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
 			};
-			buildConfigurationList = 43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "spirometer" */;
+			buildConfigurationList = 43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Contec Spirometer" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 43F39C4828BD07130098C96A;
 			productRefGroup = 43F39C5228BD07130098C96A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				43F39C5028BD07130098C96A /* spirometer */,
+				43F39C5028BD07130098C96A /* Contec Spirometer */,
 			);
 		};
 /* End PBXProject section */
@@ -178,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				437A5C4F28C2270A00064C10 /* README.md in Resources */,
+				43E60A5B28CE588F0099088A /* Localizable.strings in Resources */,
 				43F39C5C28BD07150098C96A /* Preview Assets.xcassets in Resources */,
 				43F39C5928BD07150098C96A /* Assets.xcassets in Resources */,
 			);
@@ -197,6 +210,7 @@
 				43F39C6428BD07A10098C96A /* ContecSDK.swift in Sources */,
 				43F79A2F28BF45F7009102CB /* ConnectView.swift in Sources */,
 				43F39C5528BD07130098C96A /* spirometerApp.swift in Sources */,
+				43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */,
 				43F39C6828BD08250098C96A /* DataSerializer.swift in Sources */,
 				4307BEE728C7945E00465C9F /* ProfileView.swift in Sources */,
 				43F39C6A28BD08E00098C96A /* ResultDataController.swift in Sources */,
@@ -205,10 +219,23 @@
 				43F39C6628BD07E20098C96A /* ContecDeviceController.swift in Sources */,
 				43F39C6D28BD09040098C96A /* Models.swift in Sources */,
 				437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */,
+				43E60A6228CE61640099088A /* BluetoothIsOffView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		43E60A5D28CE588F0099088A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				43E60A5C28CE588F0099088A /* en */,
+				43E60A5E28CE58940099088A /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		43F39C5D28BD07150098C96A /* Debug */ = {
@@ -261,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -315,7 +342,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -337,7 +364,7 @@
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = NSBluetoothAlwaysUsageDescription;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -349,7 +376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -370,7 +397,7 @@
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = NSBluetoothAlwaysUsageDescription;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -382,7 +409,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -394,7 +421,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "spirometer" */ = {
+		43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Contec Spirometer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43F39C5D28BD07150098C96A /* Debug */,
@@ -403,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "spirometer" */ = {
+		43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Contec Spirometer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43F39C6028BD07150098C96A /* Debug */,

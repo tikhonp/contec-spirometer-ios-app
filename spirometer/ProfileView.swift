@@ -1,8 +1,9 @@
 //
 //  ProfileView.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 06.09.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import SwiftUI
@@ -16,9 +17,9 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Личные данные")) {
+                Section(header: Text("Personal information")) {
                     HStack {
-                        Text("Возраст")
+                        Text("Age")
                         Spacer()
                         TextField("", text: Binding(
                             get: { String(bleController.userParams.age) },
@@ -29,7 +30,7 @@ struct ProfileView: View {
                         .multilineTextAlignment(.trailing)
                     }
                     HStack {
-                        Text("Рост")
+                        Text("Height")
                         Spacer()
                         TextField("", text: Binding(
                             get: { String(bleController.userParams.height) },
@@ -40,7 +41,7 @@ struct ProfileView: View {
                         .multilineTextAlignment(.trailing)
                     }
                     HStack {
-                        Text("Вес")
+                        Text("Weight")
                         Spacer()
                         TextField("", text: Binding(
                             get: { String(bleController.userParams.weight) },
@@ -50,22 +51,22 @@ struct ProfileView: View {
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.trailing)
                     }
-                    Picker("Пол", selection: $bleController.userParams.sex ) {
-                        Text("Мужской").tag(sexEnum.MALE)
-                        Text("Женский").tag(sexEnum.FEMALE)
+                    Picker("Sex", selection: $bleController.userParams.sex ) {
+                        Text("Male").tag(sexEnum.MALE)
+                        Text("Female").tag(sexEnum.FEMALE)
                     }
-                    Picker("Курение", selection: $bleController.userParams.smoke ) {
-                        Text("Да").tag(UserParams.smokeEnum.SMOKE)
-                        Text("Нет").tag(UserParams.smokeEnum.NOSMOKE)
+                    Picker("Smoke", selection: $bleController.userParams.smoke ) {
+                        Text("Yes").tag(UserParams.smokeEnum.SMOKE)
+                        Text("No").tag(UserParams.smokeEnum.NOSMOKE)
                     }
-                    Picker("Режим измерения", selection: $bleController.userParams.measureMode ) {
-                        Text("Все").tag(measureModeEnum.ALL)
+                    Picker("Measurement mode", selection: $bleController.userParams.measureMode ) {
+                        Text("All").tag(measureModeEnum.ALL)
                         Text("FVC").tag(measureModeEnum.FVC)
                         Text("MV").tag(measureModeEnum.MV)
                         Text("MVV").tag(measureModeEnum.MVV)
                         Text("VC").tag(measureModeEnum.VC)
                     }
-                    Picker("Режим измерения", selection: $bleController.userParams.standart ) {
+                    Picker("Standart type", selection: $bleController.userParams.standart ) {
                         Text("ECCS").tag(standartEnum.ECCS)
                         Text("KNUDSON").tag(standartEnum.KNUDSON)
                         Text("USA").tag(standartEnum.USA)
@@ -73,30 +74,30 @@ struct ProfileView: View {
                 }
                 
                 Section {
-                    Toggle("Запоминать устройство", isOn: $saveUUID)
+                    Toggle("Save Device", isOn: $saveUUID)
                         .onChange(of: saveUUID) { value in
                             UserDefaults.saveUUID = value
 //                            UserDefaults.savedSpirometrUUID = nil
                         }
                     if UserDefaults.savedSpirometrUUID != nil {
-                        Button("Забыть устройство") {
+                        Button("Forget Device") {
                             UserDefaults.savedSpirometrUUID = nil
                         }
                     }
                 }
                 
-                Section(header: Text("О приложении")) {
+                Section(header: Text("About")) {
                     HStack {
-                        Text("Версия")
+                        Text("Version")
                         Spacer()
-                        Text(appVersion ?? "Версия не найдена")
+                        Text(appVersion ?? LocalizedStringKey("Version not found").stringValue())
                     }
                 }
             }
-            .navigationBarTitle("Настройки")
+            .navigationBarTitle("Settings")
             .toolbar {
                 ToolbarItemGroup {
-                    Button("Cохранить", action: bleController.setUserParams)
+                    Button("Save", action: bleController.setUserParams)
                 }
             }
         }

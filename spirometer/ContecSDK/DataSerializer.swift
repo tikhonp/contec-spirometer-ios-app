@@ -1,6 +1,6 @@
 //
 //  DataSerializer.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 24.08.2022.
 //  Copyright © 2022 OOO Telepat. All rights reserved.

@@ -1,8 +1,9 @@
 //
 //  RecordLabel.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 02.09.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import SwiftUI
@@ -12,14 +13,28 @@ struct RecordLabel: View {
     
     let emojis = ["🫁", "🩹", "🧪", "🌡", "🌬", "💨"]
     
+    let dateFormatter: DateFormatter
+    
+    init(fVCDataBEXP: FVCDataBEXP) {
+        self.fVCDataBEXP = fVCDataBEXP
+        dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+    }
+    
+    
     var body: some View {
         VStack {
-            Text("\(emojis.randomElement() ?? "") \(fVCDataBEXP.day).\(fVCDataBEXP.month).\(fVCDataBEXP.year) \(fVCDataBEXP.hour):\(fVCDataBEXP.minute)")
-                .padding()
+            HStack {
+                Text("\(emojis.randomElement() ?? "")")
+                Text(fVCDataBEXP.date, formatter: dateFormatter)
+                Text(fVCDataBEXP.date, style: .time)
+            }
+            .padding()
             Text(String(format: "FVC: %.2f", fVCDataBEXP.FVC))
                 .padding(.bottom)
         }
-        .frame(minWidth: 0, maxWidth: .infinity)
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .background(Color.accentColor)
         .cornerRadius(10)
         .shadow(radius: 10)

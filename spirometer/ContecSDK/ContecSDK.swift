@@ -1,6 +1,6 @@
 //
 //  ContecSDK.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 24.08.2022.
 //  Copyright © 2022 OOO Telepat. All rights reserved.
@@ -13,6 +13,7 @@ import CoreBluetooth
 /// Status codes for different events situations
 enum StatusCodes {
     case bluetoothIsOff
+    case bluetoothIsOn
     case periferalIsNotFromThisQueue
     case failedToDiscoverServiceError
     case periferalIsNotReady
@@ -164,6 +165,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
         if central.state != .poweredOn {
             onUpdateStatusCallback(.bluetoothIsOff)
         } else {
+            onUpdateStatusCallback(.bluetoothIsOn)
             isCentralManagerReady = true
             centralManager!.scanForPeripherals(withServices: [ContecUUIDs.mainService], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }

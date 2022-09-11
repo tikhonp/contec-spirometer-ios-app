@@ -1,6 +1,6 @@
 //
 //  AsyncQueue.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 06.09.2022.
 //  Copyright © 2022 OOO Telepat. All rights reserved.

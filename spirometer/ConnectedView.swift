@@ -1,8 +1,9 @@
 //
 //  ConnectedView.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 31.08.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import SwiftUI
@@ -31,19 +32,29 @@ struct ConnectedView: View {
         NavigationView {
             ZStack {
                 if bleController.resultDataController!.measuringCount == 0 {
-                    Text("В вашем устройстве нет измерений.")
-                    
+                    VStack(alignment: .center) {
+                        Text("No measurements recorded")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("Take measurements with a spirometer so they appear here.")
+                            .font(.body)
+                            .foregroundColor(Color.gray)
+                            .multilineTextAlignment(.center)
+                            .padding(.leading, 40)
+                            .padding(.trailing, 40)
+                    }
                 } else {
                     measurementsList
                 }
             }
-            .toolbar { Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") }) }
             .toolbar { ToolbarItemGroup(placement: .bottomBar) {
                 Button(action: { showSettingsModal.toggle() }, label: {
                     Image(systemName: "person") })
                 Spacer()
+                Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
                 if bleController.resultDataController!.measuringCount != 0 {
-                    Button("Загрузить в Medsenger", action: bleController.sendDataToMedsenger)
+                    Spacer()
+                    Button("Upload to Medsenger", action: bleController.sendDataToMedsenger)
                     Spacer()
                     Button(action: bleController.deleteData, label:  {
                         Image(systemName: "trash") })
@@ -59,17 +70,17 @@ struct ConnectedView: View {
             ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
                 RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
             }
-            .navigationTitle("Ваши измерения")
+            .navigationTitle("Your measurements")
         }
     }
     
     var loadingData: some View {
         VStack(alignment: .center) {
             Spacer()
-            Text("Загрузка данных со спирометра")
+            Text("Downloading data from a spirometer")
                 .font(.title2)
                 .fontWeight(.bold)
-            Text("Не выключайте устройство до завершения")
+            Text("Do not turn off the device until the end.")
                 .font(.body)
                 .foregroundColor(Color.gray)
                 .multilineTextAlignment(.center)

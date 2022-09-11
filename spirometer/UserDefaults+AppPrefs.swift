@@ -1,8 +1,9 @@
 //
 //  UserDefaults+AppPrefs.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 05.09.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import Foundation

@@ -1,8 +1,9 @@
 //
 //  BLEController.swift
-//  spirometer
+//  Contec Spirometer
 //
 //  Created by Tikhon Petrishchev on 31.08.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
 import SwiftUI
@@ -11,9 +12,35 @@ import CoreBluetooth
 
 
 struct ErrorInfo: Identifiable {
-    var id: Int
+    var id = UUID()
     let title: String
     let description: String
+}
+
+class ErrorAlerts: NSObject {
+    static let error = ErrorInfo(
+        title: LocalizedStringKey("Ops! Something bad happened!").stringValue(),
+        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
+    static let invalidPeriferal = ErrorInfo(
+        title: LocalizedStringKey("Ops! Invalid peripheral found!").stringValue(),
+        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
+    static let serviceNotFound = ErrorInfo(
+        title: LocalizedStringKey("Ops! Bluetooth service on peripheral device not found!").stringValue(),
+        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
+    static let deviceIsNotReady = ErrorInfo(
+        title: LocalizedStringKey("Device is not ready").stringValue(),
+        description: LocalizedStringKey("Try to reload application.").stringValue())
+    static let failedToDeleteData = ErrorInfo(
+        title: LocalizedStringKey("Failed to delete data from spirometer").stringValue(),
+        description: LocalizedStringKey("Try to reload application.").stringValue())
+    static let disconnected = ErrorInfo(
+        title: LocalizedStringKey("Device disconnected").stringValue(), description: "")
+    static let emptyDataToUploadToMedsenger = ErrorInfo(
+        title: LocalizedStringKey("Empty data").stringValue(),
+        description: LocalizedStringKey("Try to reload application.").stringValue())
+    static let medsengerTokenIsEmpty = ErrorInfo(
+        title: LocalizedStringKey("Authorization in Medsenger is not successful").stringValue(),
+        description: LocalizedStringKey("Go to the Medsenger app for authorization").stringValue())
 }
 
 final class BLEController: NSObject, ObservableObject {
@@ -25,8 +52,13 @@ final class BLEController: NSObject, ObservableObject {
     @Published var progress: Float = 0.0
     @Published var userParams = UserParams(
         age: 0, height: 0, weight: 0, measureMode: .VC, sex: .MALE, smoke: .NOSMOKE, standart: .ECCS)
+    @Published var isBluetoothOn = true
     
     private var contecSDK: ContecSDK!
+    
+    private func throwAlert(_ errorInfo: ErrorInfo) {
+        self.error = errorInfo
+    }
     
     func startContecSDK() {
         contecSDK = ContecSDK(
@@ -51,15 +83,17 @@ final class BLEController: NSObject, ObservableObject {
             print("Updated status code: \(statusCode)")
             switch statusCode {
             case .bluetoothIsOff:
-                self.error = ErrorInfo(id: 1, title: "Блютуз выключен", description: "")
+                self.isBluetoothOn = false
+            case .bluetoothIsOn:
+                self.isBluetoothOn = true
             case .periferalIsNotFromThisQueue:
-                self.error = ErrorInfo(id: 2, title: "Ошибка", description: "")
+                self.throwAlert(ErrorAlerts.invalidPeriferal)
             case .failedToDiscoverServiceError:
-                self.error = ErrorInfo(id: 3, title: "Сервис не найден", description: "")
+                self.throwAlert(ErrorAlerts.serviceNotFound)
             case .periferalIsNotReady:
-                self.error = ErrorInfo(id: 4, title: "Устройство не готово", description: "")
+                self.throwAlert(ErrorAlerts.deviceIsNotReady)
             case .failedToDeleteData:
-                self.error = ErrorInfo(id: 5, title: "Ошибка при удалении данных", description: "")
+                self.throwAlert(ErrorAlerts.failedToDeleteData)
             case .deletedData:
                 let resultDataController = ResultDataController()
                 resultDataController.measuringCount = 0
@@ -69,9 +103,10 @@ final class BLEController: NSObject, ObservableObject {
                 self.isConnected = false
                 self.connectingPeripheral = nil
                 self.devices = []
+                self.throwAlert(ErrorAlerts.disconnected)
             case .gotData:
                 self.resultDataController = self.contecSDK.resultDataController
-                self.resultDataController?.printData()
+//                self.resultDataController?.printData()
             case .connected:
                 self.isConnected = true
             }
@@ -115,12 +150,12 @@ final class BLEController: NSObject, ObservableObject {
     func sendDataToMedsenger() {
         DispatchQueue.main.async { [self] in
             if resultDataController == nil || resultDataController?.measuringCount == 0 {
-                self.error = ErrorInfo(id: 7, title: "Нет данных для загрузки", description: "")
+                self.throwAlert(ErrorAlerts.emptyDataToUploadToMedsenger)
                 return
             }
             
             guard let medsengerContractId = UserDefaults.medsengerContractId, let medsengerAgentToken = UserDefaults.medsengerAgentToken else {
-                self.error = ErrorInfo(id: 8, title: "Нет токена medsenger", description: "")
+                self.throwAlert(ErrorAlerts.medsengerTokenIsEmpty)
                 return
             }
             
@@ -156,7 +191,6 @@ final class BLEController: NSObject, ObservableObject {
                     
                 }).resume()
             }
-            self.error = ErrorInfo(id: 10, title: "Данные успешно загружены", description: "")
             deleteData()
         }
     }
@@ -191,7 +225,7 @@ final class BLEController: NSObject, ObservableObject {
     
     func setUserParams() {
         if userParams.age == 0 || userParams.weight == 0 || userParams.height == 0 {
-            self.error = ErrorInfo(id: 6, title: "Не валидные значения", description: "")
+//            self.error = ErrorInfo(id: 6, title: "Не валидные значения", description: "")
             return
         }
         

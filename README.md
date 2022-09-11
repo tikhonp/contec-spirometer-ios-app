@@ -1,3 +1,3 @@
 # contec-spirometer-ios-app
  
- lol
+App syncing Contec Spirometer Data with Medsenger

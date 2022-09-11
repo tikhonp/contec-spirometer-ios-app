@@ -1,0 +1,80 @@
+/* 
+  Localizable.strings
+  Contec Spirometer
+
+  Created by Tikhon Petrishchev on 11.09.2022.
+  Copyright © 2022 OOO Telepat. All rights reserved.
+*/
+
+
+NSBluetoothAlwaysUsageDescription = "Приложение использует Bluetooth для подключения к спирометру Contec.";
+
+/* Profile View */
+"Age" = "Возраст";
+"Personal information" = "Персональные данные";
+"Height" = "Рост";
+"Weight" = "Вес";
+
+"Sex" = "Пол";
+"Male" = "Мужской";
+"Female" = "Женский";
+
+"Smoke" = "Курение";
+"Yes" = "Да";
+"No" = "Нет";
+
+"Measurement mode" = "Режим измерения";
+"All" = "Всё";
+"FVC" = "FVC";
+"MV" = "MV";
+"MVV" = "MVV";
+"VC" = "VC";
+
+"Standart type" = "Стандартизация";
+"ECCS" = "ECCS";
+"KNUDSON" = "KNUDSON";
+"USA" = "USA";
+
+"Save Device" = "Запомнить Устройство";
+"Forget Device" = "Забыть Устройство";
+
+"About" = "О приложении";
+"Version" = "Версия";
+"Version not found"="Версия не найдена";
+
+"Settings" = "Настройки";
+"Save" = "Сохранить";
+
+/* Connected View */
+"No measurements recorded" = "Нет записаных измерений";
+"Take measurements with a spirometer so they appear here." = "Сделайте измерения с помощью спирометра, чтобы они появились здесь.";
+"Upload to Medsenger" = "Загрузить в Medsenger";
+"Your measurements" = "Ваши измерения";
+"Downloading data from a spirometer" = "Загрузка данных из спирометра";
+"Do not turn off the device until the end." = "Не выключайте устройство да окончания синхронизации.";
+
+/* Connect View */
+"Device search..." = "Поиск устройства...";
+"Select your Contec Spirometer from the list below, the saved devices will be connected automatically."="Выберите Ваш Contec Spirometer из списка ниже, к сохраненным устройствам подключение будет выполнено автоматически.";
+
+
+/* Bluetooth is off View */
+"Bluetooth Disabled"="Bluetooth Выключен";
+"Turn off flight mode or enable bluetooth."="Выключите Авиарежим или активируйте bluetooth.";
+
+/* Errors */
+"Close"="Закрыть";
+
+"Ops! Something bad happened!"="Упс! Возникла ошибка!";
+"Ops! Invalid peripheral found!"="Упс! Обнаружено недопустимое периферийное устройство!";
+"Ops! Bluetooth service on peripheral device not found!"="Опс! Служба Bluetooth на подключенном устройстве не найдена!";
+"Device is not ready"="Устройство не готово";
+"Failed to delete data from spirometer"="Не удалось удалить данные со спирометра";
+"Empty data"="Нет данных";
+
+"Try to reload application."="Попробуйте перезагрузить приложение.";
+"Detailed information about this error has automaticly been recordedand we have been notified."="Детальная информация об этой ошибке записана автоматически, мы уже исправляем!";
+"Device disconnected"="Устройство отключено";
+
+"Authorization in Medsenger is not successful"="Неуспешная авторизация в Medsenger";
+"Go to the Medsenger app for authorization"="Перейдите в приложение Medsenger.";
