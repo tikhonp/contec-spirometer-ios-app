@@ -10,9 +10,6 @@ import SwiftUI
 
 struct RecordLabel: View {
     let fVCDataBEXP: FVCDataBEXP
-    
-    let emojis = ["🫁", "🩹", "🧪", "🌡", "🌬", "💨"]
-    
     let dateFormatter: DateFormatter
     
     init(fVCDataBEXP: FVCDataBEXP) {
@@ -24,27 +21,26 @@ struct RecordLabel: View {
     
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text("FVC: \(fVCDataBEXP.FVC, specifier: "%.2f") L.")
+                .font(.headline)
+            Spacer()
             HStack {
-                Text("\(emojis.randomElement() ?? "")")
-                Text(fVCDataBEXP.date, formatter: dateFormatter)
-                Text(fVCDataBEXP.date, style: .time)
+                Label("EVOL: \(fVCDataBEXP.EVOL)", systemImage: "person.3")
+                Spacer()
+                Label("\(fVCDataBEXP.date, formatter: dateFormatter)", systemImage: "clock")
+                    .padding(.trailing, 20)
             }
-            .padding()
-            Text(String(format: "FVC: %.2f", fVCDataBEXP.FVC))
-                .padding(.bottom)
+            .font(.caption)
         }
-        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-        .background(Color.accentColor)
-        .cornerRadius(10)
-        .shadow(radius: 10)
-        .padding([.bottom, .trailing, .leading])
-        
+        .padding()
+        .frame(width: .infinity, height: 30)
     }
 }
 
 struct RecordLabel_Previews: PreviewProvider {
     static var previews: some View {
-        RecordLabel(fVCDataBEXP: FVCDataBEXP(measureType: 1, measureTypeName: .FVC, number: 1, year: 2022, month: 8, day: 29, hour: 17, minute: 30, second: 36, gender: .MALE, age: 39, height: 175, standartType: 1, standartTypeName: .ECCS, drug: 1, FVC: 5.1, FEV05: 0.0, FEV1: 4.95, FEV1_FVC: 97.1, FEV3: 0.0, FEV6: 0.0, PEF: 9.33, FEF25: 8.01, FEF50: 6.52, FEF75: 3.91, FEF2575: 6.14, PEFT: 291, EVOL: 79))
+        RecordLabel(fVCDataBEXP: FVCDataBEXP.example)
+            .environment(\.locale, .init(identifier:"ru"))
     }
 }

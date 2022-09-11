@@ -66,9 +66,12 @@ struct ConnectedView: View {
     }
     
     var measurementsList: some View {
-        ScrollView {
+        List {
             ForEach(0..<bleController.resultDataController!.measuringCount, id: \.self) { i in
-                RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
+                NavigationLink(destination: RecordView(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i]), label: {
+                    RecordLabel(fVCDataBEXP: bleController.resultDataController!.fVCDataBEXPs[i])
+                })
+                
             }
             .navigationTitle("Your measurements")
         }

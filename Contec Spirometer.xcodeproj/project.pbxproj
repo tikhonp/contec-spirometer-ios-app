@@ -13,6 +13,7 @@
 		437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
+		43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B17FEC28CE7C5400D9475E /* RecordView.swift */; };
 		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
 		43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A5F28CE5C280099088A /* LocalizedString+.swift */; };
 		43E60A6228CE61640099088A /* BluetoothIsOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A6128CE61640099088A /* BluetoothIsOffView.swift */; };
@@ -38,6 +39,7 @@
 		437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedViewModel.swift; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
+		43B17FEC28CE7C5400D9475E /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5E28CE58940099088A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5F28CE5C280099088A /* LocalizedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedString+.swift"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				43E60A5D28CE588F0099088A /* Localizable.strings */,
 				43E60A5F28CE5C280099088A /* LocalizedString+.swift */,
 				43E60A6128CE61640099088A /* BluetoothIsOffView.swift */,
+				43B17FEC28CE7C5400D9475E /* RecordView.swift */,
 			);
 			path = spirometer;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */,
+				43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */,
 				43F39C5728BD07130098C96A /* RootView.swift in Sources */,
 				43F79A3128BF4607009102CB /* ConnectedView.swift in Sources */,
 				4307BEE528C7694C00465C9F /* AsyncQueue.swift in Sources */,
