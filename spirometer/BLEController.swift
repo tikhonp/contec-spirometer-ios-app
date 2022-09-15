@@ -9,6 +9,7 @@
 import SwiftUI
 import Foundation
 import CoreBluetooth
+import CoreData
 
 
 struct ErrorInfo: Identifiable {
@@ -44,20 +45,40 @@ class ErrorAlerts: NSObject {
 }
 
 final class BLEController: NSObject, ObservableObject {
-    @Published var devices: [CBPeripheral] = []
+    private let persistenceController = PersistenceController.shared
+    private var contecSDK: ContecSDK!
+    
+    
     @Published var isConnected = false
-    @Published var connectingPeripheral: CBPeripheral?
-    @Published var resultDataController: ResultDataController?
-    @Published var error: ErrorInfo?
+    @Published var isBluetoothOn = true
+    @Published var fetchingDataWithSpirometer = false
+    
     @Published var progress: Float = 0.0
+    
+    @Published var devices: [CBPeripheral] = []
+    @Published var connectingPeripheral: CBPeripheral?
+    
+    @Published var error: ErrorInfo?
+    
     @Published var userParams = UserParams(
         age: 0, height: 0, weight: 0, measureMode: .VC, sex: .MALE, smoke: .NOSMOKE, standart: .ECCS)
-    @Published var isBluetoothOn = true
     
-    private var contecSDK: ContecSDK!
     
     private func throwAlert(_ errorInfo: ErrorInfo) {
         self.error = errorInfo
+    }
+    
+    private func processResultData(resultData: ResultDataController) {
+        if resultData.measuringCount > 0 {
+            let context = persistenceController.container.viewContext
+            
+            for i in 0...resultData.measuringCount {
+                let record = resultData.fVCDataBEXPs[i]
+                persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, context: context)
+            }
+        } else {
+            // TODO: show alert with empty measuring on device
+        }
     }
     
     func startContecSDK() {
@@ -95,18 +116,18 @@ final class BLEController: NSObject, ObservableObject {
             case .failedToDeleteData:
                 self.throwAlert(ErrorAlerts.failedToDeleteData)
             case .deletedData:
-                let resultDataController = ResultDataController()
-                resultDataController.measuringCount = 0
-                resultDataController.predictedValuesBexp = self.resultDataController?.predictedValuesBexp
-                self.resultDataController = resultDataController
+                print("Data was deleted")
             case .disconnected:
                 self.isConnected = false
                 self.connectingPeripheral = nil
                 self.devices = []
                 self.throwAlert(ErrorAlerts.disconnected)
             case .gotData:
-                self.resultDataController = self.contecSDK.resultDataController
-//                self.resultDataController?.printData()
+                self.progress = 1
+                let resultDataController = self.contecSDK.resultDataController!
+                self.userParams = resultDataController.userParams
+                self.processResultData(resultData: resultDataController)
+                self.fetchingDataWithSpirometer = false
             case .connected:
                 self.isConnected = true
             }
@@ -127,8 +148,6 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
-    
-    
     func connect(peripheral: CBPeripheral) {
         if UserDefaults.saveUUID {
             UserDefaults.savedSpirometrUUID = peripheral.identifier.uuidString
@@ -142,14 +161,34 @@ final class BLEController: NSObject, ObservableObject {
     }
     
     func getData() {
-        resultDataController = nil
+        fetchingDataWithSpirometer = true
         progress = 0
         contecSDK.getData()
     }
     
     func sendDataToMedsenger() {
         DispatchQueue.main.async { [self] in
-            if resultDataController == nil || resultDataController?.measuringCount == 0 {
+            var objects: [FVCDataBEXPmodel]?
+            
+            if let recentFetchDate = UserDefaults.lastUpladedDate {
+                let context = persistenceController.container.viewContext
+                let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "%@ >= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
+                
+                do {
+                    objects = try context.fetch(fetchRequest)
+                } catch {
+                    print("Core Data failed to fetch: \(error.localizedDescription)")
+                    return
+                }
+            }
+            
+            guard let records = objects else {
+                print("Failed to fetch data")
+                return
+            }
+            
+            if records.isEmpty {
                 self.throwAlert(ErrorAlerts.emptyDataToUploadToMedsenger)
                 return
             }
@@ -159,14 +198,26 @@ final class BLEController: NSObject, ObservableObject {
                 return
             }
             
-            for i in 0..<resultDataController!.measuringCount {
-                let record = resultDataController!.fVCDataBEXPs[i]
-                
+            for record in records {
                 let data = [
                     "contract_id": medsengerContractId,
                     "agent_token": medsengerAgentToken,
-                    "timestamp": record.date.timeIntervalSince1970,
-                    "measurement": record.recordJson
+                    "timestamp": record.date!.timeIntervalSince1970,
+                    "measurement": [
+                        "FVC": record.fvc,
+                        "FEV1": record.fev1,
+                        "FEV1%": record.fev1_fvc,
+                        "PEF": record.pef,
+                        "FEF25": record.fef25,
+                        "FEF50": record.fef50,
+                        "FEF75": record.fef75,
+                        "FEF2575": record.fef2575,
+                        "FEV05": record.fef25,
+                        "FEV3": record.fev3,
+                        "FEV6": record.fev6,
+                        "PEFT": record.peft,
+                        "EVOL": record.evol
+                    ]
                 ] as [String : Any]
                 
                 print(data)
@@ -191,7 +242,7 @@ final class BLEController: NSObject, ObservableObject {
                     
                 }).resume()
             }
-            deleteData()
+            UserDefaults.lastUpladedDate = Date()
         }
     }
     
@@ -219,13 +270,9 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
-    func initilizeUserParams() {
-        userParams = resultDataController!.userParams
-    }
-    
     func setUserParams() {
         if userParams.age == 0 || userParams.weight == 0 || userParams.height == 0 {
-//            self.error = ErrorInfo(id: 6, title: "Не валидные значения", description: "")
+            //            self.error = ErrorInfo(id: 6, title: "Не валидные значения", description: "")
             return
         }
         

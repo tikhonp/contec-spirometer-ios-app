@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct RecordLabel: View {
-    let fVCDataBEXP: FVCDataBEXP
+    let fVCDataBEXP: FVCDataBEXPmodel
     let dateFormatter: DateFormatter
     
-    init(fVCDataBEXP: FVCDataBEXP) {
+    init(fVCDataBEXP: FVCDataBEXPmodel) {
         self.fVCDataBEXP = fVCDataBEXP
         dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
@@ -22,13 +22,13 @@ struct RecordLabel: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("FVC: \(fVCDataBEXP.FVC, specifier: "%.2f") L.")
+            Text("FVC: \(fVCDataBEXP.fvc, specifier: "%.2f") L.")
                 .font(.headline)
             Spacer()
             HStack {
-                Label("EVOL: \(fVCDataBEXP.EVOL)", systemImage: "person.3")
+                Label("EVOL: \(fVCDataBEXP.evol)", systemImage: "person.3")
                 Spacer()
-                Label("\(fVCDataBEXP.date, formatter: dateFormatter)", systemImage: "clock")
+                Label("\(fVCDataBEXP.date!, formatter: dateFormatter)", systemImage: "clock")
                     .padding(.trailing, 20)
             }
             .font(.caption)
@@ -39,8 +39,15 @@ struct RecordLabel: View {
 }
 
 struct RecordLabel_Previews: PreviewProvider {
+    static let persistence = PersistenceController.preview
+    
+    static var fvcDataBexp: FVCDataBEXPmodel = {
+        let context = persistence.container.viewContext
+        return PersistenceController.Seed().getSingleFvcDataBexpItem(for: context)
+    }()
+    
     static var previews: some View {
-        RecordLabel(fVCDataBEXP: FVCDataBEXP.example)
+        RecordLabel(fVCDataBEXP: fvcDataBexp)
             .environment(\.locale, .init(identifier:"ru"))
     }
 }

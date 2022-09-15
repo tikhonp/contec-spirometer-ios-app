@@ -15,8 +15,9 @@ extension UserDefaults {
         static let medsengerContractIdKey = "medsengerContractId"
         static let medsengerAgentTokenKey = "medsengerAgentToken"
         static let saveUUIDkey = "saveUUID"
+        static let lastUploadedDateKey = "lastUploadedDate"
     }
-
+    
     class var savedSpirometrUUID: String? {
         get {
             return UserDefaults.standard.string(forKey: Keys.savedSpirometrUUIDkey)
@@ -51,5 +52,20 @@ extension UserDefaults {
         set {
             UserDefaults.standard.set(newValue, forKey: Keys.medsengerAgentTokenKey)
         }
+    }
+    
+    class var lastUpladedDate: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: Keys.lastUploadedDateKey) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.lastUploadedDateKey)
+        }
+    }
+    
+    class func registerDefaultValues() {
+        UserDefaults.standard.register(defaults: [
+            Keys.saveUUIDkey: true,
+        ])
     }
 }

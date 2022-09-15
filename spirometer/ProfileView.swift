@@ -102,7 +102,6 @@ struct ProfileView: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear(perform: bleController.initilizeUserParams)
     }
 }
 

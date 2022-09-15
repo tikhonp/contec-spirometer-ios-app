@@ -10,9 +10,16 @@ import SwiftUI
 
 @main
 struct spirometerApp: App {
+    let persistenceController = PersistenceController.shared
+    
+    init() {
+        UserDefaults.registerDefaultValues()
+    }
+    
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
