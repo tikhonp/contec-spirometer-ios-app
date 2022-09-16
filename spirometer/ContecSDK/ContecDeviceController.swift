@@ -209,9 +209,12 @@ class ContecDeviceController {
         }
         
         if state == stateValues.unknown {
-            guard let value = incomingDataQueue.dequeue() else { return }
+            var value: Int8 = 0
+            while value == 0 {
+                guard let v = incomingDataQueue.dequeue() else { return }
+                value = v
+            }
             state = value
-            
             chooseStep()
         }
     }
@@ -233,7 +236,6 @@ class ContecDeviceController {
     /// Set user params to spirometer request
     func setUserParams(userParams: UserParams) {
         print("here")
-        state = stateValues.unknown
         incomingDataQueue.clear()
         writeValueCallback(dataSerializer.generateDataForSetUserParams(userParams: userParams))
     }

@@ -72,7 +72,7 @@ final class BLEController: NSObject, ObservableObject {
         if resultData.measuringCount > 0 {
             let context = persistenceController.container.viewContext
             
-            for i in 0...resultData.measuringCount {
+            for i in 0...resultData.fVCDataBEXPs.count - 1 {
                 let record = resultData.fVCDataBEXPs[i]
                 persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, context: context)
             }
@@ -130,6 +130,7 @@ final class BLEController: NSObject, ObservableObject {
                 self.fetchingDataWithSpirometer = false
             case .connected:
                 self.isConnected = true
+                self.getData()
             }
         }
     }

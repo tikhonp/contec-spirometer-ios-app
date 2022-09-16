@@ -248,7 +248,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
         
         let int8Array = data.map { Int8(bitPattern: $0) }
         
-        print("Reciving...", int8Array)
+//        print("Reciving...", int8Array)
         
         contecDeviceController!.onDataReceived(data: int8Array)
     }

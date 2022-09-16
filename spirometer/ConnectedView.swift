@@ -18,40 +18,52 @@ struct ConnectedView: View {
     private var fvcDataBexps: FetchedResults<FVCDataBEXPmodel>
     
     @State private var showSettingsModal: Bool = false
+    @State private var isPresentedDeviceList: Bool = false
     
     var body: some View {
-        NavigationView {
+        VStack {
+            if !bleController.isBluetoothOn {
+                BluetoothIsOffView()
+            }
+            if !bleController.isConnected {
+                ConnectLabel(isPresentedDeviceList: $isPresentedDeviceList)
+            }
             if bleController.fetchingDataWithSpirometer {
                 loadingData
             }
-            ZStack {
-                if fvcDataBexps.isEmpty {
-                    noMeasurements
-                } else {
-                    measurementsList
-                }
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Button(action: { showSettingsModal.toggle() }, label: {
-                        Image(systemName: "person") })
-                    Spacer()
-                    Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
+            NavigationView {
+                VStack {
                     if fvcDataBexps.isEmpty {
+                        noMeasurements
+                    } else {
+                        measurementsList
+                    }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button(action: { showSettingsModal.toggle() }, label: {
+                            Image(systemName: "person") })
                         Spacer()
-                        Button("Upload to Medsenger", action: bleController.sendDataToMedsenger)
-                        Spacer()
-                        Button(action: bleController.deleteData, label:  {
-                            Image(systemName: "trash") })
+                        Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
+                        if !fvcDataBexps.isEmpty {
+                            Spacer()
+                            Button("Upload to Medsenger", action: bleController.sendDataToMedsenger)
+                            Spacer()
+                            Button(action: bleController.deleteData, label:  {
+                                Image(systemName: "trash") })
+                        }
                     }
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .sheet(isPresented: $showSettingsModal, content: { ProfileView() })
+            .sheet(isPresented: $isPresentedDeviceList, content: { ConnectView() })
+            .onReceive(bleController.$isConnected) { flag in
+                if flag { isPresentedDeviceList = false }
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .sheet(isPresented: $showSettingsModal, content: { ProfileView() })
-        .onAppear() {
-            DispatchQueue.main.async { bleController.getData() }
-        }
+        .transition(.slide)
+        .animation(.easeInOut(duration: 1.0), value: bleController.fetchingDataWithSpirometer)
     }
     
     var noMeasurements: some View {
@@ -83,7 +95,6 @@ struct ConnectedView: View {
     
     var loadingData: some View {
         VStack(alignment: .center) {
-            Spacer()
             Text("Downloading data from a spirometer")
                 .font(.title2)
                 .fontWeight(.bold)
@@ -95,8 +106,8 @@ struct ConnectedView: View {
                 .padding(.trailing, 40)
             ProgressView(value: bleController.progress, total: 1)
                 .padding()
-            Spacer()
         }
+        .padding()
     }
     
     

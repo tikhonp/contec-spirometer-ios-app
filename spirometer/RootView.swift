@@ -15,17 +15,18 @@ struct RootView: View {
     var body: some View
     {
         ZStack {
-            if bleController.isBluetoothOn {
-                if bleController.isConnected {
-                    ConnectedView()
-                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
-                } else {
-                    ConnectView()
-                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
-                }
-            } else {
-                BluetoothIsOffView()
-            }
+            ConnectedView()
+//            if bleController.isBluetoothOn {
+//                if bleController.isConnected {
+//
+//                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
+//                } else {
+//                    ConnectView()
+//                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.3)))
+//                }
+//            } else {
+//                BluetoothIsOffView()
+//            }
         }
         .alert(item: $bleController.error, content: { error in
             Alert(

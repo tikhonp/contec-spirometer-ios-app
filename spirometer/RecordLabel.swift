@@ -25,16 +25,11 @@ struct RecordLabel: View {
             Text("FVC: \(fVCDataBEXP.fvc, specifier: "%.2f") L.")
                 .font(.headline)
             Spacer()
-            HStack {
-                Label("EVOL: \(fVCDataBEXP.evol)", systemImage: "person.3")
-                Spacer()
-                Label("\(fVCDataBEXP.date!, formatter: dateFormatter)", systemImage: "clock")
-                    .padding(.trailing, 20)
-            }
-            .font(.caption)
+            Label("\(fVCDataBEXP.date!, formatter: dateFormatter)", systemImage: "clock")
+                .font(.caption)
         }
+        .frame(height: 40)
         .padding()
-        .frame(width: .infinity, height: 30)
     }
 }
 

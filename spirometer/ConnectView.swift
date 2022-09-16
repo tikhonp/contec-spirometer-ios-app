@@ -52,7 +52,6 @@ struct ConnectView: View {
                 .foregroundColor(Color.gray)
                 .multilineTextAlignment(.center)
         }
-        .onAppear(perform: bleController.discover)
     }
 }
 
