@@ -104,8 +104,7 @@ class PersistenceController: ObservableObject {
             do {
                 try viewContext.save()
             } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                print("Core Data failed to save model: \(error.localizedDescription)")
             }
         }
     }

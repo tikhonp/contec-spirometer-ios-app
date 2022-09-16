@@ -22,6 +22,7 @@ enum StatusCodes {
     case disconnected
     case gotData
     case connected
+    case failedToFetchData
 }
 
 
@@ -81,9 +82,10 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     // MARK: - public methods
     
     /// Request to load data from contec device
-    public func getData() {
+    /// - Parameter deleteDataAfterSync: Choose to delete data after loading from spirometer
+    public func getData(deleteDataAfterSync: Bool = false) {
         if isPeriferalReady {
-            contecDeviceController?.getData()
+            contecDeviceController?.getData(deleteDataAfterSync: deleteDataAfterSync)
         } else {
             onUpdateStatusCallback(.periferalIsNotReady)
         }
@@ -140,6 +142,19 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
                 onContecDeviceUpdateStatusCallback: onContecDeviceupdateStatusCallback)
         } else {
             onUpdateStatusCallback(.bluetoothIsOff)
+        }
+    }
+    
+    /// Disconnect peripheral
+    public func disconnect() {
+        if isPeriferalReady {
+            if isCentralManagerReady {
+                centralManager!.cancelPeripheralConnection(peripheral)
+            } else {
+                onUpdateStatusCallback(.bluetoothIsOff)
+            }
+        } else {
+            onUpdateStatusCallback(.periferalIsNotReady)
         }
     }
     

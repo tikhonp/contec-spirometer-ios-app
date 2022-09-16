@@ -35,8 +35,15 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 "KNUDSON" = "KNUDSON";
 "USA" = "USA";
 
-"Save Device" = "Save Device";
-"Forget Device" = "Forget Device";
+"Connected device" = "Connected device";
+"Unknown name" = "Unknown name";
+"Forget device" = "Forget device";
+"Disconnect device" = "Disconnect device";
+
+"Save connection" = "Save connection";
+
+"Reset Medsenger credentials" = "Reset Medsenger credentials";
+"Delete Medsenger authorization details, you will not be able to send data to the service until you authorize again" = "Delete Medsenger authorization details, you will not be able to send data to the service until you authorize again";
 
 "About" = "About";
 "Version" = "Version";
@@ -45,13 +52,27 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 "Settings" = "Settings";
 "Save" = "Save";
 
+"Automatically connect to saved device after reboot"="Automatically connect to saved device after reboot";
+
 /* Connected View */
+"Devices" = "Devices";
+"Search..." = "Search...";
+"Fetching data..." = "Fetching data...";
+"Connecting..." = "Connecting...";
+"Waiting Bluetooth..." = "Waiting Bluetooth...";
+
+"Oops! Failed to fetch data" = "Oops! Failed to fetch data";
+"This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again." = "This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again.";
+
 "No measurements recorded" = "No measurements recorded";
 "Take measurements with a spirometer so they appear here." = "Take measurements with a spirometer so they appear here.";
 "Upload to Medsenger" = "Upload to Medsenger";
 "Your measurements" = "Your measurements";
 "Downloading data from a spirometer" = "Downloading data from a spirometer";
 "Do not turn off the device until the end." = "Do not turn off the device until the end.";
+
+"Done!" = "Done!";
+"The data successfully uploaded to Medsenger." = "The data successfully uploaded to Medsenger.";
 
 /* Connect View */
 "Device search..." = "Device search...";
@@ -62,18 +83,22 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 "Turn off flight mode or enable bluetooth."="Turn off flight mode or enable bluetooth.";
 
 /* Errors */
-"Close"="Close";
+"Close" = "Close";
 
 "Ops! Something bad happened!"="Ops! Something bad happened!";
 "Ops! Invalid peripheral found!"="Ops! Invalid peripheral found!";
 "Ops! Bluetooth service on peripheral device not found!"="Ops! Bluetooth service on peripheral device not found!";
 "Device is not ready"="Device is not ready";
 "Failed to delete data from spirometer"="Failed to delete data from spirometer";
-"Empty data"="Empty data";
+"No new records"="No new records";
 
-"Try to reload application."="Try to reload application.";
+"All data already fetched with Medsenger."="All data already fetched with Medsenger.";
 "Detailed information about this error has automaticly been recordedand we have been notified."="Detailed information about this error has automaticly been recordedand we have been notified.";
 "Device disconnected"="Device disconnected";
 
 "Authorization in Medsenger is not successful"="Authorization in Medsenger is not successful";
 "Go to the Medsenger app for authorization"="Go to the Medsenger app for authorization";
+
+/* Record View */
+"Measurement" = "Measurement";
+"Meta Data" = "Meta Data";

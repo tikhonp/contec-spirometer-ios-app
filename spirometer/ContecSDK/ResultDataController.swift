@@ -64,7 +64,7 @@ class ResultDataController {
     /// Save single record values from byte array to ``FVCDataBEXP`` instance
     /// and add it to ``fVCDataBEXPs`` array
     /// - Parameter data: byte array with `Int8` type
-    public func saveFVCDataBEXP(data: [Int8]) {
+    public func saveFVCDataBEXP(data: [Int8]) -> FVCDataBEXP? {
         let measureType = Int(data[2])
         var measureTypeName: measureModeEnum = .ALL
         switch (measureType)  {
@@ -80,6 +80,7 @@ class ResultDataController {
             measureTypeName = .MV
         default:
             print("ERROR: Decoding FVC data: UNKNOWN measureType CASE `\(measureType)`")
+            return nil
         }
         
         let standartType = Int(data[15])
@@ -93,9 +94,9 @@ class ResultDataController {
             standartTypeName = .USA
         default:
             print("ERROR: Decoding FVC data: UNKNOWN standartType CASE `\(standartType)`")
+            return nil
         }
-        
-        fVCDataBEXPs.append(FVCDataBEXP(
+        let fvcDataBexp = FVCDataBEXP(
             measureType: measureType,
             measureTypeName: measureTypeName,
             number: computeIntFromTwoBytes(data[3], data[4]),
@@ -134,7 +135,9 @@ class ResultDataController {
             
             PEFT: computeIntFromTwoBytes(data[39], data[40]),
             EVOL: computeIntFromTwoBytes(data[41], data[42])
-        ))
+        )
+        fVCDataBEXPs.append(fvcDataBexp)
+        return fvcDataBexp
     }
     
     /// Generate wave arrays from byte data with given frames count

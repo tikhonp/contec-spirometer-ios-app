@@ -18,8 +18,6 @@ struct ConnectLabel: View {
             HStack {
                 if bleController.connectingPeripheral == nil {
                     Text("Device search...")
-                        .font(.title2)
-                        .fontWeight(.bold)
                         .padding(.trailing)
                     
                 } else {
@@ -32,7 +30,7 @@ struct ConnectLabel: View {
                 Button {
                     isPresentedDeviceList.toggle()
                 } label: {
-                    Text("Device List")
+                    Label("Devices", systemImage: "list.bullet.rectangle")
                 }
             }
         }

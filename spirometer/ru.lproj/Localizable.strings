@@ -35,8 +35,15 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "KNUDSON" = "KNUDSON";
 "USA" = "USA";
 
-"Save Device" = "Запомнить Устройство";
-"Forget Device" = "Забыть Устройство";
+"Connected device" = "Подключённое устройство";
+"Unknown name" = "Неизвестное имя";
+"Forget device" = "Забыть устройство";
+"Disconnect device"="Отключить устройство";
+
+"Save connection" = "Запомнить подключение";
+
+"Reset Medsenger credentials" = "Сбросить реквизиты Medsenger";
+"Delete Medsenger authorization details, you will not be able to send data to the service until you authorize again" = "Удалить данные авторизации Medsenger, вы не сможете отправлять данные в сервис, пока не авторизуетесь снова";
 
 "About" = "О приложении";
 "Version" = "Версия";
@@ -45,7 +52,18 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "Settings" = "Настройки";
 "Save" = "Сохранить";
 
+"Automatically connect to saved device after reboot"="Автоматически подключаться к сохраненному устройству после перезагрузки";
+
 /* Connected View */
+"Devices" = "Устройства";
+"Search..." = "Поиск...";
+"Fetching data..." = "Синхронизация...";
+"Connecting..." = "Подключение...";
+"Waiting Bluetooth..." = "Ожидание Bluetooth...";
+
+"Oops! Failed to fetch data" = "Упс! Не удалось получить данные";
+"This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again." = "Это могло произойти, если в спирометре села батарейка. Если это не так, возможно, это случайная ошибка, попробовать еще раз.";
+
 "No measurements recorded" = "Нет записаных измерений";
 "Take measurements with a spirometer so they appear here." = "Сделайте измерения с помощью спирометра, чтобы они появились здесь.";
 "Upload to Medsenger" = "Загрузить в Medsenger";
@@ -53,8 +71,11 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "Downloading data from a spirometer" = "Загрузка данных из спирометра";
 "Do not turn off the device until the end." = "Не выключайте устройство да окончания синхронизации.";
 
+"Done!" = "Готово!";
+"The data successfully uploaded to Medsenger." = "Данные успешно загружены в Medsenger.";
+
 /* Connect View */
-"Device search..." = "Поиск устройства...";
+"Device search..." = "Поиск устройств...";
 "Select your Contec Spirometer from the list below, the saved devices will be connected automatically."="Выберите Ваш Contec Spirometer из списка ниже, к сохраненным устройствам подключение будет выполнено автоматически.";
 
 
@@ -63,18 +84,22 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "Turn off flight mode or enable bluetooth."="Выключите Авиарежим или активируйте bluetooth.";
 
 /* Errors */
-"Close"="Закрыть";
+"Close" = "Закрыть";
 
 "Ops! Something bad happened!"="Упс! Возникла ошибка!";
 "Ops! Invalid peripheral found!"="Упс! Обнаружено недопустимое периферийное устройство!";
 "Ops! Bluetooth service on peripheral device not found!"="Опс! Служба Bluetooth на подключенном устройстве не найдена!";
 "Device is not ready"="Устройство не готово";
 "Failed to delete data from spirometer"="Не удалось удалить данные со спирометра";
-"Empty data"="Нет данных";
+"No new records"="Нет новых записей";
 
-"Try to reload application."="Попробуйте перезагрузить приложение.";
+"All data already fetched with Medsenger."="Все данные уже синхронизированны с Medsenger.";
 "Detailed information about this error has automaticly been recordedand we have been notified."="Детальная информация об этой ошибке записана автоматически, мы уже исправляем!";
 "Device disconnected"="Устройство отключено";
 
 "Authorization in Medsenger is not successful"="Неуспешная авторизация в Medsenger";
 "Go to the Medsenger app for authorization"="Перейдите в приложение Medsenger.";
+
+/* Record View */
+"Measurement" = "Измерение";
+"Meta Data" = "Мета Данные";

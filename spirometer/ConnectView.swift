@@ -11,18 +11,30 @@ import SwiftUI
 struct ConnectView: View {
     @EnvironmentObject var bleController: BLEController
     
+    @Binding var isPresented: Bool
+    
     var body: some View {
         VStack {
             HStack {
-                Text("Device search...")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.trailing)
+                Button("Close", action: { isPresented.toggle() })
+                    .padding()
+                Spacer()
+            }
+            HStack {
                 if bleController.connectingPeripheral == nil {
                     ProgressView()
+                        .padding(.trailing, 1)
+                    Text("Device search...")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.trailing)
+                } else {
+                    Text("Connecting...")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.trailing)
                 }
             }
-            .padding(.top)
             .padding(.bottom, 5)
             Text("Select your Contec Spirometer from the list below, the saved devices will be connected automatically.")
                 .font(.body)
@@ -46,17 +58,12 @@ struct ConnectView: View {
                     }
                 }
             }
-            Spacer()
-            Text("(c) Medsenger Sync")
-                .font(.caption)
-                .foregroundColor(Color.gray)
-                .multilineTextAlignment(.center)
         }
     }
 }
 
-struct ConnectView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConnectView()
-    }
-}
+//struct ConnectView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ConnectView()
+//    }
+//}

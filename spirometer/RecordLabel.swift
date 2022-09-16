@@ -19,16 +19,18 @@ struct RecordLabel: View {
         dateFormatter.timeStyle = .short
     }
     
-    
     var body: some View {
         VStack(alignment: .leading) {
             Text("FVC: \(fVCDataBEXP.fvc, specifier: "%.2f") L.")
                 .font(.headline)
             Spacer()
-            Label("\(fVCDataBEXP.date!, formatter: dateFormatter)", systemImage: "clock")
-                .font(.caption)
+            HStack {
+                Image(systemName: "clock")
+                Text("\(fVCDataBEXP.date!, formatter: dateFormatter)")
+            }
+            .font(.caption)
         }
-        .frame(height: 40)
+        .frame(height: 10)
         .padding()
     }
 }

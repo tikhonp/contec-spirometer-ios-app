@@ -39,6 +39,9 @@ class ContecDeviceController {
     /// Stores all processed incoming data
     private var resultDataController = ResultDataController()
     
+    /// Choose to delete data after loading from spirometer
+    private var deleteDataAfterSync = false
+    
     // Callbacks
     private let writeValueCallback: (Data) -> Void
     private let saveResultDataCallback: (ResultDataController) -> Void
@@ -134,7 +137,10 @@ class ContecDeviceController {
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 43)
                 if !(dataStorage[1] != 127 && dataStorage[1] != 126) { return }
-                resultDataController.saveFVCDataBEXP(data: dataStorage)
+                guard let _ = resultDataController.saveFVCDataBEXP(data: dataStorage) else {
+                    onContecDeviceUpdateStatusCallback(.failedToFetchData)
+                    return
+                }
                 writeValueCallback(dataSerializer.generateDataForCaptureRecord())
                 state = stateValues.unknown
             }
@@ -163,8 +169,12 @@ class ContecDeviceController {
                     //                    print(self.incomingDataQueue.getElements.count)
                     self.incomingDataQueue.clear()
                     if currentRecord == self.resultDataController.measuringCount {
-//                        print("Exit")
-                        self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 126, i2: 1))
+                        if self.deleteDataAfterSync {
+                            self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 127, i2: 1))
+                        } else {
+                            self.writeValueCallback(self.dataSerializer.doubleNumber(i1: 126, i2: 1))
+                        }
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             self.incomingDataQueue.clear()
                             self.state = stateValues.unknown
@@ -195,6 +205,9 @@ class ContecDeviceController {
         default:
             print("CHOOSE CASE, unknown case: ", state)
             print("Queue: ", incomingDataQueue.getElements)
+            DispatchQueue.main.async {
+                self.onContecDeviceUpdateStatusCallback(.failedToFetchData)
+            }
         }
     }
     
@@ -220,7 +233,9 @@ class ContecDeviceController {
     }
     
     /// Get data request
-    public func getData() {
+    /// - Parameter deleteDataAfterSync: Choose to delete data after loading from spirometer
+    public func getData(deleteDataAfterSync: Bool) {
+        self.deleteDataAfterSync = deleteDataAfterSync
         state = stateValues.unknown
         incomingDataQueue.clear()
         writeValueCallback(dataSerializer.getDataRequest())

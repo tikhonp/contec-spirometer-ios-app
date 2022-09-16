@@ -37,11 +37,17 @@ class ErrorAlerts: NSObject {
     static let disconnected = ErrorInfo(
         title: LocalizedStringKey("Device disconnected").stringValue(), description: "")
     static let emptyDataToUploadToMedsenger = ErrorInfo(
-        title: LocalizedStringKey("Empty data").stringValue(),
-        description: LocalizedStringKey("Try to reload application.").stringValue())
+        title: LocalizedStringKey("No new records").stringValue(),
+        description: LocalizedStringKey("All data already fetched with Medsenger.").stringValue())
     static let medsengerTokenIsEmpty = ErrorInfo(
         title: LocalizedStringKey("Authorization in Medsenger is not successful").stringValue(),
         description: LocalizedStringKey("Go to the Medsenger app for authorization").stringValue())
+    static let failedToFetchDataError = ErrorInfo(
+        title: LocalizedStringKey("Oops! Failed to fetch data" ).stringValue(),
+        description: LocalizedStringKey("This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again.").stringValue())
+    static let dataSuccessfullyUploadedToMedsenger = ErrorInfo(
+        title: LocalizedStringKey("Done!").stringValue(),
+        description: LocalizedStringKey("The data successfully uploaded to Medsenger.").stringValue())
 }
 
 final class BLEController: NSObject, ObservableObject {
@@ -52,6 +58,7 @@ final class BLEController: NSObject, ObservableObject {
     @Published var isConnected = false
     @Published var isBluetoothOn = true
     @Published var fetchingDataWithSpirometer = false
+    @Published var presentUploadToMedsenger = UserDefaults.medsengerAgentToken != nil && UserDefaults.medsengerContractId != nil
     
     @Published var progress: Float = 0.0
     
@@ -63,9 +70,12 @@ final class BLEController: NSObject, ObservableObject {
     @Published var userParams = UserParams(
         age: 0, height: 0, weight: 0, measureMode: .VC, sex: .MALE, smoke: .NOSMOKE, standart: .ECCS)
     
+    @Published var navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
     
     private func throwAlert(_ errorInfo: ErrorInfo) {
-        self.error = errorInfo
+        DispatchQueue.main.async {
+            self.error = errorInfo
+        }
     }
     
     private func processResultData(resultData: ResultDataController) {
@@ -99,14 +109,22 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
+    func disconnect() {
+        contecSDK.disconnect()
+    }
+    
     func onStatusUpdateCallback(statusCode: StatusCodes) {
         DispatchQueue.main.async {
             print("Updated status code: \(statusCode)")
             switch statusCode {
             case .bluetoothIsOff:
+                self.navigationBarTitleStatus = LocalizedStringKey("Waiting Bluetooth...").stringValue()
                 self.isBluetoothOn = false
             case .bluetoothIsOn:
-                self.isBluetoothOn = true
+                if !self.isBluetoothOn {
+                    self.isBluetoothOn = true
+                    self.discover()
+                }
             case .periferalIsNotFromThisQueue:
                 self.throwAlert(ErrorAlerts.invalidPeriferal)
             case .failedToDiscoverServiceError:
@@ -118,19 +136,25 @@ final class BLEController: NSObject, ObservableObject {
             case .deletedData:
                 print("Data was deleted")
             case .disconnected:
+                self.fetchingDataWithSpirometer = false
                 self.isConnected = false
                 self.connectingPeripheral = nil
                 self.devices = []
                 self.throwAlert(ErrorAlerts.disconnected)
+                self.discover()
             case .gotData:
                 self.progress = 1
                 let resultDataController = self.contecSDK.resultDataController!
                 self.userParams = resultDataController.userParams
                 self.processResultData(resultData: resultDataController)
                 self.fetchingDataWithSpirometer = false
+                self.navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
             case .connected:
                 self.isConnected = true
                 self.getData()
+            case .failedToFetchData:
+                self.fetchingDataWithSpirometer = false
+                self.throwAlert(ErrorAlerts.failedToFetchDataError)
             }
         }
     }
@@ -150,6 +174,7 @@ final class BLEController: NSObject, ObservableObject {
     }
     
     func connect(peripheral: CBPeripheral) {
+        navigationBarTitleStatus = LocalizedStringKey("Connecting...").stringValue()
         if UserDefaults.saveUUID {
             UserDefaults.savedSpirometrUUID = peripheral.identifier.uuidString
         }
@@ -158,24 +183,35 @@ final class BLEController: NSObject, ObservableObject {
     }
     
     func discover() {
+        navigationBarTitleStatus = LocalizedStringKey("Search...").stringValue()
         contecSDK.discover()
     }
     
     func getData() {
+        self.navigationBarTitleStatus = LocalizedStringKey("Fetching data...").stringValue()
         fetchingDataWithSpirometer = true
         progress = 0
-        contecSDK.getData()
+        contecSDK.getData(deleteDataAfterSync: true)
     }
     
     func sendDataToMedsenger() {
         DispatchQueue.main.async { [self] in
             var objects: [FVCDataBEXPmodel]?
             
+            let context = persistenceController.container.viewContext
             if let recentFetchDate = UserDefaults.lastUpladedDate {
-                let context = persistenceController.container.viewContext
                 let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ >= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
-                
+                fetchRequest.predicate = NSPredicate(format: "%@ <= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
+
+                do {
+                    objects = try context.fetch(fetchRequest)
+                } catch {
+                    print("Core Data failed to fetch: \(error.localizedDescription)")
+                    return
+                }
+            } else {
+                let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
+
                 do {
                     objects = try context.fetch(fetchRequest)
                 } catch {
@@ -185,7 +221,7 @@ final class BLEController: NSObject, ObservableObject {
             }
             
             guard let records = objects else {
-                print("Failed to fetch data")
+                print("Failed to fetch data, objects are nil!")
                 return
             }
             
@@ -221,8 +257,6 @@ final class BLEController: NSObject, ObservableObject {
                     ]
                 ] as [String : Any]
                 
-                print(data)
-                
                 let jsonData = try? JSONSerialization.data(withJSONObject: data)
                 guard let url = URL(string: "https://contec.medsenger.ru/api/receive") else {
                     print("Invalid url!")
@@ -237,36 +271,39 @@ final class BLEController: NSObject, ObservableObject {
                 
                 URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
                     guard error != nil else {
-                        print(error?.localizedDescription ?? "No data")
+                        UserDefaults.lastUpladedDate = Date()
+                        self.throwAlert(ErrorAlerts.dataSuccessfullyUploadedToMedsenger)
                         return
                     }
                     
                 }).resume()
             }
-            UserDefaults.lastUpladedDate = Date()
         }
     }
     
     func updatePropertiesFromDeeplink(url: URL) {
-        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            print("Error with create url components")
-            return
-        }
-        
-        guard let queryItems = urlComponents.queryItems else { return }
-        
-        for queryItem in queryItems {
-            switch queryItem.name {
-            case "contract_id":
-                guard let medsengerContractIdValue = queryItem.value else {
-                    print("Empty medsenger contract id")
-                    return
+        DispatchQueue.main.async {
+            guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+                print("Error with create url components")
+                return
+            }
+            
+            guard let queryItems = urlComponents.queryItems else { return }
+            
+            for queryItem in queryItems {
+                switch queryItem.name {
+                case "contract_id":
+                    guard let medsengerContractIdValue = queryItem.value else {
+                        print("Empty medsenger contract id")
+                        return
+                    }
+                    UserDefaults.medsengerContractId = Int(medsengerContractIdValue)
+                case "agent_token":
+                    UserDefaults.medsengerAgentToken = queryItem.value
+                default:
+                    print("Deeplink url query item \(queryItem.name): \(queryItem.value ?? "Nil value")")
                 }
-                UserDefaults.medsengerContractId = Int(medsengerContractIdValue)
-            case "agent_token":
-                UserDefaults.medsengerAgentToken = queryItem.value
-            default:
-                print("Deeplink url query item \(queryItem.name): \(queryItem.value ?? "Nil value")")
+                self.presentUploadToMedsenger = true
             }
         }
     }
@@ -279,6 +316,14 @@ final class BLEController: NSObject, ObservableObject {
         
         DispatchQueue.main.async {
             self.contecSDK.setUserParams(userParams: self.userParams)
+        }
+    }
+    
+    func resetMedsengerCredentials() {
+        DispatchQueue.main.async {
+            UserDefaults.medsengerAgentToken = nil
+            UserDefaults.medsengerContractId = nil
+            self.presentUploadToMedsenger = false
         }
     }
 }

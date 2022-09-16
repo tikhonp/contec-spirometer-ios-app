@@ -9,12 +9,22 @@
 import SwiftUI
 import CoreData
 
+extension View {
+    func navigationBarTitle<Content>(
+        @ViewBuilder content: () -> Content
+    ) -> some View where Content : View {
+        self.toolbar {
+            ToolbarItem(placement: .principal, content: content)
+        }
+    }
+}
+
 struct ConnectedView: View {
     @EnvironmentObject var bleController: BLEController
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], animation: .default)
     private var fvcDataBexps: FetchedResults<FVCDataBEXPmodel>
     
     @State private var showSettingsModal: Bool = false
@@ -22,48 +32,84 @@ struct ConnectedView: View {
     
     var body: some View {
         VStack {
-            if !bleController.isBluetoothOn {
-                BluetoothIsOffView()
-            }
-            if !bleController.isConnected {
-                ConnectLabel(isPresentedDeviceList: $isPresentedDeviceList)
-            }
-            if bleController.fetchingDataWithSpirometer {
-                loadingData
-            }
             NavigationView {
                 VStack {
+                    if bleController.fetchingDataWithSpirometer {
+                        ProgressView(value: bleController.progress, total: 1)
+                            .padding()
+                        Spacer()
+                    }
                     if fvcDataBexps.isEmpty {
                         noMeasurements
                     } else {
                         measurementsList
                     }
                 }
+                .transition(.slide)
+                .animation(.easeInOut(duration: 0.3), value: bleController.progress)
+                .animation(.easeInOut(duration: 0.3), value: bleController.fetchingDataWithSpirometer)
+                .navigationBarTitle {
+                    HStack {
+                        if !bleController.isConnected || !bleController.isBluetoothOn || bleController.fetchingDataWithSpirometer {
+                            ProgressView()
+                                .padding(.trailing, 1)
+                        }
+                        Text(bleController.navigationBarTitleStatus)
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if bleController.isBluetoothOn {
+                            if !bleController.isConnected {
+                                Button {
+                                    isPresentedDeviceList.toggle()
+                                } label: {
+                                    HStack {
+                                        if #available(iOS 15.0, *) {
+                                            Text("Devices")
+                                                .badge(bleController.devices.count)
+                                        } else {
+                                            Text("Devices")
+                                            // TODO: Add badge on earlier versions
+                                        }
+                                    }
+                                }
+                            } else {
+                                Button(action: { showSettingsModal.toggle() }, label: {
+                                    Image(systemName: "gearshape") })
+                            }
+                        }
+                    }
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Button(action: { showSettingsModal.toggle() }, label: {
-                            Image(systemName: "person") })
-                        Spacer()
-                        Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
-                        if !fvcDataBexps.isEmpty {
-                            Spacer()
+                        if !fvcDataBexps.isEmpty && bleController.presentUploadToMedsenger {
                             Button("Upload to Medsenger", action: bleController.sendDataToMedsenger)
+                        }
+                        Spacer()
+                        if bleController.isConnected && !bleController.fetchingDataWithSpirometer {
+                            Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
+                        }
+                        if !(!fvcDataBexps.isEmpty && bleController.presentUploadToMedsenger) {
                             Spacer()
-                            Button(action: bleController.deleteData, label:  {
-                                Image(systemName: "trash") })
                         }
                     }
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())
-            .sheet(isPresented: $showSettingsModal, content: { ProfileView() })
-            .sheet(isPresented: $isPresentedDeviceList, content: { ConnectView() })
+            .sheet(isPresented: $showSettingsModal, content: { ProfileView(isPresented: $showSettingsModal) })
+            .sheet(isPresented: $isPresentedDeviceList, content: { ConnectView(isPresented: $isPresentedDeviceList) })
             .onReceive(bleController.$isConnected) { flag in
                 if flag { isPresentedDeviceList = false }
             }
         }
-        .transition(.slide)
-        .animation(.easeInOut(duration: 1.0), value: bleController.fetchingDataWithSpirometer)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.bleController.discover()
+            }
+        }
     }
     
     var noMeasurements: some View {
@@ -89,7 +135,7 @@ struct ConnectedView: View {
                     RecordLabel(fVCDataBEXP: fvcDataBexp)
                 }
             }
-            .navigationTitle("Your measurements")
+            .onDelete(perform: deleteFVCDataBEXPmodels)
         }
     }
     
@@ -110,7 +156,17 @@ struct ConnectedView: View {
         .padding()
     }
     
-    
+    private func deleteFVCDataBEXPmodels(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { fvcDataBexps[$0] }.forEach(viewContext.delete)
+            
+            do {
+                try viewContext.save()
+            } catch {
+                print("Core Data failed to save model: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 struct ConnectedView_Previews: PreviewProvider {

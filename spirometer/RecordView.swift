@@ -52,7 +52,10 @@ struct RecordView: View {
     var body: some View {
         Form {
             Section {
-                Text(fVCDataBEXP.date!, formatter: dateFormatter)
+                HStack {
+                    Image(systemName: "clock")
+                    Text(fVCDataBEXP.date!, formatter: dateFormatter)
+                }
             }
             
             Section(header: Text("Measurement")) {
@@ -173,11 +176,12 @@ struct RecordView: View {
                 HStack {
                     Text("Sex")
                     Spacer()
-                    Text("\(fVCDataBEXP.gender == 0 ? "Male" : "Female")")
+                    Text("\(fVCDataBEXP.gender == 0 ? LocalizedStringKey("Male").stringValue() : LocalizedStringKey("Female").stringValue())")
                         .foregroundColor(.gray)
                 }
             }
         }
+        .navigationBarTitle("Measurement")
     }
 }
 

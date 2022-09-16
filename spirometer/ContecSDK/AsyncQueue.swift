@@ -54,7 +54,7 @@ struct AsyncQueue<T> {
     }
     
     var isEmpty: Bool {
-        return queue.sync {
+        return queue.sync(flags: .barrier) {
             return elements.isEmpty
         }
     }
