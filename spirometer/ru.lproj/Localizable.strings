@@ -54,7 +54,7 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 
 "Automatically connect to saved device after reboot"="Автоматически подключаться к сохраненному устройству после перезагрузки";
 
-/* Connected View */
+/* Main View */
 "Devices" = "Устройства";
 "Search..." = "Поиск...";
 "Fetching data..." = "Синхронизация...";
@@ -74,14 +74,12 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "Done!" = "Готово!";
 "The data successfully uploaded to Medsenger." = "Данные успешно загружены в Medsenger.";
 
+"To connect the spirometer, turn on the bluetooth and give the app permission to use it."="Для подключения спирометра включите Bluetooth и предоставьте приложению разрешение на его использование.";
+"Click here and select the spirometer to connect." = "Нажмите на сюда и выберите спирометр для подключения.";
+
 /* Connect View */
 "Device search..." = "Поиск устройств...";
 "Select your Contec Spirometer from the list below, the saved devices will be connected automatically."="Выберите Ваш Contec Spirometer из списка ниже, к сохраненным устройствам подключение будет выполнено автоматически.";
-
-
-/* Bluetooth is off View */
-"Bluetooth Disabled"="Bluetooth Выключен";
-"Turn off flight mode or enable bluetooth."="Выключите Авиарежим или активируйте bluetooth.";
 
 /* Errors */
 "Close" = "Закрыть";
@@ -99,6 +97,9 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 
 "Authorization in Medsenger is not successful"="Неуспешная авторизация в Medsenger";
 "Go to the Medsenger app for authorization"="Перейдите в приложение Medsenger.";
+
+"Device offline" = "Устройство в режиме оффлайн";
+"Turn off Airplane Mode or connect to Wi-Fi." = "Выключите Авиарежим или подключитесь к Wi-Fi.";
 
 /* Record View */
 "Measurement" = "Измерение";

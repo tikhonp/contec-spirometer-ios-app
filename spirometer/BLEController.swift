@@ -10,7 +10,7 @@ import SwiftUI
 import Foundation
 import CoreBluetooth
 import CoreData
-
+import Sentry
 
 struct ErrorInfo: Identifiable {
     var id = UUID()
@@ -48,6 +48,9 @@ class ErrorAlerts: NSObject {
     static let dataSuccessfullyUploadedToMedsenger = ErrorInfo(
         title: LocalizedStringKey("Done!").stringValue(),
         description: LocalizedStringKey("The data successfully uploaded to Medsenger.").stringValue())
+    static let failedToConnectToNetwork = ErrorInfo(
+        title: LocalizedStringKey("Device offline").stringValue(),
+        description: LocalizedStringKey("Turn off Airplane Mode or connect to Wi-Fi.").stringValue())
 }
 
 final class BLEController: NSObject, ObservableObject {
@@ -58,6 +61,8 @@ final class BLEController: NSObject, ObservableObject {
     @Published var isBluetoothOn = true
     @Published var fetchingDataWithSpirometer = false
     @Published var presentUploadToMedsenger = UserDefaults.medsengerAgentToken != nil && UserDefaults.medsengerContractId != nil
+    @Published var showBluetoothIsOffWarning = false
+    @Published var showSelectDevicesInfo = false
     
     @Published var progress: Float = 0.0
     
@@ -72,6 +77,8 @@ final class BLEController: NSObject, ObservableObject {
     @Published var navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
     
     @Published var sendingToMedsengerStatus: Int = 0
+    
+    
     
     private func throwAlert(_ errorInfo: ErrorInfo) {
         DispatchQueue.main.async {
@@ -115,7 +122,13 @@ final class BLEController: NSObject, ObservableObject {
             case .bluetoothIsOff:
                 self.navigationBarTitleStatus = LocalizedStringKey("Waiting Bluetooth...").stringValue()
                 self.isBluetoothOn = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if !self.isBluetoothOn {
+                        self.showBluetoothIsOffWarning = true
+                    }
+                }
             case .bluetoothIsOn:
+                self.showBluetoothIsOffWarning = false
                 if !self.isBluetoothOn {
                     self.isBluetoothOn = true
                     self.discover()
@@ -145,6 +158,7 @@ final class BLEController: NSObject, ObservableObject {
                 self.fetchingDataWithSpirometer = false
                 self.navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
             case .connected:
+                self.showSelectDevicesInfo = false
                 self.isConnected = true
                 self.getData()
             case .failedToFetchData:
@@ -178,6 +192,11 @@ final class BLEController: NSObject, ObservableObject {
     }
     
     func discover() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if !self.isConnected {
+                self.showSelectDevicesInfo = true
+            }
+        }
         navigationBarTitleStatus = LocalizedStringKey("Search...").stringValue()
         contecSDK.discover()
     }
@@ -204,6 +223,7 @@ final class BLEController: NSObject, ObservableObject {
                 } catch {
                     self.sendingToMedsengerStatus = 0
                     print("Core Data failed to fetch: \(error.localizedDescription)")
+                    SentrySDK.capture(error: error)
                     return
                 }
             } else {
@@ -214,6 +234,7 @@ final class BLEController: NSObject, ObservableObject {
                 } catch {
                     self.sendingToMedsengerStatus = 0
                     print("Core Data failed to fetch: \(error.localizedDescription)")
+                    SentrySDK.capture(error: error)
                     return
                 }
             }
@@ -279,8 +300,13 @@ final class BLEController: NSObject, ObservableObject {
                 URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
                     DispatchQueue.main.async {
                         guard error == nil else {
-                            print("Failed to make HTTP reuest to medsenger: \(error!.localizedDescription)")
                             self.sendingToMedsengerStatus = 0
+                            if (error as! URLError).code == URLError.notConnectedToInternet {
+                                self.throwAlert(ErrorAlerts.failedToConnectToNetwork)
+                            } else {
+                                print("Failed to make HTTP reuest to medsenger: \(error!.localizedDescription)")
+                                SentrySDK.capture(error: error!)
+                            }
                             return
                         }
                         if self.sendingToMedsengerStatus == records.count {

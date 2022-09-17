@@ -14,14 +14,18 @@ struct spirometerApp: App {
     let persistenceController = PersistenceController.shared
     
     init() {
+#if DEBUG
+        print("Running app in debug mode")
+#else
         SentrySDK.start { options in
             options.dsn = "https://1249e55e37dd4d40bdf29daf38c15654@o1075119.ingest.sentry.io/6755116"
-            options.debug = true // Enabled debug when first installing is always helpful
+            options.debug = false // Enabled debug when first installing is always helpful
             
             // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
             // We recommend adjusting this value in production.
             options.tracesSampleRate = 1.0
         }
+#endif
         UserDefaults.registerDefaultValues()
     }
     

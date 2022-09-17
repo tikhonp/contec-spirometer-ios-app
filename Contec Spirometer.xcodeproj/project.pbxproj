@@ -10,6 +10,7 @@
 		4307BEE528C7694C00465C9F /* AsyncQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4307BEE428C7694C00465C9F /* AsyncQueue.swift */; };
 		4307BEE728C7945E00465C9F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4307BEE628C7945E00465C9F /* ProfileView.swift */; };
 		4311B14F28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */; };
+		4326ACDA28D66487007BCCDA /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 4326ACD928D66487007BCCDA /* Sentry */; };
 		4346FA7328D36C8A009A0594 /* ContecSpirometer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */; };
 		4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7428D36E55009A0594 /* PersistenceController.swift */; };
 		435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435509D728D48D50005ECCB5 /* ConnectLabel.swift */; };
@@ -17,8 +18,6 @@
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
 		43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B17FEC28CE7C5400D9475E /* RecordView.swift */; };
 		43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */; };
-		43D5868328D60DE80029E5E7 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 43D5868228D60DE80029E5E7 /* Sentry */; };
-		43D5868528D60DE80029E5E7 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 43D5868428D60DE80029E5E7 /* Sentry-Dynamic */; };
 		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
 		43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A5F28CE5C280099088A /* LocalizedString+.swift */; };
 		43F39C5528BD07130098C96A /* spirometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5428BD07130098C96A /* spirometerApp.swift */; };
@@ -40,6 +39,7 @@
 		4307BEE628C7945E00465C9F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AppPrefs.swift"; sourceTree = "<group>"; };
 		4311B15028C6354500FC0EA1 /* spirometer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = spirometer.entitlements; sourceTree = "<group>"; };
+		4326ACDD28D6843C007BCCDA /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		435509D728D48D50005ECCB5 /* ConnectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectLabel.swift; sourceTree = "<group>"; };
@@ -70,8 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43D5868328D60DE80029E5E7 /* Sentry in Frameworks */,
-				43D5868528D60DE80029E5E7 /* Sentry-Dynamic in Frameworks */,
+				4326ACDA28D66487007BCCDA /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +167,7 @@
 				43F39C4D28BD07130098C96A /* Sources */,
 				43F39C4E28BD07130098C96A /* Frameworks */,
 				43F39C4F28BD07130098C96A /* Resources */,
+				4326ACDB28D66C47007BCCDA /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -175,8 +175,7 @@
 			);
 			name = "Contec Spirometer";
 			packageProductDependencies = (
-				43D5868228D60DE80029E5E7 /* Sentry */,
-				43D5868428D60DE80029E5E7 /* Sentry-Dynamic */,
+				4326ACD928D66487007BCCDA /* Sentry */,
 			);
 			productName = spirometer;
 			productReference = 43F39C5128BD07130098C96A /* Contec Spirometer.app */;
@@ -206,10 +205,11 @@
 				en,
 				ru,
 				Base,
+				"en-GB",
 			);
 			mainGroup = 43F39C4828BD07130098C96A;
 			packageReferences = (
-				43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				4326ACD828D66487007BCCDA /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 43F39C5228BD07130098C96A /* Products */;
 			projectDirPath = "";
@@ -233,6 +233,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4326ACDB28D66C47007BCCDA /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=tikhon-systems\nexport SENTRY_PROJECT=medsenger-spirometer\nexport SENTRY_AUTH_TOKEN=57954d3467624d70a57e2d8a89d712763900e604b6b6498cacd62f8c0c44101f\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"error: sentry-cli - $ERROR\"\nfi\nelse\necho \"error: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		43F39C4D28BD07130098C96A /* Sources */ = {
@@ -270,6 +293,7 @@
 			children = (
 				43E60A5C28CE588F0099088A /* en */,
 				43E60A5E28CE58940099088A /* ru */,
+				4326ACDD28D6843C007BCCDA /* en-GB */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -400,7 +424,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -418,9 +442,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -434,7 +462,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -452,9 +480,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -485,26 +517,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+		4326ACD828D66487007BCCDA /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		43D5868228D60DE80029E5E7 /* Sentry */ = {
+		4326ACD928D66487007BCCDA /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			package = 4326ACD828D66487007BCCDA /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
-		};
-		43D5868428D60DE80029E5E7 /* Sentry-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
-			productName = "Sentry-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 

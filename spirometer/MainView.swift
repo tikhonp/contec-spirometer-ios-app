@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import Sentry
 
 struct MainView: View {
     @EnvironmentObject private var bleController: BLEController
@@ -24,7 +25,7 @@ struct MainView: View {
         NavigationView {
             VStack {
                 progressView
-                
+                inlineAlerts
                 if fvcDataBexps.isEmpty {
                     noMeasurements
                 } else {
@@ -33,7 +34,9 @@ struct MainView: View {
             }
             .transition(.slide)
             .animation(.easeInOut(duration: 0.3), value: bleController.progress)
+            .animation(.easeInOut(duration: 0.3), value: bleController.showBluetoothIsOffWarning)
             .animation(.easeInOut(duration: 0.3), value: bleController.fetchingDataWithSpirometer)
+            .animation(.easeInOut(duration: 0.3), value: bleController.showSelectDevicesInfo)
             .navigationBarTitle { navigationBarTitle }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -50,8 +53,10 @@ struct MainView: View {
                                     if #available(iOS 15.0, *) {
                                         Text("Devices")
                                             .badge(bleController.devices.count)
+                                            .id(UUID())
                                     } else {
                                         Text("Devices")
+                                            .id(UUID())
                                         // TODO: Add badge on earlier versions
                                     }
                                 }
@@ -59,6 +64,7 @@ struct MainView: View {
                         } else {
                             Button(action: { showSettingsModal.toggle() }, label: {
                                 Image(systemName: "gearshape") })
+                            .id(UUID())
                         }
                     }
                 }
@@ -114,8 +120,33 @@ struct MainView: View {
         }
     }
     
+    var inlineAlerts: some View {
+        ZStack {
+            if bleController.showBluetoothIsOffWarning {
+                Text("To connect the spirometer, turn on the bluetooth and give the app permission to use it.")
+                    .font(.body)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+            if bleController.showSelectDevicesInfo {
+                HStack(alignment: .top) {
+                    Spacer()
+                    Text("Click here and select the spirometer to connect.")
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    Text("👆")
+                }
+                .padding()
+            }
+        }
+    }
+    
     var noMeasurements: some View {
         VStack(alignment: .center) {
+            Spacer()
             Text("No measurements recorded")
                 .font(.title2)
                 .fontWeight(.bold)
@@ -125,6 +156,7 @@ struct MainView: View {
                 .multilineTextAlignment(.center)
                 .padding(.leading, 40)
                 .padding(.trailing, 40)
+            Spacer()
         }
     }
     
