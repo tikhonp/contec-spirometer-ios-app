@@ -54,7 +54,6 @@ final class BLEController: NSObject, ObservableObject {
     private let persistenceController = PersistenceController.shared
     private var contecSDK: ContecSDK!
     
-    
     @Published var isConnected = false
     @Published var isBluetoothOn = true
     @Published var fetchingDataWithSpirometer = false
@@ -72,35 +71,31 @@ final class BLEController: NSObject, ObservableObject {
     
     @Published var navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
     
+    @Published var sendingToMedsengerStatus: Int = 0
+    
     private func throwAlert(_ errorInfo: ErrorInfo) {
         DispatchQueue.main.async {
             self.error = errorInfo
         }
     }
     
+    /// Conver ``ResultDataController`` to ``CoreData`` records
+    /// - Parameter resultData: result data contriller item
     private func processResultData(resultData: ResultDataController) {
-        if resultData.measuringCount > 0 {
-            let context = persistenceController.container.viewContext
-            
-            for i in 0...resultData.fVCDataBEXPs.count - 1 {
-                let record = resultData.fVCDataBEXPs[i]
-                persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, context: context)
-            }
-        } else {
-            // TODO: show alert with empty measuring on device
+        let context = persistenceController.container.viewContext
+        
+        for record in resultData.fVCDataBEXPs {
+            persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, context: context)
         }
     }
     
+    /// Call on app appear
     func startContecSDK() {
         contecSDK = ContecSDK(
             onUpdateStatusCallback: onStatusUpdateCallback,
             onDiscoverCallback: onDiscoverCallback,
             onProgressUpdate: onProgressUpdate
         )
-    }
-    
-    func deleteData() {
-        contecSDK.deleteData()
     }
     
     func onProgressUpdate(_ progress: Float) {
@@ -159,7 +154,7 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
-    func onDiscoverCallback(peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func onDiscoverCallback(peripheral: CBPeripheral, _: [String : Any], _ RSSI: NSNumber) {
         if (!devices.contains(peripheral)) {
             devices.append(peripheral)
         }
@@ -195,42 +190,48 @@ final class BLEController: NSObject, ObservableObject {
     }
     
     func sendDataToMedsenger() {
-        DispatchQueue.main.async { [self] in
+        DispatchQueue.main.async {
+            self.sendingToMedsengerStatus = 1
             var objects: [FVCDataBEXPmodel]?
             
-            let context = persistenceController.container.viewContext
+            let context = self.persistenceController.container.viewContext
             if let recentFetchDate = UserDefaults.lastUpladedDate {
                 let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "%@ <= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
-
+                
                 do {
                     objects = try context.fetch(fetchRequest)
                 } catch {
+                    self.sendingToMedsengerStatus = 0
                     print("Core Data failed to fetch: \(error.localizedDescription)")
                     return
                 }
             } else {
                 let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
-
+                
                 do {
                     objects = try context.fetch(fetchRequest)
                 } catch {
+                    self.sendingToMedsengerStatus = 0
                     print("Core Data failed to fetch: \(error.localizedDescription)")
                     return
                 }
             }
             
             guard let records = objects else {
+                self.sendingToMedsengerStatus = 0
                 print("Failed to fetch data, objects are nil!")
                 return
             }
             
             if records.isEmpty {
+                self.sendingToMedsengerStatus = 0
                 self.throwAlert(ErrorAlerts.emptyDataToUploadToMedsenger)
                 return
             }
             
             guard let medsengerContractId = UserDefaults.medsengerContractId, let medsengerAgentToken = UserDefaults.medsengerAgentToken else {
+                self.sendingToMedsengerStatus = 0
                 self.throwAlert(ErrorAlerts.medsengerTokenIsEmpty)
                 return
             }
@@ -257,25 +258,39 @@ final class BLEController: NSObject, ObservableObject {
                     ]
                 ] as [String : Any]
                 
-                let jsonData = try? JSONSerialization.data(withJSONObject: data)
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: data) else {
+                    self.sendingToMedsengerStatus = 0
+                    print("Failed to serialize data with JSON")
+                    return
+                }
+                
                 guard let url = URL(string: "https://contec.medsenger.ru/api/receive") else {
-                    print("Invalid url!")
+                    self.sendingToMedsengerStatus = 0
+                    print("Invalid medsenger url!")
                     return
                 }
                 
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
-                request.setValue("\(String(describing: jsonData?.count))", forHTTPHeaderField: "Content-Length")
+                request.setValue("\(String(describing: jsonData.count))", forHTTPHeaderField: "Content-Length")
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.httpBody = jsonData
                 
                 URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-                    guard error != nil else {
-                        UserDefaults.lastUpladedDate = Date()
-                        self.throwAlert(ErrorAlerts.dataSuccessfullyUploadedToMedsenger)
-                        return
+                    DispatchQueue.main.async {
+                        guard error == nil else {
+                            print("Failed to make HTTP reuest to medsenger: \(error!.localizedDescription)")
+                            self.sendingToMedsengerStatus = 0
+                            return
+                        }
+                        if self.sendingToMedsengerStatus == records.count {
+                            UserDefaults.lastUpladedDate = Date()
+                            self.throwAlert(ErrorAlerts.dataSuccessfullyUploadedToMedsenger)
+                            self.sendingToMedsengerStatus = 0
+                        } else {
+                            self.sendingToMedsengerStatus += 1
+                        }
                     }
-                    
                 }).resume()
             }
         }
@@ -283,11 +298,7 @@ final class BLEController: NSObject, ObservableObject {
     
     func updatePropertiesFromDeeplink(url: URL) {
         DispatchQueue.main.async {
-            guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                print("Error with create url components")
-                return
-            }
-            
+            guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
             guard let queryItems = urlComponents.queryItems else { return }
             
             for queryItem in queryItems {

@@ -14,7 +14,7 @@ struct RootView: View {
     
     var body: some View
     {
-        ConnectedView()
+        MainView()
             .alert(item: $bleController.error, content: { error in
                 Alert(
                     title: Text(error.title),

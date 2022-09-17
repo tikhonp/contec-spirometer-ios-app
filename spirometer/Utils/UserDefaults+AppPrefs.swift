@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+/// Extention for quick accsess to UserDefault information
 extension UserDefaults {
     private enum Keys {
         static let savedSpirometrUUIDkey = "savedSpirometrUUID"

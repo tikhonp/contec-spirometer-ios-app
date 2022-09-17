@@ -36,19 +36,19 @@ struct AsyncQueue<T> {
     }
     
     var head: T? {
-        return queue.sync {
+        return queue.sync(flags: .barrier) {
             return elements.first
         }
     }
     
     var tail: T? {
-        return queue.sync {
+        return queue.sync(flags: .barrier) {
             return elements.last
         }
     }
     
     var length: Int {
-        return queue.sync {
+        return queue.sync(flags: .barrier) {
             return elements.count
         }
     }
@@ -60,7 +60,7 @@ struct AsyncQueue<T> {
     }
     
     var getElements: [T] {
-        return queue.sync {
+        return queue.sync(flags: .barrier) {
             return elements
         }
     }

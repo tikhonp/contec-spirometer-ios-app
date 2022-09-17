@@ -8,6 +8,20 @@
 
 import SwiftUI
 
+struct ValueRowView: View {
+    let key: String
+    let value: Text
+    
+    var body: some View {
+        HStack {
+            Text(key)
+            Spacer()
+            value
+                .foregroundColor(.gray)
+        }
+    }
+}
+
 struct RecordView: View {
     let fVCDataBEXP: FVCDataBEXPmodel
     let dateFormatter: DateFormatter
@@ -59,126 +73,36 @@ struct RecordView: View {
             }
             
             Section(header: Text("Measurement")) {
-                HStack {
-                    Text("FVC")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fvc, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEV05")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fev05, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEV1")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fev1, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEV1_FVC")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fev1_fvc, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEV3")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fev3, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEV6")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fev6, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("PEF")
-                    Spacer()
-                    Text("\(fVCDataBEXP.pef, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
+                ValueRowView(key: "FVC", value: Text("\(fVCDataBEXP.fvc, specifier: "%.2f")"))
+                ValueRowView(key: "FEV05", value: Text("\(fVCDataBEXP.fev05, specifier: "%.2f")"))
+                ValueRowView(key: "FEV1", value: Text("\(fVCDataBEXP.fev1, specifier: "%.2f")"))
+                ValueRowView(key: "FEV1_FVC", value: Text("\(fVCDataBEXP.fev1_fvc, specifier: "%.2f")"))
+                ValueRowView(key: "FEV3", value: Text("\(fVCDataBEXP.fev3, specifier: "%.2f")"))
+                ValueRowView(key: "FEV6", value: Text("\(fVCDataBEXP.fev6, specifier: "%.2f")"))
+                ValueRowView(key: "PEF", value: Text("\(fVCDataBEXP.pef, specifier: "%.2f")"))
             }
             
             Section {
-                HStack {
-                    Text("FEF25")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fef25, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEF50")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fef50, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEF75")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fef75, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("FEF2575")
-                    Spacer()
-                    Text("\(fVCDataBEXP.fef2575, specifier: "%.2f")")
-                        .foregroundColor(.gray)
-                }
+                ValueRowView(key: "FEF25", value: Text("\(fVCDataBEXP.fef25, specifier: "%.2f")"))
+                ValueRowView(key: "FEF50", value: Text("\(fVCDataBEXP.fef50, specifier: "%.2f")"))
+                ValueRowView(key: "FEF75", value: Text("\(fVCDataBEXP.fef75, specifier: "%.2f")"))
+                ValueRowView(key: "FEF2575", value: Text("\(fVCDataBEXP.fef2575, specifier: "%.2f")"))
             }
             
             Section {
-                HStack {
-                    Text("PEFT")
-                    Spacer()
-                    Text("\(fVCDataBEXP.peft)")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("EVOL")
-                    Spacer()
-                    Text("\(fVCDataBEXP.evol)")
-                        .foregroundColor(.gray)
-                }
+                ValueRowView(key: "PEFT", value: Text("\(fVCDataBEXP.peft, specifier: "%.2f")"))
+                ValueRowView(key: "EVOL", value: Text("\(fVCDataBEXP.evol, specifier: "%.2f")"))
             }
             
             Section(header: Text("Meta Data")) {
-                HStack {
-                    Text("Measure type")
-                    Spacer()
-                    Text("\(measureTypeString(fVCDataBEXP.measureType))")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("Standart type")
-                    Spacer()
-                    Text("\(standartTypeString(fVCDataBEXP.standartType))")
-                        .foregroundColor(.gray)
-                }
+                ValueRowView(key: "Measure type", value: Text("\(measureTypeString(fVCDataBEXP.measureType))"))
+                ValueRowView(key: "Standart type", value: Text("\(standartTypeString(fVCDataBEXP.standartType))"))
             }
             
             Section(header: Text("Personal information")) {
-                HStack {
-                    Text("Age")
-                    Spacer()
-                    Text("\(fVCDataBEXP.age)")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("Height")
-                    Spacer()
-                    Text("\(fVCDataBEXP.height)")
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Text("Sex")
-                    Spacer()
-                    Text("\(fVCDataBEXP.gender == 0 ? LocalizedStringKey("Male").stringValue() : LocalizedStringKey("Female").stringValue())")
-                        .foregroundColor(.gray)
-                }
+                ValueRowView(key: "Age", value:  Text("\(fVCDataBEXP.age)"))
+                ValueRowView(key: "Height", value: Text("\(fVCDataBEXP.height)"))
+                ValueRowView(key: "Sex", value: Text("\(fVCDataBEXP.gender == 0 ? LocalizedStringKey("Male").stringValue() : LocalizedStringKey("Female").stringValue())"))
             }
         }
         .navigationBarTitle("Measurement")

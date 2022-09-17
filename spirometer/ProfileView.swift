@@ -13,7 +13,7 @@ struct ProfileView: View {
     
     @Binding var isPresented: Bool
     @State private var saveUUID = UserDefaults.saveUUID
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
     var body: some View {
         NavigationView {

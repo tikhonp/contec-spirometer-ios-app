@@ -13,13 +13,14 @@
 		4346FA7328D36C8A009A0594 /* ContecSpirometer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */; };
 		4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7428D36E55009A0594 /* PersistenceController.swift */; };
 		435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435509D728D48D50005ECCB5 /* ConnectLabel.swift */; };
-		437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
 		43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B17FEC28CE7C5400D9475E /* RecordView.swift */; };
+		43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */; };
+		43D5868328D60DE80029E5E7 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 43D5868228D60DE80029E5E7 /* Sentry */; };
+		43D5868528D60DE80029E5E7 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 43D5868428D60DE80029E5E7 /* Sentry-Dynamic */; };
 		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
 		43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A5F28CE5C280099088A /* LocalizedString+.swift */; };
-		43E60A6228CE61640099088A /* BluetoothIsOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A6128CE61640099088A /* BluetoothIsOffView.swift */; };
 		43F39C5528BD07130098C96A /* spirometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5428BD07130098C96A /* spirometerApp.swift */; };
 		43F39C5728BD07130098C96A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C5628BD07130098C96A /* RootView.swift */; };
 		43F39C5928BD07150098C96A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43F39C5828BD07150098C96A /* Assets.xcassets */; };
@@ -30,7 +31,7 @@
 		43F39C6A28BD08E00098C96A /* ResultDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C6928BD08E00098C96A /* ResultDataController.swift */; };
 		43F39C6D28BD09040098C96A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F39C6C28BD09040098C96A /* Models.swift */; };
 		43F79A2F28BF45F7009102CB /* ConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F79A2E28BF45F7009102CB /* ConnectView.swift */; };
-		43F79A3128BF4607009102CB /* ConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F79A3028BF4607009102CB /* ConnectedView.swift */; };
+		43F79A3128BF4607009102CB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F79A3028BF4607009102CB /* MainView.swift */; };
 		43F79A3328BF8375009102CB /* BLEController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F79A3228BF8375009102CB /* BLEController.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,14 +43,13 @@
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		435509D728D48D50005ECCB5 /* ConnectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectLabel.swift; sourceTree = "<group>"; };
-		437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedViewModel.swift; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
 		43B17FEC28CE7C5400D9475E /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+NavigationBarTitle.swift"; sourceTree = "<group>"; };
 		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5E28CE58940099088A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5F28CE5C280099088A /* LocalizedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedString+.swift"; sourceTree = "<group>"; };
-		43E60A6128CE61640099088A /* BluetoothIsOffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothIsOffView.swift; sourceTree = "<group>"; };
 		43F39C5128BD07130098C96A /* Contec Spirometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contec Spirometer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F39C5428BD07130098C96A /* spirometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spirometerApp.swift; sourceTree = "<group>"; };
 		43F39C5628BD07130098C96A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		43F39C6928BD08E00098C96A /* ResultDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDataController.swift; sourceTree = "<group>"; };
 		43F39C6C28BD09040098C96A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		43F79A2E28BF45F7009102CB /* ConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectView.swift; sourceTree = "<group>"; };
-		43F79A3028BF4607009102CB /* ConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedView.swift; sourceTree = "<group>"; };
+		43F79A3028BF4607009102CB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		43F79A3228BF8375009102CB /* BLEController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,12 +70,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43D5868328D60DE80029E5E7 /* Sentry in Frameworks */,
+				43D5868528D60DE80029E5E7 /* Sentry-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43D5867D28D5FB1A0029E5E7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				43E60A5F28CE5C280099088A /* LocalizedString+.swift */,
+				4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */,
+				43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		43D5868028D602220029E5E7 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */,
+				4346FA7428D36E55009A0594 /* PersistenceController.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		43F39C4828BD07130098C96A = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +117,8 @@
 		43F39C5328BD07130098C96A /* spirometer */ = {
 			isa = PBXGroup;
 			children = (
+				43D5868028D602220029E5E7 /* Data */,
+				43D5867D28D5FB1A0029E5E7 /* Utils */,
 				4311B15028C6354500FC0EA1 /* spirometer.entitlements */,
 				43F39C6228BD074A0098C96A /* ContecSDK */,
 				43F39C5428BD07130098C96A /* spirometerApp.swift */,
@@ -103,18 +126,12 @@
 				43F39C5828BD07150098C96A /* Assets.xcassets */,
 				43F39C5A28BD07150098C96A /* Preview Content */,
 				43F79A2E28BF45F7009102CB /* ConnectView.swift */,
-				43F79A3028BF4607009102CB /* ConnectedView.swift */,
+				43F79A3028BF4607009102CB /* MainView.swift */,
 				43F79A3228BF8375009102CB /* BLEController.swift */,
-				437A5C4C28BFAC6100064C10 /* ConnectedViewModel.swift */,
 				437A5C5028C22AEE00064C10 /* RecordLabel.swift */,
-				4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */,
 				4307BEE628C7945E00465C9F /* ProfileView.swift */,
 				43E60A5D28CE588F0099088A /* Localizable.strings */,
-				43E60A5F28CE5C280099088A /* LocalizedString+.swift */,
-				43E60A6128CE61640099088A /* BluetoothIsOffView.swift */,
 				43B17FEC28CE7C5400D9475E /* RecordView.swift */,
-				4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */,
-				4346FA7428D36E55009A0594 /* PersistenceController.swift */,
 				435509D728D48D50005ECCB5 /* ConnectLabel.swift */,
 			);
 			path = spirometer;
@@ -157,6 +174,10 @@
 			dependencies = (
 			);
 			name = "Contec Spirometer";
+			packageProductDependencies = (
+				43D5868228D60DE80029E5E7 /* Sentry */,
+				43D5868428D60DE80029E5E7 /* Sentry-Dynamic */,
+			);
 			productName = spirometer;
 			productReference = 43F39C5128BD07130098C96A /* Contec Spirometer.app */;
 			productType = "com.apple.product-type.application";
@@ -183,10 +204,13 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				ru,
+				Base,
 			);
 			mainGroup = 43F39C4828BD07130098C96A;
+			packageReferences = (
+				43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = 43F39C5228BD07130098C96A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -215,11 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				437A5C4D28BFAC6100064C10 /* ConnectedViewModel.swift in Sources */,
 				43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */,
 				43F39C5728BD07130098C96A /* RootView.swift in Sources */,
+				43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */,
 				435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */,
-				43F79A3128BF4607009102CB /* ConnectedView.swift in Sources */,
+				43F79A3128BF4607009102CB /* MainView.swift in Sources */,
 				4307BEE528C7694C00465C9F /* AsyncQueue.swift in Sources */,
 				4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */,
 				43F39C6428BD07A10098C96A /* ContecSDK.swift in Sources */,
@@ -235,7 +259,6 @@
 				43F39C6628BD07E20098C96A /* ContecDeviceController.swift in Sources */,
 				43F39C6D28BD09040098C96A /* Models.swift in Sources */,
 				437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */,
-				43E60A6228CE61640099088A /* BluetoothIsOffView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +483,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		43D5868228D60DE80029E5E7 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		43D5868428D60DE80029E5E7 /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43D5868128D60DE80029E5E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */ = {
