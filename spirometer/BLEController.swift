@@ -12,6 +12,12 @@ import CoreBluetooth
 import CoreData
 import Sentry
 
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 struct ErrorInfo: Identifiable {
     var id = UUID()
     let title: String
@@ -91,8 +97,13 @@ final class BLEController: NSObject, ObservableObject {
     private func processResultData(resultData: ResultDataController) {
         let context = persistenceController.container.viewContext
         
-        for record in resultData.fVCDataBEXPs {
-            persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, context: context)
+        let fvcDataBexpPredictedModel = persistenceController.addFVCdataBEXPpredictedModel(fvcDataBexpPredicted: resultData.predictedValuesBexp!, context: context)
+        for (index, record) in resultData.fVCDataBEXPs.enumerated() {
+            guard let waveData = resultData.waveDatas[safe: index] else {
+                print("Failed to get wave data")
+                return
+            }
+            persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, waveData: waveData, fvcDataBexpPredictedModel: fvcDataBexpPredictedModel, context: context)
         }
     }
     

@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FVCDataBEXPmodel" representedClassName="FVCDataBEXPmodel" syncable="YES" codeGenerationType="class">
-        <attribute name="age" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="drug" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="evol" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="fef25" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fef50" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fef75" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fef2575" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fev1" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fev1_fvc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fev3" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fev05" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fev6" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fvc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="height" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="measureType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="pef" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="peft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="standartType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="age" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="drug" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="evol" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fef25" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef50" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef75" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef2575" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev1" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev1_fvc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev3" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev05" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev6" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fvc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="gender" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="height" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="measureType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pef" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="peft" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="speedsArray" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Float]"/>
+        <attribute name="standartType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timesArray" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Float]"/>
+        <attribute name="volumesArray" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Float]"/>
+        <relationship name="predictedValues" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PredictedValuesBEXPmodel" inverseName="records" inverseEntity="PredictedValuesBEXPmodel"/>
     </entity>
-    <elements>
-        <element name="FVCDataBEXPmodel" positionX="-63" positionY="-18" width="128" height="344"/>
-    </elements>
+    <entity name="PredictedValuesBEXPmodel" representedClassName="PredictedValuesBEXPmodel" syncable="YES" codeGenerationType="class">
+        <attribute name="fef25" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef50" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef75" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fef2575" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev1" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev1_fvc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev3" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fev6" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fvc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="pef" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FVCDataBEXPmodel" inverseName="predictedValues" inverseEntity="FVCDataBEXPmodel"/>
+    </entity>
 </model>

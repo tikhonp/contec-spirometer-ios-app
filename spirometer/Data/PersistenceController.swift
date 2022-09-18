@@ -42,7 +42,24 @@ class PersistenceController: ObservableObject {
         }
     }
     
-    func addFVCDataBEXPmodel(fVCDataBEXP: FVCDataBEXP, context: NSManagedObjectContext) {
+    func addFVCdataBEXPpredictedModel(fvcDataBexpPredicted: PredictedValuesBEXP, context: NSManagedObjectContext) -> PredictedValuesBEXPmodel {
+        let fvcDataBexpPredictedModel = PredictedValuesBEXPmodel(context: context)
+        fvcDataBexpPredictedModel.id = UUID()
+        fvcDataBexpPredictedModel.fvc = fvcDataBexpPredicted.FVC
+        fvcDataBexpPredictedModel.fev1 = fvcDataBexpPredicted.FEV1
+        fvcDataBexpPredictedModel.fev1_fvc = fvcDataBexpPredicted.FEV1_FVC
+        fvcDataBexpPredictedModel.fev3 = fvcDataBexpPredicted.FEV3
+        fvcDataBexpPredictedModel.fev6 = fvcDataBexpPredicted.FEV6
+        fvcDataBexpPredictedModel.pef = fvcDataBexpPredicted.PEF
+        fvcDataBexpPredictedModel.fef25 = fvcDataBexpPredicted.FEF25
+        fvcDataBexpPredictedModel.fef50 = fvcDataBexpPredicted.FEF50
+        fvcDataBexpPredictedModel.fef75 = fvcDataBexpPredicted.FEF75
+        fvcDataBexpPredictedModel.fef2575 = fvcDataBexpPredicted.FEF2575
+        save(context: context)
+        return fvcDataBexpPredictedModel
+    }
+    
+    func addFVCDataBEXPmodel(fVCDataBEXP: FVCDataBEXP, waveData: WaveData, fvcDataBexpPredictedModel: PredictedValuesBEXPmodel, context: NSManagedObjectContext) {
         let fVCDataBEXPmodel = FVCDataBEXPmodel(context: context)
         fVCDataBEXPmodel.id = UUID()
         fVCDataBEXPmodel.date = fVCDataBEXP.date
@@ -64,6 +81,10 @@ class PersistenceController: ObservableObject {
         fVCDataBEXPmodel.fef2575 = fVCDataBEXP.FEF2575
         fVCDataBEXPmodel.peft = Int64(fVCDataBEXP.PEFT)
         fVCDataBEXPmodel.evol = Int64(fVCDataBEXP.EVOL)
+        fVCDataBEXPmodel.predictedValues = fvcDataBexpPredictedModel
+        fVCDataBEXPmodel.speedsArray = waveData.speeds
+        fVCDataBEXPmodel.timesArray = waveData.times
+        fVCDataBEXPmodel.volumesArray = waveData.volumes
         
         save(context: context)
     }
@@ -92,6 +113,11 @@ class PersistenceController: ObservableObject {
             fVCDataBEXPmodel.fef2575 = Double.random(in: 0...500)
             fVCDataBEXPmodel.peft = Int64.random(in: 0...500)
             fVCDataBEXPmodel.evol = Int64.random(in: 0...500)
+            
+            fVCDataBEXPmodel.timesArray = (1...50).map( {_ in Float.random(in: 1...50)} )
+            fVCDataBEXPmodel.speedsArray = (1...50).map( {_ in Float.random(in: 1...50)} )
+            fVCDataBEXPmodel.volumesArray = (1...50).map( {_ in Float.random(in: 1...50)} )
+            
             return fVCDataBEXPmodel
         }
         

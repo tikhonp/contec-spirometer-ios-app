@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct ValueRowView: View {
     let key: String
@@ -70,6 +71,49 @@ struct RecordView: View {
                     Image(systemName: "clock")
                     Text(fVCDataBEXP.date!, formatter: dateFormatter)
                 }
+            }
+            
+            if #available(iOS 16.0, *) {
+                Section(header: Text("Speeds")) {
+                    Chart {
+                        ForEach(Array(fVCDataBEXP.speedsArray!.enumerated()), id: \.offset) { index, element in
+                            LineMark(
+                                x: .value("Month", index),
+                                y: .value("Hours of Sunshine", element)
+                            )
+                        }
+                    }
+                    .frame(height: 200)
+                }
+                
+                
+                Section(header: Text("Volumes")) {
+                    Chart {
+                        ForEach(Array(fVCDataBEXP.volumesArray!.enumerated()), id: \.offset) { index, element in
+                            LineMark(
+                                x: .value("Month", index),
+                                y: .value("Hours of Sunshine", element)
+                            )
+                        }
+                    }
+                    .frame(height: 200)
+                }
+                
+                
+                Section(header: Text("Times")) {
+                    Chart {
+                        ForEach(Array(fVCDataBEXP.timesArray!.enumerated()), id: \.offset) { index, element in
+                            LineMark(
+                                x: .value("Month", index),
+                                y: .value("Hours of Sunshine", element)
+                            )
+                        }
+                    }
+                    .frame(height: 200)
+                }
+                
+            } else {
+                // Fallback on earlier versions
             }
             
             Section(header: Text("Measurement")) {
