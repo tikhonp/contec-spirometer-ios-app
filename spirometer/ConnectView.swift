@@ -53,6 +53,7 @@ struct ConnectView: View {
                             }
                         }
                         .onTapGesture {
+                            HapticFeedbackController.shared.play(.rigid)
                             self.bleController.connect(peripheral: device)
                         }
                     }

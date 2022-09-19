@@ -86,8 +86,12 @@ final class BLEController: NSObject, ObservableObject {
     
     
     
-    private func throwAlert(_ errorInfo: ErrorInfo) {
+    private func throwAlert(_ errorInfo: ErrorInfo, _ feedbackType: UINotificationFeedbackGenerator.FeedbackType? = nil) {
         DispatchQueue.main.async {
+            if let feedbackType = feedbackType {
+                HapticFeedbackController.shared.prepareNotify()
+                HapticFeedbackController.shared.notify(feedbackType)
+            }
             self.error = errorInfo
         }
     }
@@ -145,13 +149,13 @@ final class BLEController: NSObject, ObservableObject {
                     self.discover()
                 }
             case .periferalIsNotFromThisQueue:
-                self.throwAlert(ErrorAlerts.invalidPeriferal)
+                self.throwAlert(ErrorAlerts.invalidPeriferal, .error)
             case .failedToDiscoverServiceError:
-                self.throwAlert(ErrorAlerts.serviceNotFound)
+                self.throwAlert(ErrorAlerts.serviceNotFound, .error)
             case .periferalIsNotReady:
-                self.throwAlert(ErrorAlerts.deviceIsNotReady)
+                self.throwAlert(ErrorAlerts.deviceIsNotReady, .error)
             case .failedToDeleteData:
-                self.throwAlert(ErrorAlerts.failedToDeleteData)
+                self.throwAlert(ErrorAlerts.failedToDeleteData, .error)
             case .deletedData:
                 print("Data was deleted")
             case .disconnected:
@@ -159,7 +163,7 @@ final class BLEController: NSObject, ObservableObject {
                 self.isConnected = false
                 self.connectingPeripheral = nil
                 self.devices = []
-                self.throwAlert(ErrorAlerts.disconnected)
+                self.throwAlert(ErrorAlerts.disconnected, .warning)
                 self.discover()
             case .gotData:
                 self.progress = 1
@@ -168,13 +172,16 @@ final class BLEController: NSObject, ObservableObject {
                 self.processResultData(resultData: resultDataController)
                 self.fetchingDataWithSpirometer = false
                 self.navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
+                HapticFeedbackController.shared.play(.light)
+                self.contecSDK.deleteData()
             case .connected:
+                HapticFeedbackController.shared.play(.light)
                 self.showSelectDevicesInfo = false
                 self.isConnected = true
                 self.getData()
             case .failedToFetchData:
                 self.fetchingDataWithSpirometer = false
-                self.throwAlert(ErrorAlerts.failedToFetchDataError)
+                self.throwAlert(ErrorAlerts.failedToFetchDataError, .error)
             }
         }
     }

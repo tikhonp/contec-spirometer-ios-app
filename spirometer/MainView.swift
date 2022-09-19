@@ -74,12 +74,18 @@ struct MainView: View {
                             if bleController.sendingToMedsengerStatus != 0 {
                                 ProgressView()
                             }
-                            Button("Upload to Medsenger", action: bleController.sendDataToMedsenger)
+                            Button("Upload to Medsenger", action: {
+                                HapticFeedbackController.shared.play(.heavy)
+                                bleController.sendDataToMedsenger()
+                            })
                         }
                     }
                     Spacer()
                     if bleController.isConnected && !bleController.fetchingDataWithSpirometer {
-                        Button(action: bleController.getData, label: { Image(systemName: "arrow.clockwise.circle") })
+                        Button(action: {
+                            HapticFeedbackController.shared.play(.medium)
+                            bleController.getData()
+                        }, label: { Image(systemName: "arrow.clockwise.circle") })
                     }
                     if !(!fvcDataBexps.isEmpty && bleController.presentUploadToMedsenger) {
                         Spacer()

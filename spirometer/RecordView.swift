@@ -73,6 +73,7 @@ struct RecordView: View {
                 }
             }
             
+            #if DEBUG
             if #available(iOS 16.0, *) {
                 Section(header: Text("Speeds")) {
                     Chart {
@@ -115,6 +116,7 @@ struct RecordView: View {
             } else {
                 // Fallback on earlier versions
             }
+            #endif
             
             Section(header: Text("Measurement")) {
                 ValueRowView(key: "FVC", value: Text("\(fVCDataBEXP.fvc, specifier: "%.2f")"))
