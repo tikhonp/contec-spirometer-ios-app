@@ -54,6 +54,8 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 
 "Automatically connect to saved device after reboot"="Автоматически подключаться к сохраненному устройству после перезагрузки";
 
+"Save user params" = "Сохранить параметры пользователя";
+
 /* Main View */
 "Devices" = "Устройства";
 "Search..." = "Поиск...";
@@ -100,6 +102,9 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 
 "Device offline" = "Устройство в режиме оффлайн";
 "Turn off Airplane Mode or connect to Wi-Fi." = "Выключите Авиарежим или подключитесь к Wi-Fi.";
+
+"Invalid user params" = "Неверные параметры пользователя";
+"Make shure that all values aren't equal to zero." = "Удостоверьтесь, что все значения верны и не равны нулю.";
 
 /* Record View */
 "Measurement" = "Измерение";

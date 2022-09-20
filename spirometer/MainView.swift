@@ -11,6 +11,9 @@ import CoreData
 import Sentry
 
 struct MainView: View {
+    
+    // MARK: - View varibles
+    
     @EnvironmentObject private var bleController: BLEController
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -20,6 +23,8 @@ struct MainView: View {
     
     @State private var showSettingsModal: Bool = false
     @State private var isPresentedDeviceList: Bool = false
+    
+    // MARK: - View body
     
     var body: some View {
         NavigationView {
@@ -106,7 +111,9 @@ struct MainView: View {
         }
     }
     
-    var navigationBarTitle: some View {
+    // MARK: - Additional Views
+    
+    private var navigationBarTitle: some View {
         HStack {
             if !bleController.isConnected || !bleController.isBluetoothOn || bleController.fetchingDataWithSpirometer {
                 ProgressView()
@@ -116,7 +123,7 @@ struct MainView: View {
         }
     }
     
-    var progressView: some View {
+    private var progressView: some View {
         ZStack {
             if bleController.fetchingDataWithSpirometer {
                 ProgressView(value: bleController.progress, total: 1)
@@ -126,7 +133,7 @@ struct MainView: View {
         }
     }
     
-    var inlineAlerts: some View {
+    private var inlineAlerts: some View {
         ZStack {
             if bleController.showBluetoothIsOffWarning {
                 Text("To connect the spirometer, turn on the bluetooth and give the app permission to use it.")
@@ -150,7 +157,7 @@ struct MainView: View {
         }
     }
     
-    var noMeasurements: some View {
+    private var noMeasurements: some View {
         VStack(alignment: .center) {
             Spacer()
             Text("No measurements recorded")
@@ -166,7 +173,7 @@ struct MainView: View {
         }
     }
     
-    var measurementsList: some View {
+    private var measurementsList: some View {
         List {
             ForEach(fvcDataBexps) { fvcDataBexp in
                 NavigationLink {
@@ -178,16 +185,21 @@ struct MainView: View {
             .onDelete(perform: deleteFVCDataBEXPmodels)
         }
     }
+
+    // MARK: - private functions
     
     private func deleteFVCDataBEXPmodels(offsets: IndexSet) {
         withAnimation {
             offsets.map { fvcDataBexps[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                print("Core Data failed to save model: \(error.localizedDescription)")
-            }
+            saveCoreData()
+        }
+    }
+
+    private func saveCoreData() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Core Data failed to save model: \(error.localizedDescription)")
         }
     }
 }

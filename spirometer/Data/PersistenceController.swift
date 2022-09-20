@@ -85,6 +85,7 @@ class PersistenceController: ObservableObject {
         fVCDataBEXPmodel.speedsArray = waveData.speeds
         fVCDataBEXPmodel.timesArray = waveData.times
         fVCDataBEXPmodel.volumesArray = waveData.volumes
+        fVCDataBEXPmodel.objectHash = Int64(fVCDataBEXP.objectHash)
         
         save(context: context)
     }
@@ -113,7 +114,7 @@ class PersistenceController: ObservableObject {
             fVCDataBEXPmodel.fef2575 = Double.random(in: 0...500)
             fVCDataBEXPmodel.peft = Int64.random(in: 0...500)
             fVCDataBEXPmodel.evol = Int64.random(in: 0...500)
-            
+            fVCDataBEXPmodel.objectHash = Int64.random(in: 0...500)
             fVCDataBEXPmodel.timesArray = (1...50).map( {_ in Float.random(in: 1...50)} )
             fVCDataBEXPmodel.speedsArray = (1...50).map( {_ in Float.random(in: 1...50)} )
             fVCDataBEXPmodel.volumesArray = (1...50).map( {_ in Float.random(in: 1...50)} )

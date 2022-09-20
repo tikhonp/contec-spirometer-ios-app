@@ -18,61 +18,64 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             Form {
-                //                Section(header: Text("Personal information")) {
-                //                    HStack {
-                //                        Text("Age")
-                //                        Spacer()
-                //                        TextField("", text: Binding(
-                //                            get: { String(bleController.userParams.age) },
-                //                            set: { bleController.userParams.age = Int($0) ?? 0 }
-                //                        ))
-                //                        .keyboardType(.numberPad)
-                //                        .foregroundColor(.gray)
-                //                        .multilineTextAlignment(.trailing)
-                //                    }
-                //                    HStack {
-                //                        Text("Height")
-                //                        Spacer()
-                //                        TextField("", text: Binding(
-                //                            get: { String(bleController.userParams.height) },
-                //                            set: { bleController.userParams.height = Int($0) ?? 0 }
-                //                        ))
-                //                        .keyboardType(.numberPad)
-                //                        .foregroundColor(.gray)
-                //                        .multilineTextAlignment(.trailing)
-                //                    }
-                //                    HStack {
-                //                        Text("Weight")
-                //                        Spacer()
-                //                        TextField("", text: Binding(
-                //                            get: { String(bleController.userParams.weight) },
-                //                            set: { bleController.userParams.weight = Int($0) ?? 0 }
-                //                        ))
-                //                        .keyboardType(.numberPad)
-                //                        .foregroundColor(.gray)
-                //                        .multilineTextAlignment(.trailing)
-                //                    }
-                //                    Picker("Sex", selection: $bleController.userParams.sex ) {
-                //                        Text("Male").tag(sexEnum.MALE)
-                //                        Text("Female").tag(sexEnum.FEMALE)
-                //                    }
-                //                    Picker("Smoke", selection: $bleController.userParams.smoke ) {
-                //                        Text("Yes").tag(UserParams.smokeEnum.SMOKE)
-                //                        Text("No").tag(UserParams.smokeEnum.NOSMOKE)
-                //                    }
-                //                    Picker("Measurement mode", selection: $bleController.userParams.measureMode ) {
-                //                        Text("All").tag(measureModeEnum.ALL)
-                //                        Text("FVC").tag(measureModeEnum.FVC)
-                //                        Text("MV").tag(measureModeEnum.MV)
-                //                        Text("MVV").tag(measureModeEnum.MVV)
-                //                        Text("VC").tag(measureModeEnum.VC)
-                //                    }
-                //                    Picker("Standart type", selection: $bleController.userParams.standart ) {
-                //                        Text("ECCS").tag(standartEnum.ECCS)
-                //                        Text("KNUDSON").tag(standartEnum.KNUDSON)
-                //                        Text("USA").tag(standartEnum.USA)
-                //                    }
-                //                }
+                #if DEBUG
+                Section(header: Text("Personal information")) {
+                    HStack {
+                        Text("Age")
+                        Spacer()
+                        TextField("", text: Binding(
+                            get: { String(bleController.userParams.age) },
+                            set: { bleController.userParams.age = Int($0) ?? 0 }
+                        ))
+                        .keyboardType(.numberPad)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    HStack {
+                        Text("Height")
+                        Spacer()
+                        TextField("", text: Binding(
+                            get: { String(bleController.userParams.height) },
+                            set: { bleController.userParams.height = Int($0) ?? 0 }
+                        ))
+                        .keyboardType(.numberPad)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    HStack {
+                        Text("Weight")
+                        Spacer()
+                        TextField("", text: Binding(
+                            get: { String(bleController.userParams.weight) },
+                            set: { bleController.userParams.weight = Int($0) ?? 0 }
+                        ))
+                        .keyboardType(.numberPad)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.trailing)
+                    }
+                    Picker("Sex", selection: $bleController.userParams.sex ) {
+                        Text("Male").tag(sexEnum.MALE)
+                        Text("Female").tag(sexEnum.FEMALE)
+                    }
+                    Picker("Smoke", selection: $bleController.userParams.smoke ) {
+                        Text("Yes").tag(UserParams.smokeEnum.SMOKE)
+                        Text("No").tag(UserParams.smokeEnum.NOSMOKE)
+                    }
+                    Picker("Measurement mode", selection: $bleController.userParams.measureMode ) {
+                        Text("All").tag(measureModeEnum.ALL)
+                        Text("FVC").tag(measureModeEnum.FVC)
+                        Text("MV").tag(measureModeEnum.MV)
+                        Text("MVV").tag(measureModeEnum.MVV)
+                        Text("VC").tag(measureModeEnum.VC)
+                    }
+                    Picker("Standart type", selection: $bleController.userParams.standart ) {
+                        Text("ECCS").tag(standartEnum.ECCS)
+                        Text("KNUDSON").tag(standartEnum.KNUDSON)
+                        Text("USA").tag(standartEnum.USA)
+                    }
+                    Button("Save user params", action: bleController.setUserParams)
+                }
+                #endif
                 
                 Section(header: Text("Connected device")) {
                     Text(bleController.connectingPeripheral?.name ?? LocalizedStringKey("Unknown name").stringValue())

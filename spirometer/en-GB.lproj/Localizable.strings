@@ -54,6 +54,8 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 
 "Automatically connect to saved device after reboot"="Automatically connect to saved device after reboot";
 
+"Save user params" = "Save user params";
+
 /* Main View */
 "Devices" = "Devices";
 "Search..." = "Search...";
@@ -100,6 +102,9 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 
 "Device offline" = "Device offline";
 "Turn off Airplane Mode or connect to Wi-Fi." = "Turn off Airplane Mode or connect to Wi-Fi.";
+
+"Invalid user params" = "Invalid user params";
+"Make shure that all values aren't equal to zero." = "Make shure that all values aren't equal to zero.";
 
 /* Record View */
 "Measurement" = "Measurement";

@@ -57,6 +57,9 @@ class ErrorAlerts: NSObject {
     static let failedToConnectToNetwork = ErrorInfo(
         title: LocalizedStringKey("Device offline").stringValue(),
         description: LocalizedStringKey("Turn off Airplane Mode or connect to Wi-Fi.").stringValue())
+    static let invalidUserParams = ErrorInfo(
+        title: LocalizedStringKey("Invalid user params").stringValue(),
+        description: LocalizedStringKey("Make shure that all values aren't equal to zero.").stringValue())
 }
 
 final class BLEController: NSObject, ObservableObject {
@@ -102,12 +105,31 @@ final class BLEController: NSObject, ObservableObject {
         let context = persistenceController.container.viewContext
         
         let fvcDataBexpPredictedModel = persistenceController.addFVCdataBEXPpredictedModel(fvcDataBexpPredicted: resultData.predictedValuesBexp!, context: context)
+        
         for (index, record) in resultData.fVCDataBEXPs.enumerated() {
-            guard let waveData = resultData.waveDatas[safe: index] else {
-                print("Failed to get wave data")
+            // Check if record already exists by hash
+            let fetchRequest = FVCDataBEXPmodel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "objectHash == %ld", record.objectHash, #keyPath(FVCDataBEXPmodel.objectHash))
+            
+            guard let objects = try? context.fetch(fetchRequest) else {
+                guard let error = error as? Error else {
+                    print("Core Data failed to fetch hash")
+                    return
+                }
+                print("Core Data failed to fetch: \(error.localizedDescription)")
+                SentrySDK.capture(error: error)
                 return
             }
-            persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, waveData: waveData, fvcDataBexpPredictedModel: fvcDataBexpPredictedModel, context: context)
+            
+            if objects.isEmpty {
+                guard let waveData = resultData.waveDatas[safe: index] else {
+                    print("Failed to get wave data")
+                    return
+                }
+                persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, waveData: waveData, fvcDataBexpPredictedModel: fvcDataBexpPredictedModel, context: context)
+            } else {
+                print("Skipping already synchronized objects")
+            }
         }
     }
     
@@ -173,7 +195,6 @@ final class BLEController: NSObject, ObservableObject {
                 self.fetchingDataWithSpirometer = false
                 self.navigationBarTitleStatus = LocalizedStringKey("Your measurements").stringValue()
                 HapticFeedbackController.shared.play(.light)
-                self.contecSDK.deleteData()
             case .connected:
                 HapticFeedbackController.shared.play(.light)
                 self.showSelectDevicesInfo = false
@@ -365,7 +386,7 @@ final class BLEController: NSObject, ObservableObject {
     
     func setUserParams() {
         if userParams.age == 0 || userParams.weight == 0 || userParams.height == 0 {
-            //            self.error = ErrorInfo(id: 6, title: "Не валидные значения", description: "")
+            throwAlert(ErrorAlerts.invalidUserParams, .error)
             return
         }
         

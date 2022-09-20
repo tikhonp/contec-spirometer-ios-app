@@ -85,6 +85,7 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     /// - Parameter deleteDataAfterSync: Choose to delete data after loading from spirometer
     public func getData(deleteDataAfterSync: Bool = false) {
         if isPeriferalReady {
+            resultDataController = nil
             contecDeviceController?.getData(deleteDataAfterSync: deleteDataAfterSync)
         } else {
             onUpdateStatusCallback(.periferalIsNotReady)

@@ -19,6 +19,7 @@
         <attribute name="height" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="measureType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="objectHash" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="pef" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="peft" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="speedsArray" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Float]"/>

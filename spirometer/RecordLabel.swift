@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct RecordLabel: View {
+    @EnvironmentObject var bleController: BLEController
+    
     let fVCDataBEXP: FVCDataBEXPmodel
     let dateFormatter: DateFormatter
     
@@ -21,17 +23,33 @@ struct RecordLabel: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("FVC: \(fVCDataBEXP.fvc, specifier: "%.2f") L.")
-                .font(.headline)
+            HStack {
+                Text("FVC: \(fVCDataBEXP.fvc, specifier: "%.2f") L.")
+                    .font(.headline)
+                    .padding(.trailing, 1)
+                if bleController.presentUploadToMedsenger {
+                    Circle()
+                        .foregroundColor(recordUploaded ? .green : .red)
+                        .frame(width: 10, height: 10)
+                }
+            }
             Spacer()
             HStack {
                 Image(systemName: "clock")
                 Text("\(fVCDataBEXP.date!, formatter: dateFormatter)")
+                Spacer()
             }
             .font(.caption)
         }
         .frame(height: 10)
         .padding()
+    }
+    
+    private var recordUploaded: Bool {
+        guard let lastUploadedDate = UserDefaults.lastUpladedDate else {
+            return false
+        }
+        return fVCDataBEXP.date! < lastUploadedDate
     }
 }
 

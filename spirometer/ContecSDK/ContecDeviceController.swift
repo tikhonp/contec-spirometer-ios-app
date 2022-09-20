@@ -137,7 +137,7 @@ class ContecDeviceController {
             Task {
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 43)
                 if !(dataStorage[1] != 127 && dataStorage[1] != 126) { return }
-                guard let _ = resultDataController.saveFVCDataBEXP(data: dataStorage) else {
+                if resultDataController.saveFVCDataBEXP(data: dataStorage) == nil {
                     onContecDeviceUpdateStatusCallback(.failedToFetchData)
                     return
                 }
@@ -146,23 +146,27 @@ class ContecDeviceController {
             }
         case stateValues.seventhStep:
             Task {
+                print(incomingDataQueue.getElements)
                 copyDataToDataStorage(copyTo: &dataStorage, from: 1, length: 4)
                 
-                let currentRecord = (Int(dataStorage[1]) & 127 | (Int(dataStorage[2]) & 127) << 7) & 65535
-                let maxFramesCount = (Int(dataStorage[3]) & 127 | (Int(dataStorage[4]) & 127) << 7) & 65535
+                let currentRecord = Int(dataStorage[1]) & 127 | (Int(dataStorage[2]) & 127) << 7
+                let maxFramesCount = Int(dataStorage[3]) & 127 | (Int(dataStorage[4]) & 127) << 7
                 
                 var times = [Float](repeating: 0, count: maxFramesCount)
                 var speeds = [Float](repeating: 0, count: maxFramesCount)
                 var volumes = [Float](repeating: 0, count: maxFramesCount)
-                var framesCount = 0
-                
-                while maxFramesCount > framesCount {
-                    var bufferByteData = [Int8](repeating: 0, count: 64)
+                var currentFrame = 0
+//                print("Max frames: \(maxFramesCount)")
+                while maxFramesCount > currentFrame {
+//                    print("Current frame: \(currentFrame)")
+                    var bufferByteData = [Int8](repeating: 0, count: 8)
                     copyDataToDataStorage(copyTo: &bufferByteData, from: 0, length: 8)
-                    resultDataController.generateWaveArrays(data: bufferByteData, times: &times, speeds: &speeds, volumes: &volumes, framesCount: framesCount)
-                    framesCount += 1
+//                    print("Queue: \(incomingDataQueue.getElements) -> \(bufferByteData)")
+                    resultDataController.generateWaveArrays(data: bufferByteData, times: &times, speeds: &speeds, volumes: &volumes, framesCount: currentFrame)
+                    currentFrame += 1
+//                    print("Arrays: \nSpeeds: \(speeds)\nVolumes: \(volumes)\nTimes: \(times)\n\n")
                 }
-                resultDataController.saveWaveData(framesCount: framesCount, speeds: speeds, volumes: volumes, times: times)
+                resultDataController.saveWaveData(framesCount: currentFrame, speeds: speeds, volumes: volumes, times: times)
                 //                copyDataToDataStorage(copyTo: &dataStorage, from: 5, length: 19)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     //                    print(self.incomingDataQueue.getElements)
@@ -252,6 +256,8 @@ class ContecDeviceController {
     func setUserParams(userParams: UserParams) {
         print("here")
         incomingDataQueue.clear()
-        writeValueCallback(dataSerializer.generateDataForSetUserParams(userParams: userParams))
+        let data = dataSerializer.generateDataForSetUserParams(userParams: userParams)
+        print(data)
+        writeValueCallback(data)
     }
 }

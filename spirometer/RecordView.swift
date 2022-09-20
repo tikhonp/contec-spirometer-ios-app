@@ -77,6 +77,34 @@ struct RecordView: View {
             if #available(iOS 16.0, *) {
                 Section(header: Text("Speeds")) {
                     Chart {
+                        ForEach(fVCDataBEXP.speedsArray!, id: \.self) { value in
+                            ForEach(fVCDataBEXP.timesArray!, id: \.self) { time in
+                                LineMark(
+                                    x: .value("Month", time),
+                                    y: .value("Hours of Sunshine", value)
+                                )
+                            }
+                        }
+                    }
+                    .frame(height: 200)
+                }
+                
+                Section(header: Text("Volumes")) {
+                    Chart {
+                        ForEach(fVCDataBEXP.volumesArray!, id: \.self) { value in
+                            ForEach(fVCDataBEXP.timesArray!, id: \.self) { time in
+                                LineMark(
+                                    x: .value("Month", time),
+                                    y: .value("Hours of Sunshine", value)
+                                )
+                            }
+                        }
+                    }
+                    .frame(height: 200)
+                }
+                
+                Section(header: Text("Speeds")) {
+                    Chart {
                         ForEach(Array(fVCDataBEXP.speedsArray!.enumerated()), id: \.offset) { index, element in
                             LineMark(
                                 x: .value("Month", index),
