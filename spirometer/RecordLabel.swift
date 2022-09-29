@@ -28,9 +28,11 @@ struct RecordLabel: View {
                     .font(.headline)
                     .padding(.trailing, 1)
                 if bleController.presentUploadToMedsenger {
-                    Circle()
-                        .foregroundColor(recordUploaded ? .green : .red)
-                        .frame(width: 10, height: 10)
+                    if recordUploaded {
+                        Image(systemName: "checkmark.icloud")
+                    } else {
+                        Image(systemName: "icloud.slash")
+                    }
                 }
             }
             Spacer()
@@ -46,10 +48,10 @@ struct RecordLabel: View {
     }
     
     private var recordUploaded: Bool {
-        guard let lastUploadedDate = UserDefaults.lastUpladedDate else {
+        guard let lastUploadedDate = UserDefaults.lastUpladedDate, let recordDate = fVCDataBEXP.date else {
             return false
         }
-        return fVCDataBEXP.date! < lastUploadedDate
+        return recordDate < lastUploadedDate
     }
 }
 

@@ -77,7 +77,7 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 "The data successfully uploaded to Medsenger." = "Данные успешно загружены в Medsenger.";
 
 "To connect the spirometer, turn on the bluetooth and give the app permission to use it."="Для подключения спирометра включите Bluetooth и предоставьте приложению разрешение на его использование.";
-"Click here and select the spirometer to connect." = "Нажмите на сюда и выберите спирометр для подключения.";
+"Click here and select the spirometer to connect." = "Выберите спирометр для подключения.";
 
 /* Connect View */
 "Device search..." = "Поиск устройств...";

@@ -131,7 +131,7 @@ struct ProfileView: View {
     func forgetDevice() {
         UserDefaults.savedSpirometrUUID = nil
         bleController.disconnect()
-        
+        isPresented = false
     }
 }
 

@@ -17,6 +17,8 @@
 		435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435509D728D48D50005ECCB5 /* ConnectLabel.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
+		437DB76428E5E5AD00870E19 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437DB76328E5E5AD00870E19 /* Alerts.swift */; };
+		437DB76628E5E64100870E19 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437DB76528E5E64100870E19 /* Collection+.swift */; };
 		43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B17FEC28CE7C5400D9475E /* RecordView.swift */; };
 		43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */; };
 		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
@@ -40,13 +42,14 @@
 		4307BEE628C7945E00465C9F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AppPrefs.swift"; sourceTree = "<group>"; };
 		4311B15028C6354500FC0EA1 /* spirometer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = spirometer.entitlements; sourceTree = "<group>"; };
-		4326ACDD28D6843C007BCCDA /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackController.swift; sourceTree = "<group>"; };
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		435509D728D48D50005ECCB5 /* ConnectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectLabel.swift; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
+		437DB76328E5E5AD00870E19 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		437DB76528E5E64100870E19 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		43B17FEC28CE7C5400D9475E /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+NavigationBarTitle.swift"; sourceTree = "<group>"; };
 		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -82,10 +85,12 @@
 		43D5867D28D5FB1A0029E5E7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				437DB76328E5E5AD00870E19 /* Alerts.swift */,
 				43E60A5F28CE5C280099088A /* LocalizedString+.swift */,
 				4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */,
 				43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */,
 				4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */,
+				437DB76528E5E64100870E19 /* Collection+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -208,7 +213,6 @@
 				en,
 				ru,
 				Base,
-				"en-GB",
 			);
 			mainGroup = 43F39C4828BD07130098C96A;
 			packageReferences = (
@@ -280,11 +284,13 @@
 				43F39C6828BD08250098C96A /* DataSerializer.swift in Sources */,
 				4307BEE728C7945E00465C9F /* ProfileView.swift in Sources */,
 				43F39C6A28BD08E00098C96A /* ResultDataController.swift in Sources */,
+				437DB76628E5E64100870E19 /* Collection+.swift in Sources */,
 				43F79A3328BF8375009102CB /* BLEController.swift in Sources */,
 				4311B14F28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift in Sources */,
 				43F39C6628BD07E20098C96A /* ContecDeviceController.swift in Sources */,
 				43F39C6D28BD09040098C96A /* Models.swift in Sources */,
 				4326ACE128D87D53007BCCDA /* HapticFeedbackController.swift in Sources */,
+				437DB76428E5E5AD00870E19 /* Alerts.swift in Sources */,
 				437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,7 +303,6 @@
 			children = (
 				43E60A5C28CE588F0099088A /* en */,
 				43E60A5E28CE58940099088A /* ru */,
-				4326ACDD28D6843C007BCCDA /* en-GB */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -428,7 +433,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -446,7 +451,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
@@ -466,7 +471,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -484,7 +489,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
@@ -525,8 +530,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				kind = exactVersion;
+				version = 7.26.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

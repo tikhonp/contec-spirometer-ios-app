@@ -6,65 +6,21 @@
 //  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
+import Sentry
 import SwiftUI
+import CoreData
 import Foundation
 import CoreBluetooth
-import CoreData
-import Sentry
 
-extension Collection where Indices.Iterator.Element == Index {
-    subscript (safe index: Index) -> Iterator.Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-struct ErrorInfo: Identifiable {
-    var id = UUID()
-    let title: String
-    let description: String
-}
-
-class ErrorAlerts: NSObject {
-    static let error = ErrorInfo(
-        title: LocalizedStringKey("Ops! Something bad happened!").stringValue(),
-        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
-    static let invalidPeriferal = ErrorInfo(
-        title: LocalizedStringKey("Ops! Invalid peripheral found!").stringValue(),
-        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
-    static let serviceNotFound = ErrorInfo(
-        title: LocalizedStringKey("Ops! Bluetooth service on peripheral device not found!").stringValue(),
-        description: LocalizedStringKey("Detailed information about this error has automaticly been recordedand we have been notified.").stringValue())
-    static let deviceIsNotReady = ErrorInfo(
-        title: LocalizedStringKey("Device is not ready").stringValue(),
-        description: LocalizedStringKey("Try to reload application.").stringValue())
-    static let failedToDeleteData = ErrorInfo(
-        title: LocalizedStringKey("Failed to delete data from spirometer").stringValue(),
-        description: LocalizedStringKey("Try to reload application.").stringValue())
-    static let disconnected = ErrorInfo(
-        title: LocalizedStringKey("Device disconnected").stringValue(), description: "")
-    static let emptyDataToUploadToMedsenger = ErrorInfo(
-        title: LocalizedStringKey("No new records").stringValue(),
-        description: LocalizedStringKey("All data already fetched with Medsenger.").stringValue())
-    static let medsengerTokenIsEmpty = ErrorInfo(
-        title: LocalizedStringKey("Authorization in Medsenger is not successful").stringValue(),
-        description: LocalizedStringKey("Go to the Medsenger app for authorization").stringValue())
-    static let failedToFetchDataError = ErrorInfo(
-        title: LocalizedStringKey("Oops! Failed to fetch data" ).stringValue(),
-        description: LocalizedStringKey("This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again.").stringValue())
-    static let dataSuccessfullyUploadedToMedsenger = ErrorInfo(
-        title: LocalizedStringKey("Done!").stringValue(),
-        description: LocalizedStringKey("The data successfully uploaded to Medsenger.").stringValue())
-    static let failedToConnectToNetwork = ErrorInfo(
-        title: LocalizedStringKey("Device offline").stringValue(),
-        description: LocalizedStringKey("Turn off Airplane Mode or connect to Wi-Fi.").stringValue())
-    static let invalidUserParams = ErrorInfo(
-        title: LocalizedStringKey("Invalid user params").stringValue(),
-        description: LocalizedStringKey("Make shure that all values aren't equal to zero.").stringValue())
-}
-
+/// Main controller for applicatin and Contec Spirometer connection
 final class BLEController: NSObject, ObservableObject {
+    
+    // MARK: - private vars
+    
     private let persistenceController = PersistenceController.shared
     private var contecSDK: ContecSDK!
+    
+    // MARK: - published vars
     
     @Published var isConnected = false
     @Published var isBluetoothOn = true
@@ -87,8 +43,12 @@ final class BLEController: NSObject, ObservableObject {
     
     @Published var sendingToMedsengerStatus: Int = 0
     
+    // MARK: - private functions
     
-    
+    /// Throw alert from ``ErrorAlerts`` class
+    /// - Parameters:
+    ///   - errorInfo: ``ErrorInfo`` instance
+    ///   - feedbackType: optional feedback type if you need haptic feedback
     private func throwAlert(_ errorInfo: ErrorInfo, _ feedbackType: UINotificationFeedbackGenerator.FeedbackType? = nil) {
         DispatchQueue.main.async {
             if let feedbackType = feedbackType {
@@ -133,23 +93,12 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
-    /// Call on app appear
-    func startContecSDK() {
-        contecSDK = ContecSDK(
-            onUpdateStatusCallback: onStatusUpdateCallback,
-            onDiscoverCallback: onDiscoverCallback,
-            onProgressUpdate: onProgressUpdate
-        )
-    }
+    // MARK: - callbacks for contec SDK usage
     
     func onProgressUpdate(_ progress: Float) {
         DispatchQueue.main.async {
             self.progress = progress
         }
-    }
-    
-    func disconnect() {
-        contecSDK.disconnect()
     }
     
     func onStatusUpdateCallback(statusCode: StatusCodes) {
@@ -221,13 +170,15 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
-    func connect(peripheral: CBPeripheral) {
-        navigationBarTitleStatus = LocalizedStringKey("Connecting...").stringValue()
-        if UserDefaults.saveUUID {
-            UserDefaults.savedSpirometrUUID = peripheral.identifier.uuidString
-        }
-        connectingPeripheral = peripheral
-        contecSDK.connect(peripheral)
+    // MARK: - public functions controlls BLE connections
+    
+    /// Call on app appear
+    func startContecSDK() {
+        contecSDK = ContecSDK(
+            onUpdateStatusCallback: onStatusUpdateCallback,
+            onDiscoverCallback: onDiscoverCallback,
+            onProgressUpdate: onProgressUpdate
+        )
     }
     
     func discover() {
@@ -240,12 +191,38 @@ final class BLEController: NSObject, ObservableObject {
         contecSDK.discover()
     }
     
+    func connect(peripheral: CBPeripheral) {
+        navigationBarTitleStatus = LocalizedStringKey("Connecting...").stringValue()
+        if UserDefaults.saveUUID {
+            UserDefaults.savedSpirometrUUID = peripheral.identifier.uuidString
+        }
+        connectingPeripheral = peripheral
+        contecSDK.connect(peripheral)
+    }
+    
+    func disconnect() {
+        contecSDK.disconnect()
+    }
+    
     func getData() {
         self.navigationBarTitleStatus = LocalizedStringKey("Fetching data...").stringValue()
         fetchingDataWithSpirometer = true
         progress = 0
         contecSDK.getData(deleteDataAfterSync: true)
     }
+    
+    func setUserParams() {
+        if userParams.age == 0 || userParams.weight == 0 || userParams.height == 0 {
+            throwAlert(ErrorAlerts.invalidUserParams, .error)
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.contecSDK.setUserParams(userParams: self.userParams)
+        }
+    }
+    
+    // MARK: - Public functions to use in views
     
     func sendDataToMedsenger() {
         DispatchQueue.main.async {
@@ -361,6 +338,14 @@ final class BLEController: NSObject, ObservableObject {
         }
     }
     
+    func resetMedsengerCredentials() {
+        DispatchQueue.main.async {
+            UserDefaults.medsengerAgentToken = nil
+            UserDefaults.medsengerContractId = nil
+            self.presentUploadToMedsenger = false
+        }
+    }
+    
     func updatePropertiesFromDeeplink(url: URL) {
         DispatchQueue.main.async {
             guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
@@ -381,25 +366,6 @@ final class BLEController: NSObject, ObservableObject {
                 }
                 self.presentUploadToMedsenger = true
             }
-        }
-    }
-    
-    func setUserParams() {
-        if userParams.age == 0 || userParams.weight == 0 || userParams.height == 0 {
-            throwAlert(ErrorAlerts.invalidUserParams, .error)
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.contecSDK.setUserParams(userParams: self.userParams)
-        }
-    }
-    
-    func resetMedsengerCredentials() {
-        DispatchQueue.main.async {
-            UserDefaults.medsengerAgentToken = nil
-            UserDefaults.medsengerContractId = nil
-            self.presentUploadToMedsenger = false
         }
     }
 }

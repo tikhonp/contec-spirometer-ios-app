@@ -124,6 +124,7 @@ struct FVCDataBEXP {
         ]
     }
     
+    /// Hash calculated for preventing multiple records of one measurement
     var objectHash: Int {
         return Int(Int(date.timeIntervalSince1970) + Int(FVC + FEV1 + FEV1_FVC + PEF + FEF25 + FEF50 + FEF75 + FEF2575 + FEV05 + FEV3 + FEV6) + PEFT + EVOL + measureType + gender.rawValue + age + height + standartType + drug)
     }
