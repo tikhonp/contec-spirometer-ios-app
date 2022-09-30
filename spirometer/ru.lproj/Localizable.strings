@@ -109,3 +109,4 @@ NSBluetoothAlwaysUsageDescription = "Приложение использует B
 /* Record View */
 "Measurement" = "Измерение";
 "Meta Data" = "Мета Данные";
+"On the right is the percentage of predicted values" = "On the right is the percentage of predicted values";

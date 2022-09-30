@@ -109,3 +109,4 @@ NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spi
 /* Record View */
 "Measurement" = "Measurement";
 "Meta Data" = "Meta Data";
+"On the right is the percentage of predicted values" = "On the right is the percentage of predicted values";

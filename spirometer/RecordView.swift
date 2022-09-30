@@ -147,25 +147,31 @@ struct RecordView: View {
             #endif
             
             Section(header: Text("Measurement")) {
-                ValueRowView(key: "FVC", value: Text("\(fVCDataBEXP.fvc, specifier: "%.2f")"))
-                ValueRowView(key: "FEV05", value: Text("\(fVCDataBEXP.fev05, specifier: "%.2f")"))
-                ValueRowView(key: "FEV1", value: Text("\(fVCDataBEXP.fev1, specifier: "%.2f")"))
-                ValueRowView(key: "FEV1_FVC", value: Text("\(fVCDataBEXP.fev1_fvc, specifier: "%.2f")"))
-                ValueRowView(key: "FEV3", value: Text("\(fVCDataBEXP.fev3, specifier: "%.2f")"))
-                ValueRowView(key: "FEV6", value: Text("\(fVCDataBEXP.fev6, specifier: "%.2f")"))
-                ValueRowView(key: "PEF", value: Text("\(fVCDataBEXP.pef, specifier: "%.2f")"))
+                ValueRowView(key: "FVC", value: Text("\(fVCDataBEXP.fvc, specifier: "%.2f") L  |  \(calculatePersantage(fVCDataBEXP.fvc, fVCDataBEXP.predictedValues!.fvc)) %"))
+                if fVCDataBEXP.fev05 != 0 {
+                    ValueRowView(key: "FEV05", value: Text("\(fVCDataBEXP.fev05, specifier: "%.2f") L"))
+                }
+                ValueRowView(key: "FEV1", value: Text("\(fVCDataBEXP.fev1, specifier: "%.2f") L  |  \(calculatePersantage(fVCDataBEXP.fev1, fVCDataBEXP.predictedValues!.fev1)) %"))
+                ValueRowView(key: "FEV1_FVC", value: Text("\(fVCDataBEXP.fev1_fvc, specifier: "%.2f") %  |  \(calculatePersantage(fVCDataBEXP.fev1_fvc, fVCDataBEXP.predictedValues!.fev1_fvc)) %"))
+                if fVCDataBEXP.fev3 != 0 {
+                    ValueRowView(key: "FEV3", value: Text("\(fVCDataBEXP.fev3, specifier: "%.2f") L"))
+                }
+                if fVCDataBEXP.fev6 != 0 {
+                    ValueRowView(key: "FEV6", value: Text("\(fVCDataBEXP.fev6, specifier: "%.2f") L"))
+                }
+                ValueRowView(key: "PEF", value: Text("\(fVCDataBEXP.pef, specifier: "%.2f") L/s  |  \(calculatePersantage(fVCDataBEXP.pef, fVCDataBEXP.predictedValues!.pef)) %"))
+            }
+            
+            Section(footer: Text("On the right is the percentage of predicted values")) {
+                ValueRowView(key: "FEF25", value: Text("\(fVCDataBEXP.fef25, specifier: "%.2f") L/s  |  \(calculatePersantage(fVCDataBEXP.fef25, fVCDataBEXP.predictedValues!.fef25)) %"))
+                ValueRowView(key: "FEF50", value: Text("\(fVCDataBEXP.fef50, specifier: "%.2f") L/s  |  \(calculatePersantage(fVCDataBEXP.fef50, fVCDataBEXP.predictedValues!.fef50)) %"))
+                ValueRowView(key: "FEF75", value: Text("\(fVCDataBEXP.fef75, specifier: "%.2f") L/s  |  \(calculatePersantage(fVCDataBEXP.fef75, fVCDataBEXP.predictedValues!.fef75)) %"))
+                ValueRowView(key: "FEF2575", value: Text("\(fVCDataBEXP.fef2575, specifier: "%.2f") L/s  |  \(calculatePersantage(fVCDataBEXP.fef2575, fVCDataBEXP.predictedValues!.fef2575)) %"))
             }
             
             Section {
-                ValueRowView(key: "FEF25", value: Text("\(fVCDataBEXP.fef25, specifier: "%.2f")"))
-                ValueRowView(key: "FEF50", value: Text("\(fVCDataBEXP.fef50, specifier: "%.2f")"))
-                ValueRowView(key: "FEF75", value: Text("\(fVCDataBEXP.fef75, specifier: "%.2f")"))
-                ValueRowView(key: "FEF2575", value: Text("\(fVCDataBEXP.fef2575, specifier: "%.2f")"))
-            }
-            
-            Section {
-                ValueRowView(key: "PEFT", value: Text("\(fVCDataBEXP.peft, specifier: "%.2f")"))
-                ValueRowView(key: "EVOL", value: Text("\(fVCDataBEXP.evol, specifier: "%.2f")"))
+                ValueRowView(key: "PEFT", value: Text("\(fVCDataBEXP.peft) ms"))
+                ValueRowView(key: "EVOL", value: Text("\(fVCDataBEXP.evol) mL"))
             }
             
             Section(header: Text("Meta Data")) {
@@ -173,13 +179,17 @@ struct RecordView: View {
                 ValueRowView(key: "Standart type", value: Text("\(standartTypeString(fVCDataBEXP.standartType))"))
             }
             
-            Section(header: Text("Personal information")) {
-                ValueRowView(key: "Age", value:  Text("\(fVCDataBEXP.age)"))
-                ValueRowView(key: "Height", value: Text("\(fVCDataBEXP.height)"))
-                ValueRowView(key: "Sex", value: Text("\(fVCDataBEXP.gender == 0 ? LocalizedStringKey("Male").stringValue() : LocalizedStringKey("Female").stringValue())"))
-            }
+//            Section(header: Text("Personal information")) {
+//                ValueRowView(key: "Age", value:  Text("\(fVCDataBEXP.age)"))
+//                ValueRowView(key: "Height", value: Text("\(fVCDataBEXP.height)"))
+//                ValueRowView(key: "Sex", value: Text("\(fVCDataBEXP.gender == 0 ? LocalizedStringKey("Male").stringValue() : LocalizedStringKey("Female").stringValue())"))
+//            }
         }
         .navigationBarTitle("Measurement")
+    }
+    
+    private func calculatePersantage(_ firstNumber: Double, _ secondNumber: Double) -> Int {
+        return Int((firstNumber / secondNumber) * 100)
     }
 }
 

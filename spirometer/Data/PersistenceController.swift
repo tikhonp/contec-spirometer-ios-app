@@ -92,6 +92,19 @@ class PersistenceController: ObservableObject {
     
     struct Seed {
         func getSingleFvcDataBexpItem(for viewContext: NSManagedObjectContext) -> FVCDataBEXPmodel {
+            let predictedValuesBexpModel = PredictedValuesBEXPmodel(context: viewContext)
+            predictedValuesBexpModel.id = UUID()
+            predictedValuesBexpModel.fvc = Double.random(in: 0...500)
+            predictedValuesBexpModel.fev1 = Double.random(in: 0...500)
+            predictedValuesBexpModel.fev1_fvc = Double.random(in: 0...500)
+            predictedValuesBexpModel.fev3 = Double.random(in: 0...500)
+            predictedValuesBexpModel.fev6 = Double.random(in: 0...500)
+            predictedValuesBexpModel.pef = Double.random(in: 0...500)
+            predictedValuesBexpModel.fef25 = Double.random(in: 0...500)
+            predictedValuesBexpModel.fef50 = Double.random(in: 0...500)
+            predictedValuesBexpModel.fef75 = Double.random(in: 0...500)
+            predictedValuesBexpModel.fef2575 = Double.random(in: 0...500)
+            
             let fVCDataBEXPmodel = FVCDataBEXPmodel(context: viewContext)
             fVCDataBEXPmodel.id = UUID()
             fVCDataBEXPmodel.date = Date()
@@ -118,6 +131,7 @@ class PersistenceController: ObservableObject {
             fVCDataBEXPmodel.timesArray = (1...50).map( {_ in Float.random(in: 1...50)} )
             fVCDataBEXPmodel.speedsArray = (1...50).map( {_ in Float.random(in: 1...50)} )
             fVCDataBEXPmodel.volumesArray = (1...50).map( {_ in Float.random(in: 1...50)} )
+            fVCDataBEXPmodel.predictedValues = predictedValuesBexpModel
             
             return fVCDataBEXPmodel
         }

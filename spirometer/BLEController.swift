@@ -19,6 +19,7 @@ final class BLEController: NSObject, ObservableObject {
     
     private let persistenceController = PersistenceController.shared
     private var contecSDK: ContecSDK!
+    private var healthKitAvailible = false
     
     // MARK: - published vars
     
@@ -87,10 +88,38 @@ final class BLEController: NSObject, ObservableObject {
                     return
                 }
                 persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, waveData: waveData, fvcDataBexpPredictedModel: fvcDataBexpPredictedModel, context: context)
+                
+                HealthKitController.saveRecord(fvc: record.FVC, fev1: record.FEV1, pef: record.PEF, date: record.date)
             } else {
                 print("Skipping already synchronized objects")
             }
         }
+    }
+    
+    private func startHealthKit() {
+        HealthKitController.authorizeHealthKit { (authorized, error) in
+            guard authorized else {
+                let baseMessage = "HealthKit Authorization Failed"
+                
+                if let error = error {
+                    print("\(baseMessage). Reason: \(error.localizedDescription)")
+                } else {
+                    print(baseMessage)
+                }
+                self.healthKitAvailible = false
+                return
+            }
+            self.healthKitAvailible = true
+            print("HealthKit Successfully Authorized.")
+        }
+    }
+    
+    private func startContecSDK() {
+        contecSDK = ContecSDK(
+            onUpdateStatusCallback: onStatusUpdateCallback,
+            onDiscoverCallback: onDiscoverCallback,
+            onProgressUpdate: onProgressUpdate
+        )
     }
     
     // MARK: - callbacks for contec SDK usage
@@ -173,12 +202,9 @@ final class BLEController: NSObject, ObservableObject {
     // MARK: - public functions controlls BLE connections
     
     /// Call on app appear
-    func startContecSDK() {
-        contecSDK = ContecSDK(
-            onUpdateStatusCallback: onStatusUpdateCallback,
-            onDiscoverCallback: onDiscoverCallback,
-            onProgressUpdate: onProgressUpdate
-        )
+    func initilizeBleController() {
+        startContecSDK()
+        startHealthKit()
     }
     
     func discover() {

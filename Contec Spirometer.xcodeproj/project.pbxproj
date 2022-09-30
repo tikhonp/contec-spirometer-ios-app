@@ -15,6 +15,7 @@
 		4346FA7328D36C8A009A0594 /* ContecSpirometer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */; };
 		4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7428D36E55009A0594 /* PersistenceController.swift */; };
 		435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435509D728D48D50005ECCB5 /* ConnectLabel.swift */; };
+		435B2C6928E7191A00B5CF1F /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B2C6828E7191A00B5CF1F /* HealthKitController.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
 		437DB76428E5E5AD00870E19 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437DB76328E5E5AD00870E19 /* Alerts.swift */; };
@@ -46,6 +47,8 @@
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		435509D728D48D50005ECCB5 /* ConnectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectLabel.swift; sourceTree = "<group>"; };
+		435B2C6828E7191A00B5CF1F /* HealthKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
+		435B2C6D28E726BC00B5CF1F /* Contec-Spirometer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Contec-Spirometer-Info.plist"; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		437A5C5028C22AEE00064C10 /* RecordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabel.swift; sourceTree = "<group>"; };
 		437DB76328E5E5AD00870E19 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 				43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */,
 				4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */,
 				437DB76528E5E64100870E19 /* Collection+.swift */,
+				435B2C6828E7191A00B5CF1F /* HealthKitController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -107,6 +111,7 @@
 		43F39C4828BD07130098C96A = {
 			isa = PBXGroup;
 			children = (
+				435B2C6D28E726BC00B5CF1F /* Contec-Spirometer-Info.plist */,
 				437A5C4E28C2270A00064C10 /* README.md */,
 				43F39C5328BD07130098C96A /* spirometer */,
 				43F39C5228BD07130098C96A /* Products */,
@@ -283,6 +288,7 @@
 				43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */,
 				43F39C6828BD08250098C96A /* DataSerializer.swift in Sources */,
 				4307BEE728C7945E00465C9F /* ProfileView.swift in Sources */,
+				435B2C6928E7191A00B5CF1F /* HealthKitController.swift in Sources */,
 				43F39C6A28BD08E00098C96A /* ResultDataController.swift in Sources */,
 				437DB76628E5E64100870E19 /* Collection+.swift in Sources */,
 				43F79A3328BF8375009102CB /* BLEController.swift in Sources */,
@@ -433,14 +439,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App uses HealthKit to add spirometry data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -451,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";
@@ -471,14 +479,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App uses HealthKit to add spirometry data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -489,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Contec Spirometer";

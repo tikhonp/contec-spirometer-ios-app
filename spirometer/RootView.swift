@@ -22,7 +22,7 @@ struct RootView: View {
                     dismissButton: .default(Text("Close"))
                 )
             })
-            .onAppear(perform: { bleController.startContecSDK() })
+            .onAppear(perform: { bleController.initilizeBleController() })
             .environmentObject(bleController)
             .onOpenURL { url in
                 bleController.updatePropertiesFromDeeplink(url: url)
