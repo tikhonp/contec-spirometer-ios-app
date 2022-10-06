@@ -17,8 +17,11 @@ struct spirometerApp: App {
         #if DEBUG
         print("Running app in debug mode")
         #else
+        guard let dsn = Bundle.main.infoDictionary?["SENTRY_DSN"] as? String else {
+            fatalError("Missing sentry DSN")
+        }
         SentrySDK.start { options in
-            options.dsn = "https://1249e55e37dd4d40bdf29daf38c15654@o1075119.ingest.sentry.io/6755116"
+            options.dsn = dsn
             options.debug = false
             
             options.tracesSampleRate = 1.0

@@ -1,0 +1,12 @@
+//
+//  Config_example.xcconfig
+//  Contec Spirometer
+//
+//  Created by Tikhon Petrishchev on 05.10.2022.
+//  Copyright © 2022 OOO Telepat. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+SENTRY_DSN = "https://1249e55e37asasasfasfasfsafblabla075119.ingest.sentry.io/12341516"

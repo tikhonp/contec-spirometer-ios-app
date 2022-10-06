@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Implements steps and methods to communicate with contec spirometer
 class ContecDeviceController {
     
