@@ -14,7 +14,6 @@
 		4326ACE128D87D53007BCCDA /* HapticFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */; };
 		4346FA7328D36C8A009A0594 /* ContecSpirometer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */; };
 		4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7428D36E55009A0594 /* PersistenceController.swift */; };
-		435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435509D728D48D50005ECCB5 /* ConnectLabel.swift */; };
 		435B2C6928E7191A00B5CF1F /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B2C6828E7191A00B5CF1F /* HealthKitController.swift */; };
 		437A5C4F28C2270A00064C10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 437A5C4E28C2270A00064C10 /* README.md */; };
 		437A5C5128C22AEE00064C10 /* RecordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5C5028C22AEE00064C10 /* RecordLabel.swift */; };
@@ -46,7 +45,6 @@
 		4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackController.swift; sourceTree = "<group>"; };
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
-		435509D728D48D50005ECCB5 /* ConnectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectLabel.swift; sourceTree = "<group>"; };
 		435B2C6828E7191A00B5CF1F /* HealthKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
 		435B2C6D28E726BC00B5CF1F /* Contec-Spirometer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Contec-Spirometer-Info.plist"; sourceTree = "<group>"; };
 		437A5C4E28C2270A00064C10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 				4307BEE628C7945E00465C9F /* ProfileView.swift */,
 				43E60A5D28CE588F0099088A /* Localizable.strings */,
 				43B17FEC28CE7C5400D9475E /* RecordView.swift */,
-				435509D728D48D50005ECCB5 /* ConnectLabel.swift */,
 			);
 			path = spirometer;
 			sourceTree = "<group>";
@@ -281,7 +278,6 @@
 				43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */,
 				43F39C5728BD07130098C96A /* RootView.swift in Sources */,
 				43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */,
-				435509D828D48D50005ECCB5 /* ConnectLabel.swift in Sources */,
 				43F79A3128BF4607009102CB /* MainView.swift in Sources */,
 				4307BEE528C7694C00465C9F /* AsyncQueue.swift in Sources */,
 				4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */,
@@ -548,8 +544,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
-				kind = exactVersion;
-				version = 7.26.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.26.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

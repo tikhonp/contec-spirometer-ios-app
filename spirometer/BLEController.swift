@@ -89,7 +89,9 @@ final class BLEController: NSObject, ObservableObject {
                 }
                 persistenceController.addFVCDataBEXPmodel(fVCDataBEXP: record, waveData: waveData, fvcDataBexpPredictedModel: fvcDataBexpPredictedModel, context: context)
                 
-                HealthKitController.saveRecord(fvc: record.FVC, fev1: record.FEV1, pef: record.PEF, date: record.date)
+                if healthKitAvailible {
+                    HealthKitController.saveRecord(fvc: record.FVC, fev1: record.FEV1, pef: record.PEF, date: record.date)
+                }
             } else {
                 print("Skipping already synchronized objects")
             }
@@ -253,33 +255,34 @@ final class BLEController: NSObject, ObservableObject {
     func sendDataToMedsenger() {
         DispatchQueue.main.async {
             self.sendingToMedsengerStatus = 1
-            var objects: [FVCDataBEXPmodel]?
             
-            let context = self.persistenceController.container.viewContext
-            if let recentFetchDate = UserDefaults.lastUpladedDate {
-                let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ <= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
-                
-                do {
-                    objects = try context.fetch(fetchRequest)
-                } catch {
-                    self.sendingToMedsengerStatus = 0
-                    print("Core Data failed to fetch: \(error.localizedDescription)")
-                    SentrySDK.capture(error: error)
-                    return
+            let objects: [FVCDataBEXPmodel]? = {
+                let context = self.persistenceController.container.viewContext
+                if let recentFetchDate = UserDefaults.lastUpladedDate {
+                    let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "%@ <= %K", recentFetchDate as NSDate, #keyPath(FVCDataBEXPmodel.date))
+                    
+                    do {
+                        return try context.fetch(fetchRequest)
+                    } catch {
+                        self.sendingToMedsengerStatus = 0
+                        print("Core Data failed to fetch: \(error.localizedDescription)")
+                        SentrySDK.capture(error: error)
+                        return nil
+                    }
+                } else {
+                    let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
+                    
+                    do {
+                        return try context.fetch(fetchRequest)
+                    } catch {
+                        self.sendingToMedsengerStatus = 0
+                        print("Core Data failed to fetch: \(error.localizedDescription)")
+                        SentrySDK.capture(error: error)
+                        return nil
+                    }
                 }
-            } else {
-                let fetchRequest: NSFetchRequest<FVCDataBEXPmodel> = FVCDataBEXPmodel.fetchRequest()
-                
-                do {
-                    objects = try context.fetch(fetchRequest)
-                } catch {
-                    self.sendingToMedsengerStatus = 0
-                    print("Core Data failed to fetch: \(error.localizedDescription)")
-                    SentrySDK.capture(error: error)
-                    return
-                }
-            }
+            }()
             
             guard let records = objects else {
                 self.sendingToMedsengerStatus = 0

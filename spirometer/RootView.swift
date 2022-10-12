@@ -8,12 +8,10 @@
 
 import SwiftUI
 
-
 struct RootView: View {
     @StateObject var bleController = BLEController()
     
-    var body: some View
-    {
+    var body: some View {
         MainView()
             .alert(item: $bleController.error, content: { error in
                 Alert(

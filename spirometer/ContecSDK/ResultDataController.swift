@@ -6,7 +6,6 @@
 //  Copyright © 2022 OOO Telepat. All rights reserved.
 //
 
-
 /// Create, store and process data got from contec spirometer
 class ResultDataController {
     

@@ -9,7 +9,6 @@
 import Foundation
 import CoreBluetooth
 
-
 /// Status codes for different events situations
 enum StatusCodes {
     case bluetoothIsOff
@@ -24,7 +23,6 @@ enum StatusCodes {
     case connected
     case failedToFetchData
 }
-
 
 /// Main Contec Spirometer controller class
 class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
@@ -56,7 +54,6 @@ class ContecSDK: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     
     private var sendDataCharacteristic: CBCharacteristic?
     private var getDataCharacteristic: CBCharacteristic?
-    
     
     private var contecDeviceController: ContecDeviceController?
     

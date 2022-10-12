@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 // MARK: - Enums
 
 enum measureModeEnum: String {
@@ -19,19 +18,16 @@ enum measureModeEnum: String {
     case MV = "MV"
 }
 
-
 enum standartEnum: Int {
     case ECCS = 1
     case KNUDSON = 2
     case USA = 3
 }
 
-
 enum sexEnum: Int {
     case MALE = 0
     case FEMALE = 1
 }
-
 
 /// Predicted values from personal data in spirometr
 struct PredictedValuesBEXP {
@@ -132,7 +128,6 @@ struct FVCDataBEXP {
     static let example = FVCDataBEXP(measureType: 1, measureTypeName: .FVC, number: 1, year: 2022, month: 8, day: 29, hour: 17, minute: 30, second: 36, gender: .MALE, age: 39, height: 175, standartType: 1, standartTypeName: .ECCS, drug: 1, FVC: 5.1, FEV05: 0.0, FEV1: 4.95, FEV1_FVC: 97.1, FEV3: 0.0, FEV6: 0.0, PEF: 9.33, FEF25: 8.01, FEF50: 6.52, FEF75: 3.91, FEF2575: 6.14, PEFT: 291, EVOL: 79)
 }
 
-
 /// Record wave data for graphs
 struct WaveData {
     let waveCount: Int
@@ -141,7 +136,6 @@ struct WaveData {
     let volumes: [Float]
     let times: [Float]
 }
-
 
 /// User params can bet set in spirometer
 class UserParams {

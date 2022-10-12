@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// All data in bytes to send to contec device
 class DataSerializer {
     
