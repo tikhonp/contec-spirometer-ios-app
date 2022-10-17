@@ -51,4 +51,7 @@ class ErrorAlerts: NSObject {
     static let invalidUserParams = ErrorInfo(
         title: LocalizedStringKey("Invalid user params").stringValue(),
         description: LocalizedStringKey("Make shure that all values aren't equal to zero.").stringValue())
+    static let failedToUploadToMedsengerError = ErrorInfo(
+        title: LocalizedStringKey("Oops! Failed to upload to medsenger").stringValue(),
+        description: LocalizedStringKey("Please contact medsenger support.").stringValue())
 }

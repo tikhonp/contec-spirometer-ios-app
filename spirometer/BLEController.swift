@@ -351,8 +351,29 @@ final class BLEController: NSObject, ObservableObject {
                             } else {
                                 print("Failed to make HTTP reuest to medsenger: \(error!.localizedDescription)")
                                 SentrySDK.capture(error: error!)
+                                self.throwAlert(ErrorAlerts.failedToUploadToMedsengerError, .error)
                             }
+                            self.sendingToMedsengerStatus = 0
                             return
+                        }
+                        if let httpResponse = response as? HTTPURLResponse {
+                            if httpResponse.statusCode == 422 {
+                                guard let data = data else {
+                                    self.throwAlert(ErrorAlerts.failedToUploadToMedsengerError, .error)
+                                    self.sendingToMedsengerStatus = 0
+                                    print("Response data is empty")
+                                    return
+                                }
+                                let dataString = String(decoding: data, as: UTF8.self)
+                                if dataString.contains("Incorrect token") {
+                                    self.throwAlert(ErrorAlerts.medsengerTokenIsEmpty)
+                                } else {
+                                    self.throwAlert(ErrorAlerts.failedToUploadToMedsengerError, .error)
+                                    print("Error sending to medsenger: \(dataString)")
+                                }
+                                self.sendingToMedsengerStatus = 0
+                                return
+                            }
                         }
                         if self.sendingToMedsengerStatus == records.count {
                             UserDefaults.lastUpladedDate = Date()

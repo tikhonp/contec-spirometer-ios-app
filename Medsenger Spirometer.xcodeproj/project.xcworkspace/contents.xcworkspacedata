@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/tikhon/projects/contec-spirometer-ios-app/Medsenger Spirometer.xcodeproj">
    </FileRef>
 </Workspace>

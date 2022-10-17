@@ -12,6 +12,7 @@
 		4311B14F28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */; };
 		4326ACDA28D66487007BCCDA /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 4326ACD928D66487007BCCDA /* Sentry */; };
 		4326ACE128D87D53007BCCDA /* HapticFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */; };
+		4328AE0428FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4328AE0228FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings */; };
 		4346FA7328D36C8A009A0594 /* ContecSpirometer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7128D36C8A009A0594 /* ContecSpirometer.xcdatamodeld */; };
 		4346FA7528D36E55009A0594 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FA7428D36E55009A0594 /* PersistenceController.swift */; };
 		435B2C6928E7191A00B5CF1F /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B2C6828E7191A00B5CF1F /* HealthKitController.swift */; };
@@ -43,6 +44,7 @@
 		4311B14E28C62CBA00FC0EA1 /* UserDefaults+AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AppPrefs.swift"; sourceTree = "<group>"; };
 		4311B15028C6354500FC0EA1 /* spirometer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = spirometer.entitlements; sourceTree = "<group>"; };
 		4326ACE028D87D53007BCCDA /* HapticFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackController.swift; sourceTree = "<group>"; };
+		4328AE0328FDA24A001B1E10 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = "ru.lproj/Contec-Spirometer-InfoPlist.strings"; sourceTree = "<group>"; };
 		4346FA7228D36C8A009A0594 /* ContecSpirometer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContecSpirometer.xcdatamodel; sourceTree = "<group>"; };
 		4346FA7428D36E55009A0594 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		435B2C6828E7191A00B5CF1F /* HealthKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
@@ -58,7 +60,7 @@
 		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5E28CE58940099088A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5F28CE5C280099088A /* LocalizedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedString+.swift"; sourceTree = "<group>"; };
-		43F39C5128BD07130098C96A /* Contec Spirometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contec Spirometer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		43F39C5128BD07130098C96A /* Medsenger Spirometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Medsenger Spirometer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F39C5428BD07130098C96A /* spirometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spirometerApp.swift; sourceTree = "<group>"; };
 		43F39C5628BD07130098C96A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		43F39C5828BD07150098C96A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				43E0E67628EE10F90010A363 /* Config_example.xcconfig */,
 				43E0E67528EE0DE60010A363 /* Config.xcconfig */,
 				435B2C6D28E726BC00B5CF1F /* Contec-Spirometer-Info.plist */,
+				4328AE0228FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings */,
 				437A5C4E28C2270A00064C10 /* README.md */,
 				43F39C5328BD07130098C96A /* spirometer */,
 				43F39C5228BD07130098C96A /* Products */,
@@ -123,7 +126,7 @@
 		43F39C5228BD07130098C96A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43F39C5128BD07130098C96A /* Contec Spirometer.app */,
+				43F39C5128BD07130098C96A /* Medsenger Spirometer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,9 +177,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		43F39C5028BD07130098C96A /* Contec Spirometer */ = {
+		43F39C5028BD07130098C96A /* Medsenger Spirometer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Contec Spirometer" */;
+			buildConfigurationList = 43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Medsenger Spirometer" */;
 			buildPhases = (
 				43F39C4D28BD07130098C96A /* Sources */,
 				43F39C4E28BD07130098C96A /* Frameworks */,
@@ -187,12 +190,12 @@
 			);
 			dependencies = (
 			);
-			name = "Contec Spirometer";
+			name = "Medsenger Spirometer";
 			packageProductDependencies = (
 				4326ACD928D66487007BCCDA /* Sentry */,
 			);
 			productName = spirometer;
-			productReference = 43F39C5128BD07130098C96A /* Contec Spirometer.app */;
+			productReference = 43F39C5128BD07130098C96A /* Medsenger Spirometer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -211,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Contec Spirometer" */;
+			buildConfigurationList = 43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Medsenger Spirometer" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,7 +231,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				43F39C5028BD07130098C96A /* Contec Spirometer */,
+				43F39C5028BD07130098C96A /* Medsenger Spirometer */,
 			);
 		};
 /* End PBXProject section */
@@ -240,6 +243,7 @@
 			files = (
 				437A5C4F28C2270A00064C10 /* README.md in Resources */,
 				43E60A5B28CE588F0099088A /* Localizable.strings in Resources */,
+				4328AE0428FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings in Resources */,
 				43F39C5C28BD07150098C96A /* Preview Assets.xcassets in Resources */,
 				43F39C5928BD07150098C96A /* Assets.xcassets in Resources */,
 			);
@@ -304,6 +308,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		4328AE0228FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4328AE0328FDA24A001B1E10 /* ru */,
+			);
+			name = "Contec-Spirometer-InfoPlist.strings";
+			sourceTree = "<group>";
+		};
 		43E60A5D28CE588F0099088A /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -441,7 +453,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -449,9 +461,9 @@
 				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "App uses HealthKit to add spirometry data";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App uses HealthKit to add spirometry data";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Приложение Medsenger Spirometer использует Bluetooth, чтобы синхронизировать данные со спирометром Contec Spirometer";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,13 +474,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.6;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
-				PRODUCT_NAME = "Contec Spirometer";
+				PRODUCT_NAME = "Medsenger Spirometer";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -482,7 +494,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
 				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
@@ -490,9 +502,9 @@
 				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "App uses Bluetooth to connect to Contec Spirometer";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "App uses HealthKit to add spirometry data";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App uses HealthKit to add spirometry data";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Приложение Medsenger Spirometer использует Bluetooth, чтобы синхронизировать данные со спирометром Contec Spirometer";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -503,13 +515,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.6;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
-				PRODUCT_NAME = "Contec Spirometer";
+				PRODUCT_NAME = "Medsenger Spirometer";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -519,7 +531,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Contec Spirometer" */ = {
+		43F39C4C28BD07130098C96A /* Build configuration list for PBXProject "Medsenger Spirometer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43F39C5D28BD07150098C96A /* Debug */,
@@ -528,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Contec Spirometer" */ = {
+		43F39C5F28BD07150098C96A /* Build configuration list for PBXNativeTarget "Medsenger Spirometer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43F39C6028BD07150098C96A /* Debug */,

@@ -1,112 +1,265 @@
-/* 
-  Localizable.strings
-  Contec Spirometer
+/* No comment provided by engineer. */
+"%.2f %%  |  %lld %%" = "%.2f %%  |  %lld %%";
 
-  Created by Tikhon Petrishchev on 11.09.2022.
-  Copyright © 2022 OOO Telepat. All rights reserved.
-*/
+/* No comment provided by engineer. */
+"%.2f L" = "%.2f л";
 
+/* No comment provided by engineer. */
+"%.2f L  |  %lld %%" = "%.2f л  |  %lld %%";
 
-NSBluetoothAlwaysUsageDescription = "Приложение использует Bluetooth для подключения к спирометру Contec.";
+/* No comment provided by engineer. */
+"%.2f L/s  |  %lld %%" = "%.2f л/с  |  %lld %%";
+
+/* No comment provided by engineer. */
+"%lld mL" = "%lld мл";
+
+/* No comment provided by engineer. */
+"%lld ms" = "%lld мс";
+
+/* (No Comment) */
+"About" = "О приложении";
 
 /* Profile View */
 "Age" = "Возраст";
-"Personal information" = "Персональные данные";
-"Height" = "Рост";
-"Weight" = "Вес";
 
-"Sex" = "Пол";
-"Male" = "Мужской";
-"Female" = "Женский";
-
-"Smoke" = "Курение";
-"Yes" = "Да";
-"No" = "Нет";
-
-"Measurement mode" = "Режим измерения";
+/* (No Comment) */
 "All" = "Всё";
-"FVC" = "FVC";
-"MV" = "MV";
-"MVV" = "MVV";
-"VC" = "VC";
 
-"Standart type" = "Стандартизация";
-"ECCS" = "ECCS";
-"KNUDSON" = "KNUDSON";
-"USA" = "USA";
+/* (No Comment) */
+"All data already fetched with Medsenger." = "Все данные уже синхронизированны с Medsenger.";
 
-"Connected device" = "Подключённое устройство";
-"Unknown name" = "Неизвестное имя";
-"Forget device" = "Забыть устройство";
-"Disconnect device"="Отключить устройство";
+/* (No Comment) */
+"Authorization in Medsenger is not successful" = "Неуспешная авторизация в Medsenger";
 
-"Save connection" = "Запомнить подключение";
+/* (No Comment) */
+"Automatically connect to saved device after reboot" = "Автоматически подключаться к сохраненному устройству после перезагрузки";
 
-"Reset Medsenger credentials" = "Сбросить реквизиты Medsenger";
-"Delete Medsenger authorization details, you will not be able to send data to the service until you authorize again" = "Удалить данные авторизации Medsenger, вы не сможете отправлять данные в сервис, пока не авторизуетесь снова";
-
-"About" = "О приложении";
-"Version" = "Версия";
-"Version not found"="Версия не найдена";
-
-"Settings" = "Настройки";
-"Save" = "Сохранить";
-
-"Automatically connect to saved device after reboot"="Автоматически подключаться к сохраненному устройству после перезагрузки";
-
-"Save user params" = "Сохранить параметры пользователя";
-
-/* Main View */
-"Devices" = "Устройства";
-"Search..." = "Поиск...";
-"Fetching data..." = "Синхронизация...";
-"Connecting..." = "Подключение...";
-"Waiting Bluetooth..." = "Ожидание Bluetooth...";
-
-"Oops! Failed to fetch data" = "Упс! Не удалось получить данные";
-"This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again." = "Это могло произойти, если в спирометре села батарейка. Если это не так, возможно, это случайная ошибка, попробовать еще раз.";
-
-"No measurements recorded" = "Нет записаных измерений";
-"Take measurements with a spirometer so they appear here." = "Сделайте измерения с помощью спирометра, чтобы они появились здесь.";
-"Upload to Medsenger" = "Загрузить в Medsenger";
-"Your measurements" = "Ваши измерения";
-"Downloading data from a spirometer" = "Загрузка данных из спирометра";
-"Do not turn off the device until the end." = "Не выключайте устройство да окончания синхронизации.";
-
-"Done!" = "Готово!";
-"The data successfully uploaded to Medsenger." = "Данные успешно загружены в Medsenger.";
-
-"To connect the spirometer, turn on the bluetooth and give the app permission to use it."="Для подключения спирометра включите Bluetooth и предоставьте приложению разрешение на его использование.";
+/* (No Comment) */
 "Click here and select the spirometer to connect." = "Выберите спирометр для подключения.";
-
-/* Connect View */
-"Device search..." = "Поиск устройств...";
-"Select your Contec Spirometer from the list below, the saved devices will be connected automatically."="Выберите Ваш Contec Spirometer из списка ниже, к сохраненным устройствам подключение будет выполнено автоматически.";
 
 /* Errors */
 "Close" = "Закрыть";
 
-"Ops! Something bad happened!"="Упс! Возникла ошибка!";
-"Ops! Invalid peripheral found!"="Упс! Обнаружено недопустимое периферийное устройство!";
-"Ops! Bluetooth service on peripheral device not found!"="Опс! Служба Bluetooth на подключенном устройстве не найдена!";
-"Device is not ready"="Устройство не готово";
-"Failed to delete data from spirometer"="Не удалось удалить данные со спирометра";
-"No new records"="Нет новых записей";
+/* (No Comment) */
+"Connected device" = "Подключённое устройство";
 
-"All data already fetched with Medsenger."="Все данные уже синхронизированны с Medsenger.";
-"Detailed information about this error has automaticly been recordedand we have been notified."="Детальная информация об этой ошибке записана автоматически, мы уже исправляем!";
-"Device disconnected"="Устройство отключено";
+/* (No Comment) */
+"Connecting..." = "Подключение...";
 
-"Authorization in Medsenger is not successful"="Неуспешная авторизация в Medsenger";
-"Go to the Medsenger app for authorization"="Перейдите в приложение Medsenger.";
+/* (No Comment) */
+"Delete Medsenger authorization details, you will not be able to send data to the service until you authorize again" = "Удалить данные авторизации Medsenger, вы не сможете отправлять данные в сервис, пока не авторизуетесь снова";
 
+/* (No Comment) */
+"Detailed information about this error has automaticly been recordedand we have been notified." = "Детальная информация об этой ошибке записана автоматически, мы уже исправляем!";
+
+/* (No Comment) */
+"Device disconnected" = "Устройство отключено";
+
+/* (No Comment) */
+"Device is not ready" = "Устройство не готово";
+
+/* (No Comment) */
 "Device offline" = "Устройство в режиме оффлайн";
-"Turn off Airplane Mode or connect to Wi-Fi." = "Выключите Авиарежим или подключитесь к Wi-Fi.";
 
+/* Connect View */
+"Device search..." = "Поиск устройств...";
+
+/* Main View */
+"Devices" = "Устройства";
+
+/* (No Comment) */
+"Disconnect device" = "Отключить устройство";
+
+/* (No Comment) */
+"Do not turn off the device until the end." = "Не выключайте устройство да окончания синхронизации.";
+
+/* (No Comment) */
+"Done!" = "Готово!";
+
+/* (No Comment) */
+"Downloading data from a spirometer" = "Загрузка данных из спирометра";
+
+/* (No Comment) */
+"ECCS" = "ECCS";
+
+/* (No Comment) */
+"Failed to delete data from spirometer" = "Не удалось удалить данные со спирометра";
+
+/* (No Comment) */
+"Female" = "Женский";
+
+/* (No Comment) */
+"Fetching data..." = "Синхронизация...";
+
+/* (No Comment) */
+"Forget device" = "Забыть устройство";
+
+/* (No Comment) */
+"FVC" = "FVC";
+
+/* No comment provided by engineer. */
+"FVC: %.2f L." = "FVC: %.2f л.";
+
+/* (No Comment) */
+"Go to the Medsenger app for authorization" = "Перейдите в приложение Medsenger.";
+
+/* (No Comment) */
+"Height" = "Рост";
+
+/* (No Comment) */
 "Invalid user params" = "Неверные параметры пользователя";
+
+/* (No Comment) */
+"KNUDSON" = "KNUDSON";
+
+/* (No Comment) */
 "Make shure that all values aren't equal to zero." = "Удостоверьтесь, что все значения верны и не равны нулю.";
+
+/* (No Comment) */
+"Male" = "Мужской";
 
 /* Record View */
 "Measurement" = "Измерение";
+
+/* (No Comment) */
+"Measurement mode" = "Режим измерения";
+
+/* (No Comment) */
 "Meta Data" = "Мета Данные";
+
+/* No comment provided by engineer. */
+"Month" = "Месяц";
+
+/* (No Comment) */
+"MV" = "MV";
+
+/* (No Comment) */
+"MVV" = "MVV";
+
+/* (No Comment) */
+"No" = "Нет";
+
+/* (No Comment) */
+"No measurements recorded" = "Нет записаных измерений";
+
+/* (No Comment) */
+"No new records" = "Нет новых записей";
+
+/* Localizable.strings
+  Contec Spirometer
+
+  Created by Tikhon Petrishchev on 11.09.2022.
+  Copyright © 2022 OOO Telepat. All rights reserved. */
+"NSBluetoothAlwaysUsageDescription" = "Приложение использует Bluetooth для подключения к спирометру Contec.";
+
+/* (No Comment) */
 "On the right is the percentage of predicted values" = "On the right is the percentage of predicted values";
+
+/* (No Comment) */
+"Oops! Failed to fetch data" = "Упс! Не удалось получить данные";
+
+/* No comment provided by engineer. */
+"Oops! Failed to upload to medsenger" = "Упс! Не удалось загрузить данные в Medsenger";
+
+/* (No Comment) */
+"Ops! Bluetooth service on peripheral device not found!" = "Упс! Служба Bluetooth на подключенном устройстве не найдена!";
+
+/* (No Comment) */
+"Ops! Invalid peripheral found!" = "Упс! Обнаружено недопустимое периферийное устройство!";
+
+/* (No Comment) */
+"Ops! Something bad happened!" = "Упс! Возникла ошибка!";
+
+/* (No Comment) */
+"Personal information" = "Персональные данные";
+
+/* No comment provided by engineer. */
+"Please contact medsenger support." = "Пожалуйста, свяжитесь с поддержкой Medsenger";
+
+/* (No Comment) */
+"Reset Medsenger credentials" = "Сбросить реквизиты Medsenger";
+
+/* (No Comment) */
+"Save" = "Сохранить";
+
+/* (No Comment) */
+"Save connection" = "Запомнить подключение";
+
+/* (No Comment) */
+"Save user params" = "Сохранить параметры пользователя";
+
+/* (No Comment) */
+"Search..." = "Поиск...";
+
+/* (No Comment) */
+"Select your Contec Spirometer from the list below, the saved devices will be connected automatically." = "Выберите Ваш Contec Spirometer из списка ниже, к сохраненным устройствам подключение будет выполнено автоматически.";
+
+/* (No Comment) */
+"Settings" = "Настройки";
+
+/* (No Comment) */
+"Sex" = "Пол";
+
+/* (No Comment) */
+"Smoke" = "Курение";
+
+/* No comment provided by engineer. */
+"Speeds" = "Скорости";
+
+/* (No Comment) */
+"Standart type" = "Стандартизация";
+
+/* (No Comment) */
+"Take measurements with a spirometer so they appear here." = "Сделайте измерения с помощью спирометра, чтобы они появились здесь.";
+
+/* (No Comment) */
+"The data successfully uploaded to Medsenger." = "Данные успешно загружены в Medsenger.";
+
+/* (No Comment) */
+"This can happen if the spirometer has a dead battery. If it's not, maybe it's a random error, try again." = "Это могло произойти, если в спирометре села батарейка. Если это не так, возможно, это случайная ошибка, попробовать еще раз.";
+
+/* No comment provided by engineer. */
+"Times" = "Время";
+
+/* (No Comment) */
+"To connect the spirometer, turn on the bluetooth and give the app permission to use it." = "Для подключения спирометра включите Bluetooth и предоставьте приложению разрешение на его использование.";
+
+/* No comment provided by engineer. */
+"Try to reload application." = "Попробуйте перезагрузить приложение";
+
+/* (No Comment) */
+"Turn off Airplane Mode or connect to Wi-Fi." = "Выключите Авиарежим или подключитесь к Wi-Fi.";
+
+/* (No Comment) */
+"Unknown name" = "Неизвестное имя";
+
+/* (No Comment) */
+"Upload to Medsenger" = "Загрузить в Medsenger";
+
+/* (No Comment) */
+"USA" = "USA";
+
+/* (No Comment) */
+"VC" = "VC";
+
+/* (No Comment) */
+"Version" = "Версия";
+
+/* (No Comment) */
+"Version not found" = "Версия не найдена";
+
+/* No comment provided by engineer. */
+"Volumes" = "Значения";
+
+/* (No Comment) */
+"Waiting Bluetooth..." = "Ожидание Bluetooth...";
+
+/* (No Comment) */
+"Weight" = "Вес";
+
+/* (No Comment) */
+"Yes" = "Да";
+
+/* (No Comment) */
+"Your measurements" = "Ваши данные";
+
