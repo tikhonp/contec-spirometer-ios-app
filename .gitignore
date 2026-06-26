@@ -92,3 +92,5 @@ iOSInjectionProject/
 *.DS_Store
 *.swp
 Config.xcconfig
+
+CLAUDE.md
