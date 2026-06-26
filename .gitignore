@@ -4,6 +4,9 @@
 
 ## User settings
 xcuserdata/
+/Medsenger Spirometer.xcodeproj/xcuserdata/
+/Medsenger Spirometer.xcodeproj/xcshareddata/xcbaselines/
+/Medsenger Spirometer.xcodeproj/project.xcworkspace/
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
