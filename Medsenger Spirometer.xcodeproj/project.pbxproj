@@ -21,6 +21,7 @@
 		437DB76428E5E5AD00870E19 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437DB76328E5E5AD00870E19 /* Alerts.swift */; };
 		437DB76628E5E64100870E19 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437DB76528E5E64100870E19 /* Collection+.swift */; };
 		43B17FED28CE7C5400D9475E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B17FEC28CE7C5400D9475E /* RecordView.swift */; };
+		43CF88B92FEE8B210007989D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 43CF88B82FEE8B210007989D /* PrivacyInfo.xcprivacy */; };
 		43D5867F28D5FC350029E5E7 /* View+NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */; };
 		43E60A5B28CE588F0099088A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43E60A5D28CE588F0099088A /* Localizable.strings */; };
 		43E60A6028CE5C280099088A /* LocalizedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E60A5F28CE5C280099088A /* LocalizedString+.swift */; };
@@ -54,9 +55,10 @@
 		437DB76328E5E5AD00870E19 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		437DB76528E5E64100870E19 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		43B17FEC28CE7C5400D9475E /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		43CF88B82FEE8B210007989D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		43CF88BA2FEE90810007989D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		43D5867E28D5FC350029E5E7 /* View+NavigationBarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+NavigationBarTitle.swift"; sourceTree = "<group>"; };
 		43E0E67528EE0DE60010A363 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		43E0E67628EE10F90010A363 /* Config_example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_example.xcconfig; sourceTree = "<group>"; };
 		43E60A5C28CE588F0099088A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5E28CE58940099088A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43E60A5F28CE5C280099088A /* LocalizedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedString+.swift"; sourceTree = "<group>"; };
@@ -113,7 +115,8 @@
 		43F39C4828BD07130098C96A = {
 			isa = PBXGroup;
 			children = (
-				43E0E67628EE10F90010A363 /* Config_example.xcconfig */,
+				43CF88BA2FEE90810007989D /* .gitignore */,
+				43CF88B82FEE8B210007989D /* PrivacyInfo.xcprivacy */,
 				43E0E67528EE0DE60010A363 /* Config.xcconfig */,
 				435B2C6D28E726BC00B5CF1F /* Contec-Spirometer-Info.plist */,
 				4328AE0228FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings */,
@@ -206,7 +209,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 2660;
 				ORGANIZATIONNAME = "OOO Telepat";
 				TargetAttributes = {
 					43F39C5028BD07130098C96A = {
@@ -241,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43CF88B92FEE8B210007989D /* PrivacyInfo.xcprivacy in Resources */,
 				437A5C4F28C2270A00064C10 /* README.md in Resources */,
 				43E60A5B28CE588F0099088A /* Localizable.strings in Resources */,
 				4328AE0428FDA24A001B1E10 /* Contec-Spirometer-InfoPlist.strings in Resources */,
@@ -333,6 +337,7 @@
 			baseConfigurationReference = 43E0E67528EE0DE60010A363 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -364,8 +369,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -380,11 +387,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -395,6 +403,7 @@
 			baseConfigurationReference = 43E0E67528EE0DE60010A363 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -426,8 +435,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -436,10 +447,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -453,13 +465,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
-				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Приложение Medsenger Spirometer использует Bluetooth, чтобы синхронизировать данные со спирометром Contec Spirometer";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
@@ -469,12 +481,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.1.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Medsenger Spirometer";
@@ -494,13 +506,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = spirometer/spirometer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"spirometer/Preview Content\"";
-				DEVELOPMENT_TEAM = CRF22TKXX5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Contec-Spirometer-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Medsenger Spirometer";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Приложение Medsenger Spirometer использует Bluetooth, чтобы синхронизировать данные со спирометром Contec Spirometer";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Medsenger Spirometer app integrates with Apple's Health app, so you can export spirometer data (FVC, FEV1, PEF) from the Medsenger Spirometer app to the Health app.";
@@ -510,12 +522,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.1.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.medsenger.contec;
 				PRODUCT_NAME = "Medsenger Spirometer";
@@ -556,9 +568,11 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.26.0;
+				kind = exactVersion;
+				version = 9.19.0;
 			};
+			traits = (
+			);
 		};
 /* End XCRemoteSwiftPackageReference section */
 
